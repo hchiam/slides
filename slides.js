@@ -5,14 +5,20 @@ setup();
 
 function setup() {
   const slidesInfo = getSlidesInfo();
-  const englishTitle = slidesInfo.englishTitle || "Type here";
-  const alternativeTitle = slidesInfo.alternativeTitle || "Type here";
-  const subtitle = slidesInfo.subtitle || "";
-  $("#english-title").text("Title: " + englishTitle.replace(/^Title: /, ""));
-  $("#alternative-title").text(
-    "Other title: " + alternativeTitle.replace(/^Other title: /, "")
+  const englishTitle = slidesInfo.englishTitle.trim();
+  const alternativeTitle = slidesInfo.alternativeTitle.trim();
+  const subtitle = slidesInfo.subtitle.trim();
+  $("#english-title").text(
+    englishTitle ? englishTitle.replace(/^Title: /, "") : "Title: Type here"
   );
-  $("#subtitle").text("Subtitle: " + subtitle.replace(/^Subtitle: /, ""));
+  $("#alternative-title").text(
+    alternativeTitle
+      ? alternativeTitle.replace(/^Other title: /, "")
+      : "Other title: Type here"
+  );
+  $("#subtitle").text(
+    subtitle ? subtitle.replace(/^Subtitle: /, "") : "Subtitle: Type here"
+  );
   reinstateSlidesInfo();
   setupHoverEffects();
 }
@@ -50,8 +56,12 @@ function reinstateSlidesInfo() {
     }
     slideNumber = i;
     addSlide(slideNumber);
-    $("#header-" + slideNumber).text(singleSlideInfo.header || "Type here");
-    $("#text-" + slideNumber).text(singleSlideInfo.content || "Type here");
+    $("#header-" + slideNumber).text(
+      singleSlideInfo.header.trim() || "Type here"
+    );
+    $("#text-" + slideNumber).text(
+      singleSlideInfo.content.trim() || "Type here"
+    );
     $("#image-" + slideNumber).attr("src", singleSlideInfo.image);
     if (singleSlideInfo.image) {
       $("#image-button-add-" + slideNumber).css("display", "none");
