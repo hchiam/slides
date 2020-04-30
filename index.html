@@ -330,7 +330,7 @@
           return;
         }
 
-        if (slideNumber === numberOfSlides) {
+        if (slideNumber === numberOfSlides && isSlideEdited(slideNumber)) {
           $("#next").text("＋ Add slide").effect(
             "shake",
             {
@@ -434,6 +434,12 @@
           $("#next").css("display", "block");
         } else {
           $("#next").css("display", "none");
+        }
+
+        if (slideNumber === numberOfSlides) {
+          $("#next").text("＋ Add slide");
+        } else {
+          $("#next").text("▶ Next slide");
         }
 
         if (isSlideEdited(slideNumber)) {
