@@ -1,0 +1,92 @@
+:root {
+  --background: #222;
+  --color: snow;
+  --padding: 2.5%;
+}
+
+body {
+  padding: var(--padding);
+  background: var(--background);
+  color: var(--color);
+  font-family: avenir, calibri, arial, tahoma, helvetica, monospace;
+  overflow: hidden;
+}
+
+#slide-controls {
+  position: relative;
+  top: calc(-2 * var(--padding));
+  left: -2.5%;
+  display: flex;
+}
+
+.editable {
+  background: black;
+  color: lime;
+}
+
+#snackbar {
+  position: fixed;
+  top: var(--padding);
+  width: 100%;
+  margin: auto;
+  text-align: center;
+  color: lime;
+  visibility: hidden;
+}
+
+#snackbar.show {
+  visibility: visible;
+}
+
+button:hover {
+  color: rgb(61, 207, 255) !important;
+}
+
+h2,
+#english-title,
+#alternative-title {
+  font-size: 5rem;
+  text-align: center;
+}
+
+#subtitle {
+  font-size: 3.5rem;
+  text-align: center;
+  margin-top: 5rem;
+}
+
+#slides > div {
+  /* slide: */
+  position: absolute;
+  height: calc(100vh - 4 * var(--padding));
+  width: calc(100vw - 2 * var(--padding));
+  top: calc(3 * var(--padding));
+  transition: 0.25s;
+  padding: 1rem;
+  border-radius: 0.25rem;
+}
+
+#slide-number {
+  color: #777;
+  padding: 0.5rem 0.75rem 0.5rem 0.5rem;
+}
+
+pre {
+  font-family: avenir, calibri, arial, tahoma, helvetica, monospace;
+  font-size: 4rem;
+  line-height: 4.5rem;
+}
+
+img {
+  object-fit: cover;
+  height: calc(100vh - 8 * var(--padding));
+  margin: auto;
+  display: none;
+}
+
+#delete {
+  position: fixed;
+  bottom: calc(0.5 * var(--padding));
+  left: 0;
+  font-size: 7px;
+}
