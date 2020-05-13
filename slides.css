@@ -13,9 +13,9 @@ body {
 }
 
 #slide-controls {
-  position: relative;
-  top: calc(-2 * var(--padding));
-  left: -2.5%;
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
   display: flex;
 }
 
@@ -89,4 +89,14 @@ img {
   bottom: calc(0.5 * var(--padding));
   left: 0;
   font-size: 7px;
+}
+
+#slide-controls > * {
+  font-size: x-small;
+}
+
+@media (max-width: 480px) {
+  #slide-controls > * {
+    font-size: small;
+  }
 }
