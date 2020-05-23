@@ -76,6 +76,11 @@ function reinstateSlidesInfo() {
 }
 
 function setupHoverEffects() {
+  if (isSavedFile) {
+    $("h1, h2, h3, pre").attr("contenteditable", false);
+    $(".add-image").remove();
+    return;
+  }
   const snackbar = $("#snackbar");
   $("h1, h2, h3, pre")
     .attr("contenteditable", true)
@@ -163,7 +168,11 @@ function goToSlide(slideNumber) {
     return;
   }
 
-  if (slideNumber === numberOfSlides && isSlideEdited(slideNumber)) {
+  if (
+    !isSavedFile &&
+    slideNumber === numberOfSlides &&
+    isSlideEdited(slideNumber)
+  ) {
     $("#next").text("＋ Add slide").effect(
       "shake",
       {
