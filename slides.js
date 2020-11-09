@@ -8,13 +8,14 @@ function left() {}
 function right() {}
 
 function createSlide() {
-  var haveTextsInMemory = Object.keys(memory.texts).length;
+  var currentSlideTexts = getCurrentSlide().texts;
+  var haveTextsInMemory = Object.keys(currentSlideTexts).length;
   if (haveTextsInMemory) return;
   createNewText(currentSlide);
 }
 
 function recreateText(parentElement = currentSlide, textId) {
-  var textObject = memory.texts[textId];
+  var textObject = getCurrentSlide().texts[textId];
   var text = textObject.text;
   var left = textObject.left;
   var top = textObject.top;
@@ -83,8 +84,8 @@ function backgroundColorIfEmptyText(htmlElement) {
 }
 
 function alreadyHasDefaultText() {
-  var textsInMemory = memory.texts;
-  var textIds = Object.keys(memory.texts);
+  var textsInMemory = getCurrentSlide().texts;
+  var textIds = Object.keys(getCurrentSlide().texts);
   var found = false;
   textIds.forEach(function (textId) {
     var text = textsInMemory[textId];
