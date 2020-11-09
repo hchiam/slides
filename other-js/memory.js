@@ -6,10 +6,10 @@ var memory = {
   slides: [
     {
       texts: {
-        // id: { text: "", left: 0, left: 0, slide: 0 },
+        // id: { text: "", left: 0, top: 0, slide: 0 },
       },
       images: {
-        // id: { file: "", left: 0, left: 0, slide: 0 },
+        // id: { file: "", left: 0, top: 0, slide: 0 },
       },
     },
   ],
