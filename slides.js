@@ -105,14 +105,16 @@ function recreateText(parentElement = currentSlide, textId, slideIndex) {
   var left = textObject.left;
   var top = textObject.top;
   var id = textObject.id;
-  createText(parentElement, text, left, top, id, slideIndex);
+  var textProps = textObject.textProps;
+  createText(parentElement, text, left, top, id, slideIndex, textProps);
 }
 
 function createNewText(
   parentElement = currentSlide,
   text = defaultText.text,
   left = defaultText.left,
-  top = defaultText.top
+  top = defaultText.top,
+  textProps
 ) {
   if (alreadyHasDefaultText()) return;
   var textObject = new Text(text);
@@ -120,9 +122,19 @@ function createNewText(
   textObject.top = top;
   textObject.slide = currentSlideIndex;
   var id = textObject.id;
-  addTextToMemory(textObject);
-  createText(parentElement, text, left, top, id, currentSlideIndex);
+  addTextToMemory(textObject, id, textProps);
+  createText(parentElement, text, left, top, id, currentSlideIndex, textProps);
   styleLeftRightButtons();
+}
+
+function createNewBigText(
+  parentElement = currentSlide,
+  text = defaultText.text,
+  left = defaultText.left,
+  top = defaultText.top
+) {
+  var textProps = { fontSize: "2rem" };
+  createNewText(parentElement, text, left, top, textProps);
 }
 
 function createText(
@@ -131,7 +143,8 @@ function createText(
   left = defaultText.left,
   top = defaultText.top,
   id,
-  slideIndex = currentSlideIndex
+  slideIndex = currentSlideIndex,
+  textProperties
 ) {
   var p = document.createElement("p");
   p.innerText = text;
@@ -141,6 +154,11 @@ function createText(
   p.style.boxShadow = "none";
   p.style.background = "transparent";
   p.style.display = currentSlideIndex === slideIndex ? "block" : "none";
+  if (textProperties) {
+    if (textProperties.fontSize) {
+      p.style.fontSize = textProperties.fontSize;
+    }
+  }
   makeElementDraggableAndEditable(p, {
     mouseMoveCallback: updateTextPosition,
     blurCallback: updateText,

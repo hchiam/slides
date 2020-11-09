@@ -35,3 +35,17 @@ input {
   text-align: center;
   padding-left: 20px;
 }
+
+button#add_big_text {
+  height: 34px;
+  line-height: 0;
+  padding-top: 5px;
+}
+
+button#add_big_text span {
+  font-size: 1.5rem;
+  position: relative;
+  top: 0.25rem;
+  left: 0.6rem;
+  margin-left: -1.2rem;
+}

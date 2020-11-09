@@ -85,9 +85,11 @@ function haveContentInSlide(slideIndex) {
   );
 }
 
-function addTextToMemory(text, id) {
+function addTextToMemory(text, id, textProps) {
+  var textId = "";
   if (typeof text === "string") {
     var textObject = new Text(text, id);
+    textId = textObject.id;
     memory.slides[currentSlideIndex].texts[textObject.id] = {
       text: textObject.text,
       left: textObject.left,
@@ -96,6 +98,7 @@ function addTextToMemory(text, id) {
       id: textObject.id,
     };
   } else {
+    textId = text.id;
     memory.slides[currentSlideIndex].texts[text.id] = {
       text: text.text,
       left: text.left,
@@ -103,6 +106,9 @@ function addTextToMemory(text, id) {
       slide: text.slide,
       id: text.id,
     };
+  }
+  if (textProps) {
+    memory.slides[currentSlideIndex].texts[textId].textProps = textProps;
   }
   updatePersistentMemory(memory);
 }
