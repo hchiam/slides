@@ -11,12 +11,15 @@ button {
 }
 
 button:hover,
-button:focus {
+button:focus,
+input:hover,
+input:focus {
   background: green;
   color: white;
 }
 
-button:active {
+button:active,
+input:active {
   background: lime;
   color: black;
 }
