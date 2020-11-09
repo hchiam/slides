@@ -1,3 +1,5 @@
+var currentSlide = document.querySelector("#current_slide");
+
 useMemory(createTextCallback, createImageCallback);
 createSlide();
 
@@ -8,14 +10,10 @@ function right() {}
 function createSlide() {
   var haveTextsInMemory = Object.keys(memory.texts).length;
   if (haveTextsInMemory) return;
-  var currentSlide = document.querySelector("#current_slide");
   createNewText(currentSlide);
 }
 
-function recreateText(
-  parentElement = document.querySelector("#current_slide"),
-  textId
-) {
+function recreateText(parentElement = currentSlide, textId) {
   var textObject = memory.texts[textId];
   var text = textObject.text;
   var left = textObject.left;
@@ -25,7 +23,7 @@ function recreateText(
 }
 
 function createNewText(
-  parentElement = document.querySelector("#current_slide"),
+  parentElement = currentSlide,
   text = defaultText.text,
   left = defaultText.left,
   top = defaultText.top
@@ -34,13 +32,12 @@ function createNewText(
   var textObject = new Text(text);
   textObject.left = left;
   textObject.top = top;
-  console.log(textObject.id);
   addTextToMemory(textObject);
   createText(parentElement, textObject.text, left, top, textObject.id);
 }
 
 function createText(
-  parentElement = document.querySelector("#current_slide"),
+  parentElement = currentSlide,
   text = defaultText.text,
   left = defaultText.left,
   top = defaultText.top,
@@ -104,9 +101,7 @@ function alreadyHasDefaultText() {
 }
 
 function createTextCallback(textObject) {
-  var parentElement = document.querySelector("#current_slide");
-  var textId = textObject.id;
-  recreateText(parentElement, textId);
+  recreateText(currentSlide, textObject.id);
 }
 
 // TODO: image versions of the text functions above
