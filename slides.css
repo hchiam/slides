@@ -5,25 +5,18 @@
 button {
   text-decoration: none;
   transition: 0.2s;
-}
-
-#left,
-#right {
   color: white;
   width: 3rem;
   font-weight: bold;
 }
 
-#left:hover,
-#left:focus,
-#right:hover,
-#right:focus {
+button:hover,
+button:focus {
   background: green;
   color: white;
 }
 
-#left:active,
-#right:active {
+button:active {
   background: lime;
   color: black;
 }

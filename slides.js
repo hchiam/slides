@@ -26,10 +26,11 @@ function recreateText(
 
 function createNewText(
   parentElement = document.querySelector("#current_slide"),
-  text = "Double-click to edit",
-  left = 100,
-  top = 100
+  text = defaultText.text,
+  left = defaultText.left,
+  top = defaultText.top
 ) {
+  if (alreadyHasDefaultText()) return;
   var textObject = new Text(text);
   textObject.left = left;
   textObject.top = top;
@@ -40,9 +41,9 @@ function createNewText(
 
 function createText(
   parentElement = document.querySelector("#current_slide"),
-  text = "Double-click to edit",
-  left = 100,
-  top = 100,
+  text = defaultText.text,
+  left = defaultText.left,
+  top = defaultText.top,
   id
 ) {
   var p = document.createElement("p");
@@ -82,6 +83,24 @@ function backgroundColorIfEmptyText(htmlElement) {
   } else {
     htmlElement.style.background = "transparent";
   }
+}
+
+function alreadyHasDefaultText() {
+  var textsInMemory = memory.texts;
+  var textIds = Object.keys(memory.texts);
+  var found = false;
+  textIds.forEach(function (textId) {
+    var text = textsInMemory[textId];
+    if (
+      text.text === defaultText.text &&
+      text.left === defaultText.left &&
+      text.top === defaultText.top
+    ) {
+      found = true;
+      return;
+    }
+  });
+  return found;
 }
 
 function createTextCallback(textObject) {

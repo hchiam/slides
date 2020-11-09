@@ -9,6 +9,12 @@ var memory = {
   },
 };
 
+var defaultText = {
+  text: "Double-click to edit",
+  left: 100,
+  top: 100,
+};
+
 if (localStorage.slidesMemory) {
   memory = readPersistentMemory();
 } else {
@@ -16,9 +22,9 @@ if (localStorage.slidesMemory) {
 }
 
 function Text(text = "", id) {
-  this.text = text;
-  this.left = 0;
-  this.top = 0;
+  this.text = text || defaultText.text;
+  this.left = defaultText.left;
+  this.top = defaultText.top;
   this.id = id || generateId();
 }
 
