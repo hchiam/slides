@@ -185,6 +185,7 @@ function updateTextPosition(htmlElement) {
 
 function updateText(htmlElement) {
   var text = htmlElement.innerText;
+  htmlElement.innerText = text;
   updateTextInMemory(htmlElement.id, text);
   backgroundColorIfEmptyText(htmlElement);
 
