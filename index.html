@@ -9,18 +9,28 @@
       integrity="sha384-8liekxt1KgfCZ+rMs0cnUeab/bf2ddaGJXHQsKLd0RbRRH3PxCEkpmcRXiac5zRU"
       crossorigin="anonymous"
     ></script>
-    <link rel="stylesheet" href="other-css/boilerplate.css"></link>
+    <link rel="stylesheet" href="other-css/boilerplate.css" />
     <script type="text/javascript" src="other-js/memory.js"></script>
     <script type="text/javascript" src="other-js/debug.js"></script>
   </head>
   <body>
-    <button id="left" onclick="left()" disabled>◀</button>
-    <button id="right" onclick="right()">▶</button>
-    <button id="add_text" onclick="createNewText()">abc</button>
+    <button aria-label="left" id="left" onclick="left()" disabled>◀</button>
+    <button aria-label="right" id="right" onclick="right()">▶</button>
+    <input
+      aria-label="slide number"
+      id="slide_number"
+      min="1"
+      type="number"
+      onkeypress="setSlideNumber(this.value)"
+      onchange="setSlideNumber(this.value)"
+      onmouseover="this.focus()"
+    />
+    <button aria-label="add text" id="add_text" onclick="createNewText()">
+      abc
+    </button>
     <!-- <button id="add_image" onclick="createNewImage()">☐</button> -->
-    <section id="current_slide">
-    </section>
-    <link rel="stylesheet" href="slides.css"></link>
+    <section id="current_slide"></section>
+    <link rel="stylesheet" href="slides.css" />
     <script type="text/javascript" src="slides.js"></script>
   </body>
 </html>

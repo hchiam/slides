@@ -26,3 +26,12 @@ button[disabled="true"] {
   color: #333;
   box-shadow: none;
 }
+
+input {
+  width: 3rem;
+  background: grey;
+  box-shadow: 2px 2px 5px black;
+  border: none;
+  text-align: center;
+  padding-left: 20px;
+}
