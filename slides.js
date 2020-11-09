@@ -171,6 +171,9 @@ function createText(
     mouseMoveCallback: updateTextPosition,
     blurCallback: updateText,
   });
+  p.oninput = function preventHtmlInjection() {
+    p.innerText = p.innerText.toString();
+  };
 
   parentElement.appendChild(p);
 }
