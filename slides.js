@@ -256,17 +256,16 @@ function readImage(inputElement) {
 }
 
 function actuallyCreateNewImage(src) {
-  var parentElement = currentSlide;
-  var imageId = generateId();
+  var image = new Image(src);
+  addImageToMemory(image, imageId);
+  var imageId = image.id;
 
   var img = document.createElement("img");
   img.src = src;
   img.style.left = left + "px";
   img.style.top = top + "px";
   img.id = imageId;
-  parentElement.appendChild(img);
+  currentSlide.appendChild(img);
 
   makeElementDraggable(img);
-
-  addImageToMemory(img, imageId);
 }
