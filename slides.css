@@ -20,3 +20,9 @@ button:active {
   background: lime;
   color: black;
 }
+
+button[disabled="true"] {
+  background: inherit;
+  color: #333;
+  box-shadow: none;
+}

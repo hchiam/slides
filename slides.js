@@ -2,12 +2,14 @@ var currentSlide = document.querySelector("#current_slide");
 
 useMemory(createTextCallback, createImageCallback);
 createSlide();
+styleLeftRightButtons();
 
 function left() {
   if (currentSlideIndex === 0) return;
   hideSlide(currentSlideIndex);
   currentSlideIndex--;
   showSlide(currentSlideIndex);
+  styleLeftRightButtons();
 }
 
 function right() {
@@ -18,6 +20,24 @@ function right() {
     createSlideInMemory();
   }
   showSlide(currentSlideIndex);
+  styleLeftRightButtons();
+}
+
+function styleLeftRightButtons() {
+  // left
+  var isOnFirstSlide = currentSlideIndex > 0;
+  if (isOnFirstSlide) {
+    document.getElementById("left").removeAttribute("disabled");
+  } else {
+    document.getElementById("left").setAttribute("disabled", true);
+  }
+  // right
+  var isOnLastSlide = currentSlideIndex === memory.slides.length - 1;
+  if (isOnLastSlide && !haveContentInSlide(currentSlideIndex)) {
+    document.getElementById("right").setAttribute("disabled", true);
+  } else {
+    document.getElementById("right").removeAttribute("disabled");
+  }
 }
 
 function hideSlide(slideIndex) {
@@ -66,6 +86,7 @@ function createNewText(
   var id = textObject.id;
   addTextToMemory(textObject);
   createText(parentElement, text, left, top, id, currentSlideIndex);
+  styleLeftRightButtons();
 }
 
 function createText(
