@@ -171,8 +171,14 @@ function createText(
     mouseMoveCallback: updateTextPosition,
     blurCallback: updateText,
   });
-  p.oninput = function preventHtmlInjection() {
-    p.innerText = p.innerText.toString();
+  p.onpaste = function handlePaste(e) {
+    // prevent actually pasting HTML:
+    e.stopPropagation();
+    e.preventDefault();
+
+    var clipboardData = e.clipboardData || window.clipboardData;
+    var pastedText = clipboardData.getData("Text");
+    p.innerText = pastedText;
   };
 
   parentElement.appendChild(p);
