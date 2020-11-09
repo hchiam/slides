@@ -3,24 +3,53 @@ var currentSlide = document.querySelector("#current_slide");
 useMemory(createTextCallback, createImageCallback);
 createSlide();
 
-function left() {}
+function left() {
+  if (currentSlideIndex === 0) return;
+  hideSlide(currentSlideIndex);
+  currentSlideIndex--;
+  showSlide(currentSlideIndex);
+}
 
-function right() {}
+function right() {
+  if (!haveContentInSlide(currentSlideIndex)) return;
+  hideSlide(currentSlideIndex);
+  currentSlideIndex++;
+  if (currentSlideIndex >= memory.slides.length) {
+    createSlideInMemory();
+  }
+  showSlide(currentSlideIndex);
+}
+
+function hideSlide(slideIndex) {
+  var textIds = getTextIds(slideIndex);
+  textIds.map(function hideText(textId) {
+    var element = document.getElementById(textId);
+    if (element) element.style.display = "none";
+  });
+}
+
+function showSlide(slideIndex) {
+  var textIds = getTextIds(slideIndex);
+  textIds.map(function showText(textId) {
+    var element = document.getElementById(textId);
+    if (element) element.style.display = "block";
+  });
+}
 
 function createSlide() {
   var currentSlideTexts = getCurrentSlide().texts;
-  var haveTextsInMemory = Object.keys(currentSlideTexts).length;
+  var haveTextsInMemory = Object.keys(currentSlideTexts).length > 0;
   if (haveTextsInMemory) return;
   createNewText(currentSlide);
 }
 
-function recreateText(parentElement = currentSlide, textId) {
-  var textObject = getCurrentSlide().texts[textId];
+function recreateText(parentElement = currentSlide, textId, slideIndex) {
+  var textObject = getSlide(slideIndex).texts[textId];
   var text = textObject.text;
   var left = textObject.left;
   var top = textObject.top;
   var id = textObject.id;
-  createText(parentElement, text, left, top, id);
+  createText(parentElement, text, left, top, id, slideIndex);
 }
 
 function createNewText(
@@ -33,8 +62,10 @@ function createNewText(
   var textObject = new Text(text);
   textObject.left = left;
   textObject.top = top;
+  textObject.slide = currentSlideIndex;
+  var id = textObject.id;
   addTextToMemory(textObject);
-  createText(parentElement, textObject.text, left, top, textObject.id);
+  createText(parentElement, text, left, top, id, currentSlideIndex);
 }
 
 function createText(
@@ -42,7 +73,8 @@ function createText(
   text = defaultText.text,
   left = defaultText.left,
   top = defaultText.top,
-  id
+  id,
+  slideIndex = currentSlideIndex
 ) {
   var p = document.createElement("p");
   p.innerText = text;
@@ -51,6 +83,7 @@ function createText(
   p.id = id;
   p.style.boxShadow = "none";
   p.style.background = "transparent";
+  p.style.display = currentSlideIndex === slideIndex ? "block" : "none";
   makeElementDraggableAndEditable(p, {
     mouseMoveCallback: updateTextPosition,
     blurCallback: updateText,
@@ -101,10 +134,10 @@ function alreadyHasDefaultText() {
   return found;
 }
 
-function createTextCallback(textObject) {
-  recreateText(currentSlide, textObject.id);
+function createTextCallback(textObject, slideIndex) {
+  recreateText(currentSlide, textObject.id, slideIndex);
 }
 
 // TODO: image versions of the text functions above
 
-function createImageCallback(imageObject) {}
+function createImageCallback(imageObject, slideIndex) {}

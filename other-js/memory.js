@@ -51,8 +51,38 @@ function generateId() {
   return idCounter + "_" + timeNow;
 }
 
+function createSlideInMemory(createSlideCallback) {
+  memory.slides.push({
+    texts: {
+      // id: { text: "", left: 0, left: 0, slide: 0 },
+    },
+    images: {
+      // id: { file: "", left: 0, left: 0, slide: 0 },
+    },
+  });
+  updatePersistentMemory(memory);
+  if (createSlideCallback) createSlideCallback();
+}
+
 function getCurrentSlide() {
   return memory.slides[currentSlideIndex];
+}
+
+function getSlide(slideIndex) {
+  return memory.slides[slideIndex];
+}
+
+function getTextIds(slideIndex) {
+  var slides = getSlide(slideIndex);
+  if (!slides || !slides.texts) return [];
+  return Object.keys(slides.texts);
+}
+
+function haveContentInSlide(slideIndex) {
+  var slide = getSlide(slideIndex);
+  return (
+    Object.keys(slide.texts).length > 0 || Object.keys(slide.images).length > 0
+  );
 }
 
 function addTextToMemory(text, id) {
@@ -88,8 +118,8 @@ function updateTextInMemory(textId, text) {
   updatePersistentMemory(memory);
 }
 
-function updatePersistentMemory(memory) {
-  localStorage.slidesMemory = JSON.stringify(memory);
+function updatePersistentMemory(memoryObject) {
+  localStorage.slidesMemory = JSON.stringify(memoryObject || memory);
 }
 
 function readPersistentMemory() {
@@ -102,31 +132,31 @@ function readPersistentMemory() {
 function useMemory(createTextCallback, createImageCallback) {
   var slides = memory.slides;
 
-  if (!slides.length) return;
+  if (slides.length === 0) return;
 
-  slides.forEach(function (slide) {
-    if (Object.keys(slide.texts).length) {
-      useTextsFromMemory(slide, createTextCallback);
+  slides.forEach(function (slide, slideIndex) {
+    if (Object.keys(slide.texts).length > 0) {
+      useTextsFromMemory(slide, slideIndex, createTextCallback);
     }
 
-    if (Object.keys(slide.images).length) {
-      useImagesFromMemory(slide, createImageCallback);
+    if (Object.keys(slide.images).length > 0) {
+      useImagesFromMemory(slide, slideIndex, createImageCallback);
     }
   });
 }
 
-function useTextsFromMemory(slide, createTextCallback) {
+function useTextsFromMemory(slide, slideIndex, createTextCallback) {
   var textIds = Object.keys(slide.texts);
   textIds.forEach(function (textId) {
     var textObject = slide.texts[textId];
-    createTextCallback(textObject);
+    createTextCallback(textObject, slideIndex);
   });
 }
 
-function useImagesFromMemory(slide, createImageCallback) {
+function useImagesFromMemory(slide, slideIndex, createImageCallback) {
   var imageIds = Object.keys(slide.images);
   imageIds.forEach(function (imageId) {
     var imageObject = slide.images[imageId];
-    createImageCallback(imageObject);
+    createImageCallback(imageObject, slideIndex);
   });
 }
