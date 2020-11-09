@@ -4,18 +4,25 @@ useMemory(createTextCallback, createImageCallback);
 createSlide();
 styleLeftRightButtons();
 updateSlideNumberInputMax();
+setSlideNumber(currentSlideIndex + 1);
+
+var slideNumberTimer = null;
+function delayedSetSlideNumber(slideNumber) {
+  clearTimeout(slideNumberTimer);
+  slideNumberTimer = setTimeout(function () {
+    setSlideNumber(slideNumber);
+  }, 2000);
+}
 
 function setSlideNumber(slideNumber) {
   var slideIndex = slideNumber - 1;
   var slideNumberInput = document.getElementById("slide_number");
   slideNumberInput.value = slideNumber;
-  if (slideIndex < 0) {
-    slideIndex = 0;
-    slideNumberInput.value = 0;
-  }
-  if (slideIndex >= memory.slides.length) {
-    slideIndex = memory.slides.length - 1;
-    slideNumberInput.value = memory.slides.length;
+  var isValidSlideNumber =
+    0 < slideNumber && slideNumber < memory.slides.length + 1;
+  if (!isValidSlideNumber) {
+    slideNumberInput.value = currentSlideIndex + 1;
+    return;
   }
   hideSlide(currentSlideIndex);
   currentSlideIndex = slideIndex;
@@ -38,7 +45,7 @@ function right() {
   if (!haveContentInSlide(currentSlideIndex)) return;
   hideSlide(currentSlideIndex);
   currentSlideIndex++;
-  if (currentSlideIndex > memory.slides.length) {
+  if (currentSlideIndex >= memory.slides.length) {
     createSlideInMemory();
     updateSlideNumberInputMax();
   }
