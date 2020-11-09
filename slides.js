@@ -234,3 +234,39 @@ function createTextCallback(textObject, slideIndex) {
 // TODO: image versions of the text functions above
 
 function createImageCallback(imageObject, slideIndex) {}
+
+function createNewImage() {
+  document.getElementById("select_image").click();
+}
+
+function readImage(inputElement) {
+  if (inputElement.files && inputElement.files[0]) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      var src = e.target.result;
+      actuallyCreateNewImage(src);
+    };
+    inputElement.onchange = function (e) {
+      const f = e.target.files[0];
+      reader.readAsDataURL(f);
+    };
+    const image = inputElement.files[0];
+    reader.readAsDataURL(image);
+  }
+}
+
+function actuallyCreateNewImage(src) {
+  var parentElement = currentSlide;
+  var imageId = generateId();
+
+  var img = document.createElement("img");
+  img.src = src;
+  img.style.left = left + "px";
+  img.style.top = top + "px";
+  img.id = imageId;
+  parentElement.appendChild(img);
+
+  makeElementDraggable(img);
+
+  addImageToMemory(img, imageId);
+}

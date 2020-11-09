@@ -5,6 +5,11 @@
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <script
+      src="https://cdn.jsdelivr.net/gh/hchiam/draggable@2.0.0/makeElementDraggable.js"
+      integrity="sha384-QmLrXrsyvvots0lqy9VbxH9XRhnUzhXriP9vr8UewHu4zNfWxv3J+2ZcooyFjgNw"
+      crossorigin="anonymous"
+    ></script>
+    <script
       src="https://cdn.jsdelivr.net/gh/hchiam/draggable@2.0.0/makeElementDraggableAndEditable.js"
       integrity="sha384-8liekxt1KgfCZ+rMs0cnUeab/bf2ddaGJXHQsKLd0RbRRH3PxCEkpmcRXiac5zRU"
       crossorigin="anonymous"
@@ -52,9 +57,20 @@
     >
       <span>abc</span>
     </button>
-    <!-- <button id="add_image" onclick="createNewImage()">☐</button> -->
+    <button id="add_image" title="Add image" onclick="createNewImage()">
+      ☐
+    </button>
+    <input
+      aria-label="select image"
+      id="select_image"
+      onchange="readImage(this)"
+      type="file"
+      accept="image/*"
+    />
     <!-- <button id="save" onclick="save()">Save</button> -->
-    <section id="current_slide"></section>
+    <section id="current_slide">
+      <img id="image-1" src="" alt="" draggable />
+    </section>
     <link rel="stylesheet" href="slides.css" />
     <script type="text/javascript" src="slides.js"></script>
   </body>

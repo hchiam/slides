@@ -6,10 +6,10 @@ var memory = {
   slides: [
     {
       texts: {
-        // id: { text: "", left: 0, top: 0, slide: 0 },
+        // id: { text: "", left: 0, top: 0, slide: 0, id: "..." },
       },
       images: {
-        // id: { file: "", left: 0, top: 0, slide: 0 },
+        // id: { file: "", left: 0, top: 0, slide: 0, id: "..." },
       },
     },
   ],
@@ -54,10 +54,10 @@ function generateId() {
 function createSlideInMemory(createSlideCallback) {
   memory.slides.push({
     texts: {
-      // id: { text: "", left: 0, left: 0, slide: 0 },
+      // id: { text: "", left: 0, top: 0, slide: 0, id: "..." },
     },
     images: {
-      // id: { file: "", left: 0, left: 0, slide: 0 },
+      // id: { file: "", left: 0, top: 0, slide: 0, id: "..." },
     },
   });
   updatePersistentMemory(memory);
@@ -165,4 +165,27 @@ function useImagesFromMemory(slide, slideIndex, createImageCallback) {
     var imageObject = slide.images[imageId];
     createImageCallback(imageObject, slideIndex);
   });
+}
+
+function addImageToMemory(image, id) {
+  if (typeof image === "string") {
+    var src = image;
+    var imageObject = new Image(src, id);
+    memory.slides[currentSlideIndex].images[imageObject.id] = {
+      file: imageObject.file,
+      left: imageObject.left,
+      top: imageObject.top,
+      slide: imageObject.slide,
+      id: imageObject.id,
+    };
+  } else {
+    memory.slides[currentSlideIndex].images[image.id] = {
+      file: image.file,
+      left: image.left,
+      top: image.top,
+      slide: image.slide,
+      id: image.id,
+    };
+  }
+  updatePersistentMemory(memory);
 }

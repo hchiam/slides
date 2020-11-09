@@ -52,3 +52,7 @@ button#add_big_text span {
   left: 0.6rem;
   margin-left: -1.2rem;
 }
+
+input#select_image {
+  display: none;
+}
