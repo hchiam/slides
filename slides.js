@@ -59,15 +59,23 @@ function styleLeftRightButtons() {
   var isOnFirstSlide = currentSlideIndex > 0;
   if (isOnFirstSlide) {
     document.getElementById("left").removeAttribute("disabled");
+    document.getElementById("left").setAttribute("title", "Previous slide");
   } else {
     document.getElementById("left").setAttribute("disabled", true);
+    document
+      .getElementById("left")
+      .setAttribute("title", "(You're on the first slide)");
   }
   // right
   var isOnLastSlide = currentSlideIndex === memory.slides.length - 1;
   if (isOnLastSlide && !haveContentInSlide(currentSlideIndex)) {
     document.getElementById("right").setAttribute("disabled", true);
+    document
+      .getElementById("right")
+      .setAttribute("title", "(You're on the last slide)");
   } else {
     document.getElementById("right").removeAttribute("disabled");
+    document.getElementById("right").setAttribute("title", "Next slide");
   }
 }
 

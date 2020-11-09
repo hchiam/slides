@@ -14,10 +14,21 @@
     <script type="text/javascript" src="other-js/debug.js"></script>
   </head>
   <body>
-    <button aria-label="left" id="left" onclick="left()" disabled>◀</button>
-    <button aria-label="right" id="right" onclick="right()">▶</button>
+    <button
+      aria-label="left"
+      title="Previous slide"
+      id="left"
+      onclick="left()"
+      disabled
+    >
+      ◀
+    </button>
+    <button aria-label="right" title="Next slide" id="right" onclick="right()">
+      ▶
+    </button>
     <input
       aria-label="slide number"
+      title="Slide number"
       id="slide_number"
       min="1"
       type="number"
@@ -25,11 +36,17 @@
       onchange="setSlideNumber(this.value)"
       onmouseover="this.focus()"
     />
-    <button aria-label="add text" id="add_text" onclick="createNewText()">
+    <button
+      aria-label="add text"
+      title="Add text"
+      id="add_text"
+      onclick="createNewText()"
+    >
       abc
     </button>
     <button
       aria-label="add big text"
+      title="Add BIG text"
       id="add_big_text"
       onclick="createNewBigText()"
     >
