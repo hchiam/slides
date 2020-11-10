@@ -212,6 +212,17 @@ function updateText(htmlElement) {
   updateTextInMemory(htmlElement.id, text);
   backgroundColorIfEmptyText(htmlElement);
 
+  var isEmpty = text.trim() === "";
+  if (isEmpty) {
+    removeTextFromMemory(
+      htmlElement.id,
+      function callbackOnDelete() {},
+      function callbackOnKeep(defaultText) {
+        htmlElement.innerText = defaultText;
+      }
+    );
+  }
+
   debugMemory();
 }
 
