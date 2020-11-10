@@ -6,6 +6,8 @@ styleLeftRightButtons();
 updateSlideNumberInputMax();
 setSlideNumber(currentSlideIndex + 1);
 
+// slide:
+
 var slideNumberTimer = null;
 function delayedSetSlideNumber(slideNumber) {
   clearTimeout(slideNumberTimer);
@@ -117,6 +119,8 @@ function createSlide() {
   createNewText(currentSlide);
 }
 
+// text:
+
 function recreateText(parentElement = currentSlide, textId, slideIndex) {
   var textObject = getSlide(slideIndex).texts[textId];
   var text = textObject.text;
@@ -125,23 +129,6 @@ function recreateText(parentElement = currentSlide, textId, slideIndex) {
   var id = textObject.id;
   var textProps = textObject.textProps;
   createText(parentElement, text, left, top, id, slideIndex, textProps);
-}
-
-function recreateImage(parentElement = currentSlide, imageId, slideIndex) {
-  var imageObject = getSlide(slideIndex).images[imageId];
-  var img = document.createElement("img");
-  img.src = imageObject.file;
-  img.style.left = imageObject.left + "px";
-  img.style.top = imageObject.top + "px";
-  img.id = imageObject.id;
-
-  img.style.display = currentSlideIndex === slideIndex ? "block" : "none";
-
-  parentElement.appendChild(img);
-
-  makeElementDraggable(img, {
-    mouseMoveCallback: updateImagePosition,
-  });
 }
 
 function createNewText(
@@ -219,14 +206,6 @@ function updateTextPosition(htmlElement) {
   debugMemory();
 }
 
-function updateImagePosition(htmlElement) {
-  var left = htmlElement.offsetLeft;
-  var top = htmlElement.offsetTop;
-  updateImagePositionInMemory(htmlElement.id, left, top);
-
-  debugMemory();
-}
-
 function updateText(htmlElement) {
   var text = htmlElement.innerText;
   htmlElement.innerText = text;
@@ -266,13 +245,63 @@ function createTextCallback(textObject, slideIndex) {
   recreateText(currentSlide, textObject.id, slideIndex);
 }
 
-// TODO: image versions of the text functions above
+// image:
+
+function recreateImage(parentElement = currentSlide, imageId, slideIndex) {
+  var imageObject = getSlide(slideIndex).images[imageId];
+  var src = imageObject.file;
+  var left = imageObject.left;
+  var top = imageObject.top;
+  createImage(currentSlide, src, left, top, imageId, slideIndex);
+}
+
+function createNewImage(src) {
+  var image = new Image(src);
+  addImageToMemory(image, image.id);
+
+  var src = image.file;
+  var left = image.left;
+  var top = image.top;
+  var imageId = image.id;
+  createImage(currentSlide, src, left, top, imageId, currentSlideIndex);
+}
+
+function createImage(
+  parentElement = currentSlide,
+  src,
+  left,
+  top,
+  imageId,
+  slideIndex
+) {
+  var img = document.createElement("img");
+  img.src = src;
+  img.style.left = isNaN(left) && left.endsWith("px") ? left : left + "px";
+  img.style.top = isNaN(top) && top.endsWith("px") ? top : top + "px";
+  img.id = imageId;
+
+  img.style.display = currentSlideIndex === slideIndex ? "block" : "none";
+
+  parentElement.appendChild(img);
+
+  makeElementDraggable(img, {
+    mouseMoveCallback: updateImagePosition,
+  });
+}
+
+function updateImagePosition(htmlElement) {
+  var left = htmlElement.offsetLeft;
+  var top = htmlElement.offsetTop;
+  updateImagePositionInMemory(htmlElement.id, left, top);
+
+  debugMemory();
+}
 
 function createImageCallback(imageObject, slideIndex) {
   recreateImage(currentSlide, imageObject.id, slideIndex);
 }
 
-function createNewImage() {
+function triggerCreateNewImage() {
   document.getElementById("select_image").click();
 }
 
@@ -281,7 +310,7 @@ function readImage(inputElement) {
     const reader = new FileReader();
     reader.onload = function (e) {
       var src = e.target.result;
-      actuallyCreateNewImage(src);
+      createNewImage(src);
     };
     inputElement.onchange = function (e) {
       const f = e.target.files[0];
@@ -290,20 +319,4 @@ function readImage(inputElement) {
     const image = inputElement.files[0];
     reader.readAsDataURL(image);
   }
-}
-
-function actuallyCreateNewImage(src) {
-  var image = new Image(src);
-  addImageToMemory(image, image.id);
-
-  var img = document.createElement("img");
-  img.src = image.file;
-  img.style.left = image.left + "px";
-  img.style.top = image.top + "px";
-  img.id = image.id;
-  currentSlide.appendChild(img);
-
-  makeElementDraggable(img, {
-    mouseMoveCallback: updateImagePosition,
-  });
 }
