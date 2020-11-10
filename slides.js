@@ -127,6 +127,20 @@ function recreateText(parentElement = currentSlide, textId, slideIndex) {
   createText(parentElement, text, left, top, id, slideIndex, textProps);
 }
 
+function recreateImage(parentElement = currentSlide, imageId, slideIndex) {
+  var imageObject = getSlide(slideIndex).images[imageId];
+  var img = document.createElement("img");
+  img.src = imageObject.file;
+  img.style.left = imageObject.left + "px";
+  img.style.top = imageObject.top + "px";
+  img.id = imageObject.id;
+  currentSlide.appendChild(img);
+
+  makeElementDraggable(img, {
+    mouseMoveCallback: updateImagePosition,
+  });
+}
+
 function createNewText(
   parentElement = currentSlide,
   text = defaultText.text,
@@ -202,6 +216,14 @@ function updateTextPosition(htmlElement) {
   debugMemory();
 }
 
+function updateImagePosition(htmlElement) {
+  var left = htmlElement.offsetLeft;
+  var top = htmlElement.offsetTop;
+  updateImagePositionInMemory(htmlElement.id, left, top);
+
+  debugMemory();
+}
+
 function updateText(htmlElement) {
   var text = htmlElement.innerText;
   htmlElement.innerText = text;
@@ -243,7 +265,9 @@ function createTextCallback(textObject, slideIndex) {
 
 // TODO: image versions of the text functions above
 
-function createImageCallback(imageObject, slideIndex) {}
+function createImageCallback(imageObject, slideIndex) {
+  recreateImage(currentSlide, imageObject.id, slideIndex);
+}
 
 function createNewImage() {
   document.getElementById("select_image").click();
@@ -267,14 +291,13 @@ function readImage(inputElement) {
 
 function actuallyCreateNewImage(src) {
   var image = new Image(src);
-  addImageToMemory(image, imageId);
-  var imageId = image.id;
+  addImageToMemory(image, image.id);
 
   var img = document.createElement("img");
-  img.src = src;
-  img.style.left = left + "px";
-  img.style.top = top + "px";
-  img.id = imageId;
+  img.src = image.file;
+  img.style.left = image.left + "px";
+  img.style.top = image.top + "px";
+  img.id = image.id;
   currentSlide.appendChild(img);
 
   makeElementDraggable(img);

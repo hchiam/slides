@@ -125,6 +125,12 @@ function updateTextPositionInMemory(textId, left, top) {
   updatePersistentMemory(memory);
 }
 
+function updateImagePositionInMemory(imageId, left, top) {
+  memory.slides[currentSlideIndex].images[imageId].left = left;
+  memory.slides[currentSlideIndex].images[imageId].top = top;
+  updatePersistentMemory(memory);
+}
+
 function updateTextInMemory(textId, text) {
   memory.slides[currentSlideIndex].texts[textId].text = text;
   updatePersistentMemory(memory);
