@@ -90,12 +90,22 @@ function hideSlide(slideIndex) {
     var element = document.getElementById(textId);
     if (element) element.style.display = "none";
   });
+  var imageIds = getImageIds(slideIndex);
+  imageIds.map(function hideImage(imageId) {
+    var element = document.getElementById(imageId);
+    if (element) element.style.display = "none";
+  });
 }
 
 function showSlide(slideIndex) {
   var textIds = getTextIds(slideIndex);
   textIds.map(function showText(textId) {
     var element = document.getElementById(textId);
+    if (element) element.style.display = "block";
+  });
+  var imageIds = getImageIds(slideIndex);
+  imageIds.map(function showImage(imageId) {
+    var element = document.getElementById(imageId);
     if (element) element.style.display = "block";
   });
 }

@@ -78,6 +78,12 @@ function getTextIds(slideIndex) {
   return Object.keys(slides.texts);
 }
 
+function getImageIds(slideIndex) {
+  var slides = getSlide(slideIndex);
+  if (!slides || !slides.images) return [];
+  return Object.keys(slides.images);
+}
+
 function haveContentInSlide(slideIndex) {
   var slide = getSlide(slideIndex);
   return (
