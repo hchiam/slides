@@ -303,5 +303,7 @@ function actuallyCreateNewImage(src) {
   img.id = image.id;
   currentSlide.appendChild(img);
 
-  makeElementDraggable(img);
+  makeElementDraggable(img, {
+    mouseMoveCallback: updateImagePosition,
+  });
 }
