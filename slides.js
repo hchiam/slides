@@ -134,6 +134,9 @@ function recreateImage(parentElement = currentSlide, imageId, slideIndex) {
   img.style.left = imageObject.left + "px";
   img.style.top = imageObject.top + "px";
   img.id = imageObject.id;
+
+  img.style.display = currentSlideIndex === slideIndex ? "block" : "none";
+
   parentElement.appendChild(img);
 
   makeElementDraggable(img, {
