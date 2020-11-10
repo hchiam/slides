@@ -282,11 +282,19 @@ function createImage(
 
   img.style.display = currentSlideIndex === slideIndex ? "block" : "none";
 
+  img.addEventListener("dblclick", function () {
+    removeImageFromMemory(img.id, function () {
+      img.remove();
+    });
+  });
+
   parentElement.appendChild(img);
 
   makeElementDraggable(img, {
     mouseMoveCallback: updateImagePosition,
   });
+
+  alert("Note: you can remove images by double-clicking on them.");
 }
 
 function updateImagePosition(htmlElement) {

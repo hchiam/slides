@@ -119,6 +119,11 @@ function addTextToMemory(text, id, textProps) {
   updatePersistentMemory(memory);
 }
 
+function removeTextFromMemory(id) {
+  delete memory.slides[currentSlideIndex].texts[id];
+  updatePersistentMemory(memory);
+}
+
 function updateTextPositionInMemory(textId, left, top) {
   memory.slides[currentSlideIndex].texts[textId].left = left;
   memory.slides[currentSlideIndex].texts[textId].top = top;
@@ -200,4 +205,12 @@ function addImageToMemory(image, id) {
     };
   }
   updatePersistentMemory(memory);
+}
+
+function removeImageFromMemory(id, callback) {
+  var yes = confirm("Do you want to remove this image?");
+  if (!yes) return;
+  delete memory.slides[currentSlideIndex].images[id];
+  updatePersistentMemory(memory);
+  if (callback) callback();
 }
