@@ -16,7 +16,7 @@ var memory = {
 };
 
 var defaultText = {
-  text: "Double-click to edit",
+  text: "Drag to move around. Double-click to edit.",
   left: 100,
   top: 100,
   slide: 0,
