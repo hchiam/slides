@@ -34,6 +34,8 @@ function createImage(
 
   img.style.display = currentSlideIndex === slideIndex ? "block" : "none";
 
+  img.setAttribute("data-slide", slideIndex);
+
   img.addEventListener("dblclick", function () {
     removeImageFromMemory(img.id, function () {
       img.remove();

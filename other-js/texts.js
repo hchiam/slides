@@ -52,7 +52,11 @@ function createText(
   p.id = id;
   p.style.boxShadow = "none";
   p.style.background = "transparent";
+
   p.style.display = currentSlideIndex === slideIndex ? "block" : "none";
+
+  p.setAttribute("data-slide", slideIndex);
+
   if (textProperties) {
     if (textProperties.fontSize) {
       p.style.fontSize = textProperties.fontSize;

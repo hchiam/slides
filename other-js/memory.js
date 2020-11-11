@@ -167,6 +167,7 @@ function readPersistentMemory() {
 }
 
 function useMemory(createTextCallback, createImageCallback) {
+  if (isSavedFile()) memory = readPersistentMemory();
   var slides = memory.slides;
 
   if (slides.length === 0) return;
@@ -229,9 +230,66 @@ function removeImageFromMemory(id, callback) {
   if (callback) callback();
 }
 
+function markAsSavedFile() {
+  document.body.setAttribute("saved", true);
+}
+
+function isSavedFile() {
+  return document.body.getAttribute("saved");
+}
+
+function recreateSlidesFromMemory() {
+  if (!isSavedFile()) return;
+  sessionStorage.slidesMemory = JSON.stringify({});
+  var existingTexts = document.body.querySelectorAll("p");
+  existingTexts.forEach(function (existingText) {
+    var text = existingText.text;
+    var left = existingText.style.left;
+    var top = existingText.style.top;
+    var slide = existingText.getAttribute("data-slide");
+    var id = existingText.id;
+    var alreadyHaveSlide = memory.slides[slide];
+    if (!alreadyHaveSlide) {
+      memory.slides[slide] = { texts: {}, images: {} };
+    }
+    memory.slides[slide].texts[id] = {
+      text: text,
+      left: left,
+      top: top,
+      slide: slide,
+      id: id,
+    };
+  });
+  var existingImages = document.body.querySelectorAll("img");
+  existingImages.forEach(function (existingImage) {
+    var src = existingImage.src;
+    var left = existingImage.style.left;
+    var top = existingImage.style.top;
+    var slide = existingImage.getAttribute("data-slide");
+    var id = existingImage.id;
+    var alreadyHaveSlide = memory.slides[slide];
+    if (!alreadyHaveSlide) {
+      memory.slides[slide] = { texts: {}, images: {} };
+    }
+    memory.slides[slide].images[id] = {
+      file: src,
+      left: left,
+      top: top,
+      slide: slide,
+      id: id,
+    };
+  });
+  updatePersistentMemory(memory);
+}
+
 function save() {
-  var script = document.createElement("script");
+  markAsSavedFile();
+  var script = document.getElementById("save_memory_script");
   script.innerText =
-    "sessionStorage.slidesMemory = " + JSON.stringify(readPersistentMemory());
-  document.body.insertBefore(script, document.getElementById("main_script"));
+    "sessionStorage.slidesMemory = JSON.stringify(" +
+    JSON.stringify(readPersistentMemory()) +
+    ")";
+  document.getElementById("current_slide").innerHTML = "";
+
+  // TODO: trigger save page dialog
 }

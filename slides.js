@@ -3,7 +3,7 @@ var currentSlide = document.querySelector("#current_slide");
 var isInitializingMemory = true;
 useMemory(createTextCallback, createImageCallback);
 isInitializingMemory = false;
-createSlide();
+setUpInitialSlide();
 styleLeftRightButtons();
 updateSlideNumberInputMax();
 setSlideNumber(currentSlideIndex + 1);
@@ -126,7 +126,8 @@ function showSlide(slideIndex) {
   });
 }
 
-function createSlide() {
+function setUpInitialSlide() {
+  if (isSavedFile()) return;
   var currentSlideTexts = getCurrentSlide().texts;
   var haveTextsInMemory = Object.keys(currentSlideTexts).length > 0;
   if (haveTextsInMemory) return;
