@@ -291,6 +291,7 @@ function createImage(
   img.src = src;
   img.style.left = isNaN(left) && left.endsWith("px") ? left : left + "px";
   img.style.top = isNaN(top) && top.endsWith("px") ? top : top + "px";
+  img.style.zIndex = -1;
   img.id = imageId;
 
   img.style.display = currentSlideIndex === slideIndex ? "block" : "none";
