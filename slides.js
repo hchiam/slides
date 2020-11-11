@@ -1,6 +1,8 @@
 var currentSlide = document.querySelector("#current_slide");
 
+var isInitializingMemory = true;
 useMemory(createTextCallback, createImageCallback);
+isInitializingMemory = false;
 createSlide();
 styleLeftRightButtons();
 updateSlideNumberInputMax();
@@ -305,7 +307,9 @@ function createImage(
     mouseMoveCallback: updateImagePosition,
   });
 
-  alert("Note: you can remove images by double-clicking on them.");
+  if (!isInitializingMemory) {
+    alert("Note: you can remove images by double-clicking on them.");
+  }
 }
 
 function updateImagePosition(htmlElement) {
