@@ -34,8 +34,10 @@ button[disabled="true"] {
 
 input {
   width: 3rem;
-  background: grey;
+  background: #333;
+  color: white;
   box-shadow: 0 0 5px black;
+  font-weight: bold;
   border: none;
   text-align: center;
   padding-left: 20px;
