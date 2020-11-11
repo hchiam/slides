@@ -82,3 +82,16 @@ input#select_image {
   position: relative;
   top: -0.05rem;
 }
+
+button,
+input {
+  animation: hey-notice-this 1s ease 1s 1 forwards;
+}
+
+@keyframes hey-notice-this {
+  50% {
+    background: lime;
+    color: black;
+    box-shadow: 5px 5px 15px 2px black;
+  }
+}
