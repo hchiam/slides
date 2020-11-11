@@ -16,6 +16,7 @@ input:hover,
 input:focus {
   background: green;
   color: white;
+  box-shadow: 5px 5px 10px 1px black;
 }
 
 button:active,
@@ -33,7 +34,7 @@ button[disabled="true"] {
 input {
   width: 3rem;
   background: grey;
-  box-shadow: 2px 2px 5px black;
+  box-shadow: 0 0 5px black;
   border: none;
   text-align: center;
   padding-left: 20px;
