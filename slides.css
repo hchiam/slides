@@ -63,7 +63,7 @@ button#add_big_text span {
 button#add_big_text:after {
   content: "abc";
   position: relative;
-  margin-top: -0.9rem;
+  margin-top: -1rem;
   margin-left: -0.25rem;
   font-size: 1.5rem;
   width: 0;
@@ -79,4 +79,6 @@ input#select_image {
   font-size: 2em;
   margin: -1em;
   vertical-align: middle;
+  position: relative;
+  top: -0.05rem;
 }
