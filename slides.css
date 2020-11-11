@@ -23,6 +23,7 @@ button:active,
 input:active {
   background: lime;
   color: black;
+  box-shadow: 5px 5px 15px 2px black;
 }
 
 button[disabled="true"] {
