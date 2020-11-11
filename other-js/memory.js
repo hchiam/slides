@@ -22,7 +22,7 @@ var defaultText = {
   slide: 0,
 };
 
-if (localStorage.slidesMemory) {
+if (sessionStorage.slidesMemory || localStorage.slidesMemory) {
   memory = readPersistentMemory();
 } else {
   updatePersistentMemory(memory);
@@ -150,11 +150,17 @@ function updateTextInMemory(textId, text) {
 }
 
 function updatePersistentMemory(memoryObject) {
-  localStorage.slidesMemory = JSON.stringify(memoryObject || memory);
+  if (sessionStorage.slidesMemory) {
+    sessionStorage.slidesMemory = JSON.stringify(memoryObject || memory);
+  } else {
+    localStorage.slidesMemory = JSON.stringify(memoryObject || memory);
+  }
 }
 
 function readPersistentMemory() {
-  if (localStorage.slidesMemory) {
+  if (sessionStorage.slidesMemory) {
+    return JSON.parse(sessionStorage.slidesMemory);
+  } else if (localStorage.slidesMemory) {
     return JSON.parse(localStorage.slidesMemory);
   }
   return memory;
@@ -221,4 +227,11 @@ function removeImageFromMemory(id, callback) {
   delete memory.slides[currentSlideIndex].images[id];
   updatePersistentMemory(memory);
   if (callback) callback();
+}
+
+function save() {
+  var script = document.createElement("script");
+  script.innerText =
+    "sessionStorage.slidesMemory = " + JSON.stringify(readPersistentMemory());
+  document.body.insertBefore(script, document.getElementById("main_script"));
 }

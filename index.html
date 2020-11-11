@@ -15,11 +15,13 @@
       integrity="sha384-QmLrXrsyvvots0lqy9VbxH9XRhnUzhXriP9vr8UewHu4zNfWxv3J+2ZcooyFjgNw"
       crossorigin="anonymous"
     ></script>
+    <script src="other-js/makeElementDraggable.js"></script>
     <script
       src="https://cdn.jsdelivr.net/gh/hchiam/draggable@2.0.0/makeElementDraggableAndEditable.js"
       integrity="sha384-8liekxt1KgfCZ+rMs0cnUeab/bf2ddaGJXHQsKLd0RbRRH3PxCEkpmcRXiac5zRU"
       crossorigin="anonymous"
     ></script>
+    <script src="other-js/makeElementDraggableAndEditable.js"></script>
     <link rel="stylesheet" href="other-css/boilerplate.css" />
     <script type="text/javascript" src="other-js/debug.js"></script>
     <script type="text/javascript" src="other-js/memory.js"></script>
@@ -83,12 +85,14 @@
         type="file"
         accept="image/*"
       />
-      <!-- <button id="save" onclick="save()">Save</button> -->
+      <button id="save" onclick="save()">
+        <i class="material-icons">save</i>
+      </button>
     </section>
     <section id="current_slide">
       <img id="image-1" src="" alt="" draggable />
     </section>
     <link rel="stylesheet" href="slides.css" />
-    <script type="text/javascript" src="slides.js"></script>
+    <script id="main_script" type="text/javascript" src="slides.js"></script>
   </body>
 </html>
