@@ -34,6 +34,19 @@ function setSlideNumber(slideNumber) {
   slideNumberInput.style.width = slideNumberInput.value.length + 5 + "ch";
 }
 
+function detectArrowKeys(event) {
+  var key = event.code || event.keyCode || event.which || window.event;
+  var isLeft = key === "ArrowLeft" || key === 37;
+  var isUp = key === "ArrowUp" || key === 38;
+  var isRight = key === "ArrowRight" || key === 39;
+  var isDown = key === "ArrowDown" || key === 40;
+  if (isLeft || isUp) {
+    left();
+  } else if (isRight || isDown) {
+    right();
+  }
+}
+
 function left() {
   if (currentSlideIndex === 0) return;
   hideSlide(currentSlideIndex);
