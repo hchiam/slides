@@ -2,6 +2,12 @@
   padding: 10px;
 }
 
+button,
+input {
+  /* box-shadow: 0 0 5px black; */
+  animation: hey-notice-this 1s ease 1s 1 forwards;
+}
+
 button {
   text-decoration: none;
   transition: 0.2s;
@@ -36,7 +42,7 @@ input {
   width: 3rem;
   background: #333;
   color: white;
-  box-shadow: 0 0 5px black;
+  box-shadow: 2px 2px 5px black;
   font-weight: bold;
   border: none;
   text-align: center;
@@ -83,9 +89,13 @@ input#select_image {
   top: -0.05rem;
 }
 
-button,
-input {
-  animation: hey-notice-this 1s ease 1s 1 forwards;
+#controls {
+  text-align: center;
+  padding: 0.5rem;
+  width: 30%;
+  min-width: 340px;
+  margin: auto;
+  box-shadow: 2px 2px 5px black;
 }
 
 @keyframes hey-notice-this {
