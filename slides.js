@@ -8,8 +8,6 @@ styleLeftRightButtons();
 updateSlideNumberInputMax();
 setSlideNumber(currentSlideIndex + 1);
 
-// slide:
-
 var slideNumberTimer = null;
 function delayedSetSlideNumber(slideNumber) {
   clearTimeout(slideNumberTimer);
