@@ -13,7 +13,7 @@ function delayedSetSlideNumber(slideNumber) {
   clearTimeout(slideNumberTimer);
   slideNumberTimer = setTimeout(function () {
     setSlideNumber(slideNumber);
-  }, 2000);
+  }, 1000);
 }
 
 function setSlideNumber(slideNumber) {
@@ -127,9 +127,21 @@ function showSlide(slideIndex) {
 }
 
 function setUpInitialSlide() {
-  if (isSavedFile()) return;
-  var currentSlideTexts = getCurrentSlide().texts;
-  var haveTextsInMemory = Object.keys(currentSlideTexts).length > 0;
-  if (haveTextsInMemory) return;
-  createNewText(currentSlide);
+  if (isSavedFile()) {
+    disableControls();
+    return;
+  } else {
+    var currentSlideTexts = getCurrentSlide().texts;
+    var haveTextsInMemory = Object.keys(currentSlideTexts).length > 0;
+    if (haveTextsInMemory) return;
+    createNewText(currentSlide);
+  }
+}
+
+function disableControls() {
+  document
+    .querySelectorAll("button:not(#left):not(#right)")
+    .forEach(function (button) {
+      button.style.display = "none";
+    });
 }

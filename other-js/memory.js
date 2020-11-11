@@ -292,4 +292,6 @@ function save() {
   document.getElementById("current_slide").innerHTML = "";
 
   // TODO: trigger save page dialog
+
+  // TODO: reload this page so you can continue editing
 }
