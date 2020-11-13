@@ -119,3 +119,73 @@ p {
   margin: 0;
   padding: 0;
 }
+
+span {
+  position: absolute;
+}
+
+span:before {
+  position: relative;
+  text-align: center;
+  z-index: -1;
+  color: white;
+  background: black;
+  padding: 0;
+  border-radius: 3px;
+  -webkit-transition: top 0.25s;
+  transition: top 0.25s;
+  top: 0;
+  content: "";
+}
+
+:hover + span:before {
+  top: -2rem;
+  padding: 3px;
+}
+
+button#left:hover + span:before {
+  content: "Previous slide";
+  left: -5em;
+}
+
+button#right:hover + span:before {
+  content: "Next slide";
+  left: -4.2em;
+}
+
+input#slide_number:hover + span:before {
+  content: "Slide number";
+  left: -5.75em;
+}
+
+button#add_text:hover + span:before {
+  content: "Add text";
+  left: -3.85em;
+}
+
+button#add_big_text:hover + span:before {
+  content: "Add big text";
+  left: -4.7em;
+}
+
+button#add_image:hover + span:before {
+  content: "Add image";
+  left: -4.45em;
+}
+
+button#fullscreen:hover + span:before {
+  content: "Fullscreen";
+  left: -4.1em;
+}
+
+button#save:hover + span:before {
+  content: "Save slide data";
+  left: -5.35em;
+  white-space: nowrap;
+}
+
+button#upload:hover + span:before {
+  content: "Reuse slide data";
+  left: -5.25em;
+  white-space: nowrap;
+}

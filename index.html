@@ -38,6 +38,7 @@
       >
         ◀
       </button>
+      <span></span>
       <button
         aria-label="Next slide"
         title="Next slide"
@@ -46,6 +47,7 @@
       >
         ▶
       </button>
+      <span></span>
       <input
         aria-label="Slide number"
         title="Slide number"
@@ -56,6 +58,7 @@
         onchange="setSlideNumber(this.value)"
         onmouseover="this.focus()"
       />
+      <span></span>
       <button
         aria-label="Add text"
         title="Add text"
@@ -64,6 +67,7 @@
       >
         abc
       </button>
+      <span></span>
       <button
         aria-label="Add big text"
         title="Add big text"
@@ -72,22 +76,7 @@
       >
         &nbsp;
       </button>
-      <button
-        aria-label="Add image"
-        title="Add image"
-        id="add_image"
-        onclick="triggerCreateNewImage()"
-      >
-        <i class="material-icons">image</i>
-      </button>
-      <button
-        aria-label="Full screen"
-        title="Full screen"
-        id="fullscreen"
-        onclick="fullscreen()"
-      >
-        <i class="material-icons">fullscreen</i>
-      </button>
+      <span></span>
       <input
         aria-label="Select image"
         title="Select image"
@@ -97,6 +86,24 @@
         accept="image/*"
       />
       <button
+        aria-label="Add image"
+        title="Add image"
+        id="add_image"
+        onclick="triggerCreateNewImage()"
+      >
+        <i class="material-icons">image</i>
+      </button>
+      <span></span>
+      <button
+        aria-label="Fullscreen"
+        title="Fullscreen"
+        id="fullscreen"
+        onclick="fullscreen()"
+      >
+        <i class="material-icons">fullscreen</i>
+      </button>
+      <span></span>
+      <button
         aria-label="Save slide data as JSON"
         title="Save slide data"
         id="save"
@@ -104,6 +111,14 @@
       >
         <i class="material-icons">save</i>
       </button>
+      <span></span>
+      <input
+        aria-label="Select JSON file"
+        title="Select JSON file"
+        id="select_json_file"
+        type="file"
+        accept=".json"
+      />
       <button
         aria-label="Reuse JSON format slide data"
         title="Reuse slide data"
@@ -112,13 +127,7 @@
       >
         <i class="material-icons">upload</i>
       </button>
-      <input
-        aria-label="Select JSON file"
-        title="Select JSON file"
-        id="select_json_file"
-        type="file"
-        accept=".json"
-      />
+      <span></span>
     </section>
     <section id="current_slide"></section>
     <link rel="stylesheet" href="slides.css" />
