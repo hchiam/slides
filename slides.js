@@ -103,6 +103,16 @@ function updateSlideNumberInputMax() {
   slideNumberInput.setAttribute("max", memory.slides.length);
 }
 
+var slideNumberTimer;
+function focusSlideNumberInput() {
+  var slideNumberInput = document.getElementById("slide_number");
+  slideNumberInput.focus();
+  clearTimeout(slideNumberTimer);
+  slideNumberTimer = setTimeout(function () {
+    if (document.activeElement === slideNumberInput) slideNumberInput.blur();
+  }, 3000);
+}
+
 function hideSlide(slideIndex) {
   var textIds = getTextIds(slideIndex);
   textIds.map(function hideText(textId) {
