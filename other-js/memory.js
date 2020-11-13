@@ -250,7 +250,7 @@ function clearMemory() {
 
 function save() {
   var yes = confirm(
-    "\nYour slides are already automatically saved in your browser, \nas long as you don't clear cache. \n\nDo you still want to save the slides in a JSON file?"
+    "\nYour slides are already automatically saved in your browser, \nas long as you don't clear cache. \n\nDo you still want to save the slides data in a JSON file?"
   );
   if (!yes) return;
   var jsonText = JSON.stringify(readPersistentMemory());
