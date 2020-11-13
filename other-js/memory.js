@@ -20,7 +20,7 @@ var defaultTextString = "Drag to move around. Double-click to edit.";
 var defaultText = {
   text: defaultTextString,
   left: document.documentElement.clientWidth / 2 - 309 / 2,
-  top: (document.documentElement.clientHeight * 2) / 5 - 16,
+  top: document.documentElement.clientHeight / 2 - 16,
   slide: 0,
 };
 
