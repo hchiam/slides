@@ -82,7 +82,7 @@ input#select_json_file {
   margin: auto;
   position: fixed;
   bottom: 1rem;
-  left: calc(50% - 500px / 2 - 0.5rem / 2);
+  left: calc(50% - 550px / 2 - 0.5rem / 2);
   box-shadow: 0 1px 5px black;
   animation: jump-a-little 0.25s ease 1s forwards;
 }
