@@ -68,19 +68,20 @@ function right() {
   showSlide(currentSlideIndex);
   styleLeftRightButtons();
   setSlideNumber(currentSlideIndex + 1);
+  document.getElementById("left").classList.remove("hide-on-first-load");
 }
 
 function styleLeftRightButtons() {
   // left
-  var isOnFirstSlide = currentSlideIndex > 0;
+  var isOnFirstSlide = currentSlideIndex < 1;
   if (isOnFirstSlide) {
-    document.getElementById("left").removeAttribute("disabled");
-    document.getElementById("left").setAttribute("title", "Previous slide");
-  } else {
     document.getElementById("left").setAttribute("disabled", true);
     document
       .getElementById("left")
       .setAttribute("title", "(You're on the first slide)");
+  } else {
+    document.getElementById("left").removeAttribute("disabled");
+    document.getElementById("left").setAttribute("title", "Previous slide");
   }
   // right
   var isOnLastSlide = currentSlideIndex === memory.slides.length - 1;
