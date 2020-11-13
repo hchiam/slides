@@ -94,15 +94,7 @@ function updateText(htmlElement) {
   backgroundColorIfEmptyText(htmlElement);
 
   var isEmpty = text.trim() === "";
-  if (isEmpty) {
-    removeTextFromMemory(
-      htmlElement.id,
-      function callbackOnDelete() {},
-      function callbackOnKeep(defaultText) {
-        htmlElement.innerText = defaultText;
-      }
-    );
-  }
+  if (isEmpty) removeTextFromMemory(htmlElement.id);
 
   debugMemory();
 }

@@ -121,17 +121,10 @@ function addTextToMemory(text, id, textProps) {
   updatePersistentMemory(memory);
 }
 
-function removeTextFromMemory(id, callbackOnDelete, callbackOnKeep) {
-  var yes = confirm("Do you want to remove this text?");
-  if (yes) {
-    delete memory.slides[currentSlideIndex].texts[id];
-    updatePersistentMemory(memory);
-    if (callbackOnDelete) callbackOnDelete();
-  } else {
-    memory.slides[currentSlideIndex].texts[id] = defaultText.text;
-    updatePersistentMemory(memory);
-    if (callbackOnKeep) callbackOnKeep(defaultText.text);
-  }
+function removeTextFromMemory(id, callbackOnDelete) {
+  delete memory.slides[currentSlideIndex].texts[id];
+  updatePersistentMemory(memory);
+  if (callbackOnDelete) callbackOnDelete();
 }
 
 function updateTextPositionInMemory(textId, left, top) {
