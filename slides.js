@@ -78,23 +78,33 @@ function styleLeftRightButtons() {
   var isOnFirstSlide = currentSlideIndex < 1;
   if (isOnFirstSlide) {
     leftButton.setAttribute("disabled", true);
-    document
-      .getElementById("left")
-      .setAttribute("title", "(You're on the first slide)");
+    leftButton.setAttribute("title", "(You're on the first slide)");
+    leftButton.nextElementSibling.setAttribute(
+      "data-before",
+      "(You're on the first slide)"
+    );
+    leftButton.nextElementSibling.style.setProperty("--left", "-7.1em");
   } else {
     leftButton.removeAttribute("disabled");
     leftButton.setAttribute("title", "Previous slide");
+    leftButton.nextElementSibling.setAttribute("data-before", "Previous slide");
+    leftButton.nextElementSibling.style.setProperty("--left", "-5em");
   }
   // right
   var isOnLastSlide = currentSlideIndex === memory.slides.length - 1;
   if (isOnLastSlide && !haveContentInSlide(currentSlideIndex)) {
     rightButton.setAttribute("disabled", true);
-    document
-      .getElementById("right")
-      .setAttribute("title", "(You're on the last slide)");
+    rightButton.setAttribute("title", "(You're on the last slide)");
+    rightButton.nextElementSibling.setAttribute(
+      "data-before",
+      "(You're on the last slide)"
+    );
+    rightButton.nextElementSibling.style.setProperty("--left", "-7.2em");
   } else {
     rightButton.removeAttribute("disabled");
     rightButton.setAttribute("title", "Next slide");
+    rightButton.nextElementSibling.setAttribute("data-before", "Next slide");
+    rightButton.nextElementSibling.style.setProperty("--left", "-4.2em");
   }
 }
 

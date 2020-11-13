@@ -144,13 +144,13 @@ span:before {
 }
 
 button#left:hover + span:before {
-  content: "Previous slide";
-  left: -5em;
+  content: attr(data-before);
+  left: var(--left);
 }
 
 button#right:hover + span:before {
-  content: "Next slide";
-  left: -4.2em;
+  content: attr(data-before);
+  left: var(--left);
 }
 
 input#slide_number:hover + span:before {
