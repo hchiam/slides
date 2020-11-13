@@ -1,88 +1,121 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Slides</title>
     <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"
     />
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/gh/hchiam/draggable@2.0.0/makeElementDraggable.js"
+      integrity="sha384-QmLrXrsyvvots0lqy9VbxH9XRhnUzhXriP9vr8UewHu4zNfWxv3J+2ZcooyFjgNw"
+      crossorigin="anonymous"
+    ></script>
+    <script src="other-js/makeElementDraggable.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/gh/hchiam/draggable@2.0.0/makeElementDraggableAndEditable.js"
+      integrity="sha384-8liekxt1KgfCZ+rMs0cnUeab/bf2ddaGJXHQsKLd0RbRRH3PxCEkpmcRXiac5zRU"
+      crossorigin="anonymous"
+    ></script>
+    <script src="other-js/makeElementDraggableAndEditable.js"></script>
+    <link rel="stylesheet" href="other-css/boilerplate.css" />
+    <script type="text/javascript" src="other-js/debug.js"></script>
+    <script type="text/javascript" src="other-js/texts.js"></script>
+    <script type="text/javascript" src="other-js/images.js"></script>
   </head>
-  <body>
-    <div id="slide-controls">
+  <body onkeyup="detectArrowKeys(event)">
+    <section id="controls">
       <button
-        id="previous"
-        class="ui secondary button tiny"
-        type="button"
-        onclick="previous()"
+        aria-label="left"
+        title="Previous slide"
+        id="left"
+        onclick="left()"
         disabled
+        class="hide-on-first-load"
       >
-        ◀ Previous slide
+        ◀
       </button>
-      <span
-        id="slide-number"
-        oninput="jumpToSlideNumberTyped()"
-        contenteditable
-      >
-        1
-      </span>
       <button
-        id="next"
-        class="ui secondary button tiny"
-        type="button"
-        onclick="next()"
+        aria-label="right"
+        title="Next slide"
+        id="right"
+        onclick="right()"
       >
-        ＋ Add slide
+        ▶
       </button>
-      <button id="save" class="ui button tiny" type="button">
-        Save slides
+      <input
+        aria-label="slide number"
+        title="Slide number"
+        id="slide_number"
+        min="1"
+        type="number"
+        onkeyup="delayedSetSlideNumber(this.value)"
+        onchange="setSlideNumber(this.value)"
+        onmouseover="this.focus()"
+      />
+      <button
+        aria-label="add text"
+        title="Add text"
+        id="add_text"
+        onclick="createNewText()"
+      >
+        abc
       </button>
-      <div id="snackbar">(Click to edit.)</div>
-    </div>
-
-    <div id="slides">
-      <div id="slide-1">
-        <h2
-          id="english-title"
-          onkeyup="setSlidesInfo({...getSlidesInfo(),englishTitle:this.innerText});"
-        ></h2>
-        <h2
-          id="alternative-title"
-          onkeyup="setSlidesInfo({...getSlidesInfo(),alternativeTitle:this.innerText});"
-        ></h2>
-        <h3
-          id="subtitle"
-          onkeyup="setSlidesInfo({...getSlidesInfo(),subtitle:this.innerText});"
-        ></h3>
-      </div>
-    </div>
-
-    <!-- <button
-      id="delete"
-      class="ui secondary button tiny"
-      type="button"
-      onclick="deleteSlide()"
-    >
-      - Delete slide
-    </button> -->
-
-    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/gh/hchiam/slides@master/slides.css"
-    />
-    <script
-      type="text/javascript"
-      src="https://cdn.jsdelivr.net/gh/hchiam/slides@master/data.js"
-    ></script>
-    <script
-      type="text/javascript"
-      src="https://cdn.jsdelivr.net/gh/hchiam/slides@master/slides.js"
-    ></script>
-    <!-- for local testing: -->
-    <!-- <link rel="stylesheet" href="slides.css" /> -->
-    <!-- <script type="text/javascript" src="data.js"></script>
-    <script type="text/javascript" src="slides.js"></script> -->
+      <button
+        aria-label="add big text"
+        title="Add BIG text"
+        id="add_big_text"
+        onclick="createNewBigText()"
+      >
+        &nbsp;
+      </button>
+      <button
+        aria-label="Add image"
+        title="Add image"
+        id="add_image"
+        onclick="triggerCreateNewImage()"
+      >
+        <i class="material-icons">image</i>
+      </button>
+      <input
+        aria-label="select image"
+        title="Select image"
+        id="select_image"
+        onchange="readImage(this)"
+        type="file"
+        accept="image/*"
+      />
+      <button
+        aria-label="save slide data"
+        title="Save slide data"
+        id="save"
+        onclick="save()"
+      >
+        <i class="material-icons">save</i>
+      </button>
+      <button
+        aria-label="reuse slide data"
+        title="Reuse slide data"
+        id="upload"
+        onclick="upload()"
+      >
+        <i class="material-icons">upload</i>
+      </button>
+      <input
+        aria-label="select JSON file"
+        title="Select JSON file"
+        id="select_json_file"
+        type="file"
+        accept=".json"
+      />
+    </section>
+    <section id="current_slide"></section>
+    <link rel="stylesheet" href="slides.css" />
+    <script type="text/javascript" src="other-js/memory.js"></script>
+    <script type="text/javascript" src="slides.js"></script>
   </body>
 </html>

@@ -1,102 +1,121 @@
-:root {
-  --background: #222;
-  --color: snow;
-  --padding: 2.5%;
+#current_slide {
+  padding: 10px;
 }
 
-body {
-  padding: var(--padding);
-  background: var(--background);
-  color: var(--color);
-  font-family: avenir, calibri, arial, tahoma, helvetica, monospace;
-  overflow: hidden;
+button,
+input {
+  /* box-shadow: 0 0 5px black; */
+  animation: hey-notice-this 1s ease 1s 1 forwards;
 }
 
-#slide-controls {
+button {
+  text-decoration: none;
+  transition: 0.2s;
+  color: white;
+  width: 3rem;
+  font-weight: bold;
+}
+
+button:hover,
+button:focus,
+input:hover,
+input:focus {
+  background: green;
+  color: white;
+  box-shadow: 5px 5px 10px 1px black;
+}
+
+button:active,
+input:active {
+  background: lime;
+  color: black;
+  box-shadow: 5px 5px 15px 2px black;
+}
+
+button[disabled="true"] {
+  background: inherit;
+  color: #333;
+  box-shadow: none;
+}
+
+input {
+  width: 3rem;
+  background: #333;
+  color: white;
+  box-shadow: 2px 2px 5px black;
+  font-weight: bold;
+  border: none;
+  text-align: center;
+  padding-left: 20px;
+}
+
+button#add_big_text {
+  position: relative;
+}
+
+button#add_big_text:after {
+  content: "abc";
   position: absolute;
-  top: 1rem;
-  left: 1rem;
-  display: flex;
+  font-size: 1.5rem;
+  align-items: center;
+  left: 0.25rem;
+  top: 0;
 }
 
-.editable {
-  background: black;
-  color: lime;
-}
-
-#snackbar {
-  position: fixed;
-  top: var(--padding);
-  width: 100%;
-  margin: auto;
-  text-align: center;
-  color: lime;
-  visibility: hidden;
-}
-
-#snackbar.show {
-  visibility: visible;
-}
-
-button:hover {
-  color: rgb(61, 207, 255) !important;
-}
-
-h2,
-#english-title,
-#alternative-title {
-  font-size: 5rem;
-  text-align: center;
-}
-
-#subtitle {
-  font-size: 3.5rem;
-  text-align: center;
-  margin-top: 5rem;
-}
-
-#slides > div {
-  /* slide: */
-  position: absolute;
-  height: calc(100vh - 4 * var(--padding));
-  width: calc(100vw - 2 * var(--padding));
-  top: calc(3 * var(--padding));
-  transition: 0.25s;
-  padding: 1rem;
-  border-radius: 0.25rem;
-}
-
-#slide-number {
-  color: #777;
-  padding: 0.5rem 0.75rem 0.5rem 0.5rem;
-}
-
-pre {
-  font-family: avenir, calibri, arial, tahoma, helvetica, monospace;
-  font-size: 4rem;
-  line-height: 4.5rem;
-}
-
-img {
-  object-fit: cover;
-  height: calc(100vh - 8 * var(--padding));
-  margin: auto;
+input#select_image,
+input#select_json_file {
   display: none;
 }
 
-#delete {
+.material-icons {
+  font-size: 2em;
+  margin: -1em;
+  vertical-align: middle;
+  position: relative;
+  top: -0.05rem;
+}
+
+#controls {
+  text-align: center;
+  padding: 0.5rem;
+  width: 500px;
+  margin: auto;
   position: fixed;
-  bottom: calc(0.5 * var(--padding));
-  left: 0;
-  font-size: 7px;
+  bottom: 1rem;
+  left: calc(50% - 500px / 2 - 0.5rem / 2);
+  box-shadow: 0 1px 5px black;
+  animation: jump-a-little 0.25s ease 1s forwards;
 }
 
-#slide-controls > * {
-  font-size: x-small;
-}
-
-@media (max-width: 480px) {
-  #slide-controls > * {
-    font-size: small;
+@keyframes jump-a-little {
+  0% {
+    bottom: 1rem;
   }
+  50% {
+    bottom: 2rem;
+  }
+  100% {
+    bottom: 1rem;
+  }
+}
+
+@keyframes hey-notice-this {
+  50% {
+    background: lime;
+    color: black;
+    box-shadow: 5px 5px 15px 2px black;
+  }
+}
+
+p {
+  color: white;
+  mix-blend-mode: difference;
+}
+
+.hide-on-first-load {
+  visibility: hidden;
+  width: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
 }
