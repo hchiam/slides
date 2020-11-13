@@ -34,7 +34,7 @@ input:active {
 
 button[disabled="true"] {
   background: inherit;
-  color: #333;
+  color: #33333388;
   box-shadow: none;
 }
 
