@@ -101,6 +101,11 @@ input#select_image {
   animation: jump-a-little 0.25s ease 1s forwards;
 }
 
+#saved_script_only {
+  visibility: hidden;
+  display: none;
+}
+
 @keyframes jump-a-little {
   0% {
     bottom: 1rem;

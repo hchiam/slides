@@ -3,13 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <FilesMatch "\.(?i:pdf)$">
+      ForceType application/octet-stream
+      Header set Content-Disposition attachment
+   </FilesMatch>
     <title>Slides</title>
     <link
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
     />
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <script
       src="https://cdn.jsdelivr.net/gh/hchiam/draggable@2.0.0/makeElementDraggable.js"
       integrity="sha384-QmLrXrsyvvots0lqy9VbxH9XRhnUzhXriP9vr8UewHu4zNfWxv3J+2ZcooyFjgNw"
@@ -23,11 +25,18 @@
     ></script>
     <script src="other-js/makeElementDraggableAndEditable.js"></script>
     <link rel="stylesheet" href="other-css/boilerplate.css" />
+    <script type="text/javascript" src="other-js/disable.js"></script>
     <script type="text/javascript" src="other-js/debug.js"></script>
     <script type="text/javascript" src="other-js/texts.js"></script>
     <script type="text/javascript" src="other-js/images.js"></script>
   </head>
   <body onkeyup="detectArrowKeys(event)">
+    <a id="save_trigger" style="visibility: hidden; display: none"></a>
+    <a
+      href="data:application/xml;charset=utf-8,your code here"
+      download="filename.html"
+      >Save</a
+    >
     <section id="controls">
       <button
         aria-label="left"
@@ -93,5 +102,193 @@
     <script id="save_memory_script" type="text/javascript"></script>
     <script type="text/javascript" src="other-js/memory.js"></script>
     <script type="text/javascript" src="slides.js"></script>
+    <style>
+      /* start of automated style paste */
+      body {
+        padding: 2% 5%;
+        font-family: avenir, arial, tahoma, monospace, sans-serif;
+
+        background: rgb(32, 32, 32);
+        color: whitesmoke;
+      }
+
+      * {
+        /* background: rgb(32, 32, 32);
+  color: whitesmoke; */
+        font-family: avenir, arial, helvetica, sans-serif;
+        border-radius: 0.5rem;
+        /* transition: 0.25s; */
+      }
+
+      button {
+        padding: 0.5rem;
+        border: none;
+        background: rgb(50, 50, 50);
+        box-shadow: 2px 2px 5px black;
+      }
+
+      input,
+      textarea {
+        padding: 0.5rem;
+      }
+
+      button:hover,
+      input:hover,
+      textarea:hover,
+      button:focus,
+      input:focus,
+      textarea:focus {
+        background: lime;
+        color: black;
+      }
+
+      a:hover,
+      a:focus {
+        color: lime;
+      }
+
+      button:focus,
+      a:focus {
+        /* text-decoration: underline; */
+      }
+
+      code {
+        font-family: monospace;
+      }
+      #current_slide {
+        padding: 10px;
+      }
+
+      button,
+      input {
+        /* box-shadow: 0 0 5px black; */
+        animation: hey-notice-this 1s ease 1s 1 forwards;
+      }
+
+      button {
+        text-decoration: none;
+        transition: 0.2s;
+        color: white;
+        width: 3rem;
+        font-weight: bold;
+      }
+
+      button:hover,
+      button:focus,
+      input:hover,
+      input:focus {
+        background: green;
+        color: white;
+        box-shadow: 5px 5px 10px 1px black;
+      }
+
+      button:active,
+      input:active {
+        background: lime;
+        color: black;
+        box-shadow: 5px 5px 15px 2px black;
+      }
+
+      button[disabled="true"] {
+        background: inherit;
+        color: #333;
+        box-shadow: none;
+      }
+
+      input {
+        width: 3rem;
+        background: #333;
+        color: white;
+        box-shadow: 2px 2px 5px black;
+        font-weight: bold;
+        border: none;
+        text-align: center;
+        padding-left: 20px;
+      }
+
+      button {
+        height: 32px;
+      }
+
+      button#add_big_text {
+        position: relative;
+        top: -0.2rem;
+      }
+
+      button#add_big_text span {
+        font-size: 1.5rem;
+        position: relative;
+        top: 0.25rem;
+        left: 0.6rem;
+        margin-left: -1.2rem;
+      }
+
+      button#add_big_text:after {
+        content: "abc";
+        position: relative;
+        margin-top: -1rem;
+        margin-left: -0.25rem;
+        font-size: 1.5rem;
+        width: 0;
+        height: 0;
+        display: table-caption;
+      }
+
+      input#select_image {
+        display: none;
+      }
+
+      .material-icons {
+        font-size: 2em;
+        margin: -1em;
+        vertical-align: middle;
+        position: relative;
+        top: -0.05rem;
+      }
+
+      #controls {
+        text-align: center;
+        padding: 0.5rem;
+        width: 400px;
+        margin: auto;
+        position: fixed;
+        bottom: 1rem;
+        left: calc(50% - 400px / 2 - 0.5rem / 2);
+        box-shadow: 0 1px 5px black;
+        animation: jump-a-little 0.25s ease 1s forwards;
+      }
+
+      #saved_script_only {
+        visibility: hidden;
+        display: none;
+      }
+
+      @keyframes jump-a-little {
+        0% {
+          bottom: 1rem;
+        }
+        50% {
+          bottom: 2rem;
+        }
+        100% {
+          bottom: 1rem;
+        }
+      }
+
+      @keyframes hey-notice-this {
+        50% {
+          background: lime;
+          color: black;
+          box-shadow: 5px 5px 15px 2px black;
+        }
+      }
+      /* end of automated style paste */
+    </style>
+    <!-- start of automated script paste -->
+    <textarea id="saved_script_only">
+console.log("concatenated script ran");function makeElementDraggable(e,t){var n=0,i=0,r=t&&t.disableStyleReset||!1;function o(r){e.focus();var o=r||window.event;o.preventDefault();const l=o.clientX-n,d=o.clientY-i;n=o.clientX,i=o.clientY,e.style.left=e.offsetLeft+l+"px",e.style.top=e.offsetTop+d+"px",t&&t.mouseMoveCallback&&t.mouseMoveCallback(e)}function l(){document.removeEventListener("mouseup",l),document.removeEventListener("mousemove",o),t&&t.mouseUpCallback&&t.mouseUpCallback(e)}e.addEventListener("mousedown",(function(r){var d=r||window.event;d.preventDefault(),n=d.clientX,i=d.clientY,document.addEventListener("mouseup",l),document.addEventListener("mousemove",o),t&&t.mouseDownCallback&&t.mouseDownCallback(e)})),r&&"boolean"==typeof r||(e.style.marginBlockStart="initial",e.style.position="absolute")}function makeElementDraggableAndEditable(e,t){var n=0,i=0,r=t&&t.disableStyleReset||!1,o=!1;function l(r){var l=r||window.event;l.preventDefault(),n=l.clientX,i=l.clientY,document.addEventListener("mouseup",s),document.addEventListener("mousemove",d),e.contentEditable=!1,o=!0,t&&t.mouseDownCallback&&t.mouseDownCallback(e)}function d(r){e.focus();var l=r||window.event;l.preventDefault();const d=l.clientX-n,s=l.clientY-i;n=l.clientX,i=l.clientY,e.style.left=e.offsetLeft+d+"px",e.style.top=e.offsetTop+s+"px",o=!1,t&&t.mouseMoveCallback&&t.mouseMoveCallback(e)}function s(){document.removeEventListener("mouseup",s),document.removeEventListener("mousemove",d),o&&(e.contentEditable=!0,e.focus(),e.removeEventListener("mousedown",l)),t&&t.mouseUpCallback&&t.mouseUpCallback(e)}e.addEventListener("mousedown",l),e.addEventListener("blur",(function(){e.contentEditable=!1,e.addEventListener("mousedown",l),t&&t.blurCallback&&t.blurCallback(e)})),r&&"boolean"==typeof r||(e.style.marginBlockStart="initial",e.style.position="absolute",e.style.minWidth="1ch",e.style.minHeight="1em")}var enableDebugging=!1;function debugMemory(){if(enableDebugging){var e=Object.keys(memory.texts)[0],t=memory.texts[e];console.log(JSON.stringify(t))}}function getEventsOnElement(e){if("undefined"!=typeof jQuery){var t=$(e);if(t){var n=$._data(t[0],"events");if(!n)return;console.log("vvv click to expand vvv"),Object.keys(n).forEach((function(e){console.groupCollapsed("%cEvent:%c "+e,"color: lime; background: black;",""),n[e].forEach((function(e){console.log(e.handler.toString())})),console.groupEnd()}))}}}function recreateText(e=currentSlide,t,n){var i=getSlide(n).texts[t];createText(e,i.text,i.left,i.top,i.id,n,i.textProps)}function createNewText(e=currentSlide,t=defaultText.text,n=defaultText.left,i=defaultText.top,r){if(!alreadyHasDefaultText()){var o=new Text(t);o.left=n,o.top=i,o.slide=currentSlideIndex;var l=o.id;addTextToMemory(o,l,r),createText(e,t,n,i,l,currentSlideIndex,r),styleLeftRightButtons()}}function createNewBigText(e=currentSlide,t=defaultText.text,n=defaultText.left,i=defaultText.top){createNewText(e,t,n,i,{fontSize:"2rem"})}function createText(e=currentSlide,t=defaultText.text,n=defaultText.left,i=defaultText.top,r,o=currentSlideIndex,l){if(!isSavedFile()){var d=document.createElement("p");d.innerText=t,d.style.left=n+"px",d.style.top=i+"px",d.id=r,d.style.boxShadow="none",d.style.background="transparent",d.style.display=currentSlideIndex===o?"block":"none",d.setAttribute("data-slide",o),l&&l.fontSize&&(d.style.fontSize=l.fontSize),makeElementDraggableAndEditable(d,{mouseMoveCallback:updateTextPosition,blurCallback:updateText}),d.onpaste=function(e){e.stopPropagation(),e.preventDefault();var t=(e.clipboardData||window.clipboardData).getData("Text");d.innerText=t},e.appendChild(d)}}function updateTextPosition(e){var t=e.offsetLeft,n=e.offsetTop;updateTextPositionInMemory(e.id,t,n),debugMemory()}function updateText(e){var t=e.innerText;e.innerText=t,updateTextInMemory(e.id,t),backgroundColorIfEmptyText(e),""===t.trim()&&removeTextFromMemory(e.id,(function(){}),(function(t){e.innerText=t})),debugMemory()}function backgroundColorIfEmptyText(e){e.innerText?e.style.background="transparent":e.style.background="black"}function alreadyHasDefaultText(){var e=getCurrentSlide().texts,t=Object.keys(getCurrentSlide().texts),n=!1;return t.forEach((function(t){var i=e[t];i.text!==defaultText.text||i.left!==defaultText.left||i.top!==defaultText.top||(n=!0)})),n}function createTextCallback(e,t){recreateText(currentSlide,e.id,t)}function recreateImage(e=currentSlide,t,n){var i=getSlide(n).images[t],r=i.file,o=i.left,l=i.top;createImage(currentSlide,r,o,l,t,n)}function createNewImage(e){var t=new Image(e);addImageToMemory(t,t.id);e=t.file;var n=t.left,i=t.top,r=t.id;createImage(currentSlide,e,n,i,r,currentSlideIndex)}function createImage(e=currentSlide,t,n,i,r,o){var l=document.createElement("img");l.src=t,l.style.left=isNaN(n)&&n.endsWith("px")?n:n+"px",l.style.top=isNaN(i)&&i.endsWith("px")?i:i+"px",l.style.zIndex=-1,l.id=r,l.style.display=currentSlideIndex===o?"block":"none",l.setAttribute("data-slide",o),l.addEventListener("dblclick",(function(){removeImageFromMemory(l.id,(function(){l.remove()}))})),e.appendChild(l),makeElementDraggable(l,{mouseMoveCallback:updateImagePosition}),isInitializingMemory||alert("Note: you can remove images by double-clicking on them.")}function updateImagePosition(e){var t=e.offsetLeft,n=e.offsetTop;updateImagePositionInMemory(e.id,t,n),debugMemory()}function createImageCallback(e,t){recreateImage(currentSlide,e.id,t)}function triggerCreateNewImage(){document.getElementById("select_image").click()}function readImage(e){if(e.files&&e.files[0]){const t=new FileReader;t.onload=function(e){createNewImage(e.target.result)},e.onchange=function(e){const n=e.target.files[0];t.readAsDataURL(n)};const n=e.files[0];t.readAsDataURL(n)}}var currentSlideIndex=0,idCounter=0,memory={slides:[{texts:{},images:{}}]},defaultText={text:"Drag to move around. Double-click to edit.",left:100,top:100,slide:0};function Text(e="",t){this.text=e||defaultText.text,this.left=defaultText.left,this.top=defaultText.top,this.slide=defaultText.slide,this.id=t||generateId()}function Image(e="",t){this.file=e,this.left=0,this.top=0,this.slide=defaultText.slide,this.id=t||generateId()}function generateId(){var e=(new Date).getTime();return++idCounter+"_"+e}function createSlideInMemory(e){memory.slides.push({texts:{},images:{}}),updatePersistentMemory(memory),e&&e()}function getCurrentSlide(){return memory.slides[currentSlideIndex]}function getSlide(e){return memory.slides[e]}function getTextIds(e){var t=getSlide(e);return t&&t.texts?Object.keys(t.texts):[]}function getImageIds(e){var t=getSlide(e);return t&&t.images?Object.keys(t.images):[]}function haveContentInSlide(e){var t=getSlide(e);return Object.keys(t.texts).length>0||Object.keys(t.images).length>0}function addTextToMemory(e,t,n){var i="";if("string"==typeof e){var r=new Text(e,t);i=r.id,memory.slides[currentSlideIndex].texts[r.id]={text:r.text,left:r.left,top:r.top,slide:r.slide,id:r.id}}else i=e.id,memory.slides[currentSlideIndex].texts[e.id]={text:e.text,left:e.left,top:e.top,slide:e.slide,id:e.id};n&&(memory.slides[currentSlideIndex].texts[i].textProps=n),updatePersistentMemory(memory)}function removeTextFromMemory(e,t,n){confirm("Do you want to remove this text?")?(delete memory.slides[currentSlideIndex].texts[e],updatePersistentMemory(memory),t&&t()):(memory.slides[currentSlideIndex].texts[e]=defaultText.text,updatePersistentMemory(memory),n&&n(defaultText.text))}function updateTextPositionInMemory(e,t,n){memory.slides[currentSlideIndex].texts[e].left=t,memory.slides[currentSlideIndex].texts[e].top=n,updatePersistentMemory(memory)}function updateImagePositionInMemory(e,t,n){memory.slides[currentSlideIndex].images[e].left=t,memory.slides[currentSlideIndex].images[e].top=n,updatePersistentMemory(memory)}function updateTextInMemory(e,t){memory.slides[currentSlideIndex].texts[e].text=t,updatePersistentMemory(memory)}function updatePersistentMemory(e){sessionStorage.slidesMemory?sessionStorage.slidesMemory=JSON.stringify(e||memory):localStorage.slidesMemory=JSON.stringify(e||memory)}function readPersistentMemory(){return sessionStorage.slidesMemory?JSON.parse(sessionStorage.slidesMemory):localStorage.slidesMemory?JSON.parse(localStorage.slidesMemory):memory}function useMemory(e,t){isSavedFile()&&(memory=readPersistentMemory());var n=memory.slides;0!==n.length&&n.forEach((function(n,i){Object.keys(n.texts).length>0&&useTextsFromMemory(n,i,e),Object.keys(n.images).length>0&&useImagesFromMemory(n,i,t)}))}function useTextsFromMemory(e,t,n){Object.keys(e.texts).forEach((function(i){var r=e.texts[i];n(r,t)}))}function useImagesFromMemory(e,t,n){Object.keys(e.images).forEach((function(i){var r=e.images[i];n(r,t)}))}function addImageToMemory(e,t){if("string"==typeof e){var n=new Image(e,t);memory.slides[currentSlideIndex].images[n.id]={file:n.file,left:n.left,top:n.top,slide:n.slide,id:n.id}}else memory.slides[currentSlideIndex].images[e.id]={file:e.file,left:e.left,top:e.top,slide:e.slide,id:e.id};updatePersistentMemory(memory)}function removeImageFromMemory(e,t){confirm("Do you want to remove this image?")&&(delete memory.slides[currentSlideIndex].images[e],updatePersistentMemory(memory),t&&t())}function markAsSavedFile(){document.body.setAttribute("saved",!0)}function isSavedFile(){return document.body.getAttribute("saved")}function recreateSlidesFromMemory(){isSavedFile()&&(sessionStorage.slidesMemory=JSON.stringify({}),document.body.querySelectorAll("p").forEach((function(e){var t=e.text,n=e.style.left,i=e.style.top,r=e.getAttribute("data-slide"),o=e.id;memory.slides[r]||(memory.slides[r]={texts:{},images:{}}),memory.slides[r].texts[o]={text:t,left:n,top:i,slide:r,id:o}})),document.body.querySelectorAll("img").forEach((function(e){var t=e.src,n=e.style.left,i=e.style.top,r=e.getAttribute("data-slide"),o=e.id;memory.slides[r]||(memory.slides[r]={texts:{},images:{}}),memory.slides[r].images[o]={file:t,left:n,top:i,slide:r,id:o}})),updatePersistentMemory(memory))}function save(){markAsSavedFile();var e=document.getElementById("saved_script_only"),t=document.getElementById("save_memory_script");t.innerText=e.innerHTML;var n=t.innerText||t.textContent;t.innerHTML="sessionStorage.slidesMemory = JSON.stringify("+JSON.stringify(readPersistentMemory())+");"+n;var i=document.querySelector("a#save_trigger");i.setAttribute("download","example.html"),i.setAttribute("href","data:text/html;charset=UTF-8,"+document.documentElement.innerHTML),i.click()}sessionStorage.slidesMemory||localStorage.slidesMemory?memory=readPersistentMemory():updatePersistentMemory(memory);var currentSlide=document.querySelector("#current_slide"),isInitializingMemory=!0;useMemory(createTextCallback,createImageCallback),isInitializingMemory=!1,setUpInitialSlide(),styleLeftRightButtons(),updateSlideNumberInputMax(),setSlideNumber(currentSlideIndex+1);var slideNumberTimer=null;function delayedSetSlideNumber(e){clearTimeout(slideNumberTimer),slideNumberTimer=setTimeout((function(){setSlideNumber(e)}),1e3)}function setSlideNumber(e){var t=e-1,n=document.getElementById("slide_number");n.value=e,0<e&&e<memory.slides.length+1?(hideSlide(currentSlideIndex),showSlide(currentSlideIndex=t),styleLeftRightButtons(),n.style.width=n.value.length+5+"ch"):n.value=currentSlideIndex+1}function detectArrowKeys(e){if(document.activeElement===document.body){var t=e.code||e.keyCode||e.which||window.event,n="ArrowRight"===t||39===t,i="ArrowDown"===t||40===t;"ArrowLeft"===t||37===t||("ArrowUp"===t||38===t)?left():(n||i)&&right()}}function left(){0!==currentSlideIndex&&(hideSlide(currentSlideIndex),showSlide(--currentSlideIndex),styleLeftRightButtons(),setSlideNumber(currentSlideIndex+1))}function right(){haveContentInSlide(currentSlideIndex)&&(hideSlide(currentSlideIndex),++currentSlideIndex>=memory.slides.length&&(createSlideInMemory(),updateSlideNumberInputMax()),showSlide(currentSlideIndex),styleLeftRightButtons(),setSlideNumber(currentSlideIndex+1))}function styleLeftRightButtons(){currentSlideIndex>0?(document.getElementById("left").removeAttribute("disabled"),document.getElementById("left").setAttribute("title","Previous slide")):(document.getElementById("left").setAttribute("disabled",!0),document.getElementById("left").setAttribute("title","(You're on the first slide)")),currentSlideIndex===memory.slides.length-1&&!haveContentInSlide(currentSlideIndex)?(document.getElementById("right").setAttribute("disabled",!0),document.getElementById("right").setAttribute("title","(You're on the last slide)")):(document.getElementById("right").removeAttribute("disabled"),document.getElementById("right").setAttribute("title","Next slide"))}function updateSlideNumberInputMax(){document.getElementById("slide_number").setAttribute("max",memory.slides.length)}function hideSlide(e){getTextIds(e).map((function(e){var t=document.getElementById(e);t&&(t.style.display="none")})),getImageIds(e).map((function(e){var t=document.getElementById(e);t&&(t.style.display="none")}))}function showSlide(e){getTextIds(e).map((function(e){var t=document.getElementById(e);t&&(t.style.display="block")})),getImageIds(e).map((function(e){var t=document.getElementById(e);t&&(t.style.display="block")}))}function setUpInitialSlide(){if(isSavedFile())disableControls();else{var e=getCurrentSlide().texts;Object.keys(e).length>0||createNewText(currentSlide)}}function disableControls(){document.querySelectorAll("button:not(#left):not(#right)").forEach((function(e){e.style.display="none"}))}
+</textarea
+    >
+    <!-- end of automated script paste -->
   </body>
 </html>

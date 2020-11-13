@@ -284,14 +284,30 @@ function recreateSlidesFromMemory() {
 
 function save() {
   markAsSavedFile();
+  var saved_script_only = document.getElementById("saved_script_only");
   var script = document.getElementById("save_memory_script");
   script.innerText =
+    // "sessionStorage.slidesMemory = JSON.stringify(" +
+    // JSON.stringify(readPersistentMemory()) +
+    // ");" +
+    saved_script_only.innerHTML;
+  var text = script.innerText || script.textContent;
+  script.innerHTML =
     "sessionStorage.slidesMemory = JSON.stringify(" +
     JSON.stringify(readPersistentMemory()) +
-    ")";
-  document.getElementById("current_slide").innerHTML = "";
+    ");" +
+    text;
+
+  // document.getElementById("current_slide").innerHTML = "";
 
   // TODO: trigger save page dialog
+  var anchor = document.querySelector("a#save_trigger");
+  anchor.setAttribute("download", "example.html");
+  anchor.setAttribute(
+    "href",
+    "data:text/html;charset=UTF-8," + document.documentElement.innerHTML
+  );
+  anchor.click();
 
   // TODO: reload this page so you can continue editing
 }

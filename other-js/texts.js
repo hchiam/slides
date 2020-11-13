@@ -45,6 +45,7 @@ function createText(
   slideIndex = currentSlideIndex,
   textProperties
 ) {
+  if (isSavedFile()) return;
   var p = document.createElement("p");
   p.innerText = text;
   p.style.left = left + "px";
