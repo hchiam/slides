@@ -26,6 +26,7 @@
     <script type="text/javascript" src="other-js/debug.js"></script>
     <script type="text/javascript" src="other-js/texts.js"></script>
     <script type="text/javascript" src="other-js/images.js"></script>
+    <script type="text/javascript" src="other-js/fullscreen.js"></script>
   </head>
   <body onkeyup="detectArrowKeys(event)">
     <section id="controls">
@@ -74,12 +75,20 @@
         &nbsp;
       </button>
       <button
-        aria-label="Add image"
+        aria-label="add image"
         title="Add image"
         id="add_image"
         onclick="triggerCreateNewImage()"
       >
         <i class="material-icons">image</i>
+      </button>
+      <button
+        aria-label="full screen"
+        title="Full screen"
+        id="fullscreen"
+        onclick="fullscreen()"
+      >
+        <i class="material-icons">fullscreen</i>
       </button>
       <input
         aria-label="select image"
