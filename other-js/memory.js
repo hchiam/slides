@@ -15,10 +15,12 @@ var memory = {
   ],
 };
 
+var defaultTextString = "Drag to move around. Double-click to edit.";
+
 var defaultText = {
-  text: "Drag to move around. Double-click to edit.",
-  left: 100,
-  top: 100,
+  text: defaultTextString,
+  left: document.documentElement.clientWidth / 2 - 309 / 2,
+  top: (document.documentElement.clientHeight * 2) / 5 - 16,
   slide: 0,
 };
 
@@ -234,6 +236,23 @@ function recreateSlidesFromMemory(memoryObject) {
   updatePersistentMemory(memoryObject);
   clearSlides();
   useMemory(createTextCallback, createImageCallback);
+}
+
+function clearMemory() {
+  sessionStorage.slidesMemory = "";
+  localStorage.slidesMemory = "";
+  memory = {
+    slides: [
+      {
+        texts: {
+          // id: { text: "", left: 0, top: 0, slide: 0, id: "..." },
+        },
+        images: {
+          // id: { file: "", left: 0, top: 0, slide: 0, id: "..." },
+        },
+      },
+    ],
+  };
 }
 
 function save() {
