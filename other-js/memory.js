@@ -250,7 +250,7 @@ function clearMemory() {
 
 function save() {
   var jsonText = JSON.stringify(readPersistentMemory());
-  download(jsonText, "slides.json", "application/json");
+  download(jsonText, "slides_data.json", "application/json");
 }
 
 function download(text, name, type) {
