@@ -189,3 +189,9 @@ button#upload:hover + span:before {
   left: -5.25em;
   white-space: nowrap;
 }
+
+button#delete:hover + span:before {
+  content: "Delete";
+  left: -3.2em;
+  white-space: nowrap;
+}

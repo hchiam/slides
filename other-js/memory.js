@@ -231,26 +231,9 @@ function recreateSlidesFromMemory(memoryObject) {
   useMemory(createTextCallback, createImageCallback);
 }
 
-function clearMemory() {
-  sessionStorage.slidesMemory = "";
-  localStorage.slidesMemory = "";
-  memory = {
-    slides: [
-      {
-        texts: {
-          // id: { text: "", left: 0, top: 0, slide: 0, id: "..." },
-        },
-        images: {
-          // id: { file: "", left: 0, top: 0, slide: 0, id: "..." },
-        },
-      },
-    ],
-  };
-}
-
 function save() {
   var yes = confirm(
-    "\nYour slides are already automatically saved in your browser, \nas long as you don't clear cache. \n\nDo you still want to save the slides data in a JSON file?"
+    "Your slides are already automatically saved in your browser, \nas long as you don't clear cache. \n\nDo you still want to save the slides data in a JSON file?"
   );
   if (!yes) return;
   var jsonText = JSON.stringify(readPersistentMemory());
@@ -280,4 +263,28 @@ function upload() {
     };
   };
   selectJsonFileInput.click();
+}
+
+function deleteAll() {
+  var yes = confirm("Do you want to delete all slides?");
+  if (!yes) return;
+  clearMemory();
+  location.reload();
+}
+
+function clearMemory() {
+  sessionStorage.slidesMemory = "";
+  localStorage.slidesMemory = "";
+  memory = {
+    slides: [
+      {
+        texts: {
+          // id: { text: "", left: 0, top: 0, slide: 0, id: "..." },
+        },
+        images: {
+          // id: { file: "", left: 0, top: 0, slide: 0, id: "..." },
+        },
+      },
+    ],
+  };
 }
