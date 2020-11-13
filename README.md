@@ -1,7 +1,5 @@
-# slides
+# slides ![version](https://img.shields.io/github/release/hchiam/slides?style=flat-square) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+Edit. Present.
 
-Slides Editor + Presenter
-
-Live demo: [hchiam-slides.surge.sh](https://hchiam-slides.surge.sh)
+Try it: [hchiam-slides.surge.sh](https://hchiam-slides.surge.sh)
