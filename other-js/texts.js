@@ -54,6 +54,9 @@ function createText(
   p.style.background = "transparent";
 
   p.style.display = currentSlideIndex === slideIndex ? "block" : "none";
+  p.tabIndex = 0;
+  p.ariaLabel = getAriaLabelFromTextElement(p);
+  p.role = "textbox";
 
   p.setAttribute("data-slide", slideIndex);
 
@@ -79,10 +82,33 @@ function createText(
   parentElement.appendChild(p);
 }
 
+function getAriaLabelFromTextElement(textElement) {
+  var startOfTextString = getStartOfTextStringForA11y(textElement.innerText);
+  var output = startOfTextString
+    ? "Text starting with: " + startOfTextString
+    : "(empty text)";
+  output +=
+    " at " +
+    textElement.style.left +
+    " left and " +
+    textElement.style.top +
+    " top";
+  return output;
+}
+
+function getStartOfTextStringForA11y(text) {
+  // for quick text preview/reminder
+  var textString = typeof text === "string" ? text : text.text;
+  if (textString.length <= 20) return textString;
+  var positionOfLastSpace = textString.slice(0, 20).lastIndexOf(" ");
+  return textString.slice(0, positionOfLastSpace);
+}
+
 function updateTextPosition(htmlElement) {
   var left = htmlElement.offsetLeft;
   var top = htmlElement.offsetTop;
   updateTextPositionInMemory(htmlElement.id, left, top);
+  htmlElement.ariaLabel = getAriaLabelFromTextElement(htmlElement);
 
   debugMemory();
 }
@@ -91,10 +117,14 @@ function updateText(htmlElement) {
   var text = htmlElement.innerText;
   htmlElement.innerText = text;
   updateTextInMemory(htmlElement.id, text);
+  htmlElement.ariaLabel = getAriaLabelFromTextElement(htmlElement);
   backgroundColorIfEmptyText(htmlElement);
 
   var isEmpty = text.trim() === "";
-  if (isEmpty) removeTextFromMemory(htmlElement.id);
+  if (isEmpty) {
+    removeTextFromMemory(htmlElement.id);
+    htmlElement.remove();
+  }
 
   debugMemory();
 }

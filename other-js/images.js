@@ -33,6 +33,8 @@ function createImage(
   img.id = imageId;
 
   img.style.display = currentSlideIndex === slideIndex ? "block" : "none";
+  img.tabIndex = 0;
+  img.ariaLabel = getAriaLabelFromImage(img);
 
   img.setAttribute("data-slide", slideIndex);
 
@@ -53,10 +55,15 @@ function createImage(
   }
 }
 
+function getAriaLabelFromImage(img) {
+  return "image at " + img.style.left + " left and " + img.style.top + " top";
+}
+
 function updateImagePosition(htmlElement) {
   var left = htmlElement.offsetLeft;
   var top = htmlElement.offsetTop;
   updateImagePositionInMemory(htmlElement.id, left, top);
+  htmlElement.ariaLabel = getAriaLabelFromImage(htmlElement);
 
   debugMemory();
 }
