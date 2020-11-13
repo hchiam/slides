@@ -36,8 +36,6 @@ function createImage(
   img.tabIndex = 0;
   img.ariaLabel = getAriaLabelFromImage(img);
 
-  setMaxImageSize(img);
-
   img.setAttribute("data-slide", slideIndex);
 
   img.addEventListener("dblclick", function () {
@@ -55,6 +53,10 @@ function createImage(
   if (!isInitializingMemory) {
     alert("Note: you can remove images by double-clicking on them.");
   }
+
+  setTimeout(function () {
+    setMaxImageSize(img);
+  }, 0); // 0 ms, but need timeout so img src sizes are defined
 }
 
 function getAriaLabelFromImage(img) {
