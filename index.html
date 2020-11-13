@@ -15,13 +15,11 @@
       integrity="sha384-QmLrXrsyvvots0lqy9VbxH9XRhnUzhXriP9vr8UewHu4zNfWxv3J+2ZcooyFjgNw"
       crossorigin="anonymous"
     ></script>
-    <script src="other-js/makeElementDraggable.js"></script>
     <script
       src="https://cdn.jsdelivr.net/gh/hchiam/draggable@2.0.0/makeElementDraggableAndEditable.js"
       integrity="sha384-8liekxt1KgfCZ+rMs0cnUeab/bf2ddaGJXHQsKLd0RbRRH3PxCEkpmcRXiac5zRU"
       crossorigin="anonymous"
     ></script>
-    <script src="other-js/makeElementDraggableAndEditable.js"></script>
     <link rel="stylesheet" href="other-css/boilerplate.css" />
     <script type="text/javascript" src="other-js/debug.js"></script>
     <script type="text/javascript" src="other-js/texts.js"></script>
@@ -31,7 +29,7 @@
   <body onkeyup="detectArrowKeys(event)">
     <section id="controls">
       <button
-        aria-label="left"
+        aria-label="Previous slide"
         title="Previous slide"
         id="left"
         onclick="left()"
@@ -41,7 +39,7 @@
         ◀
       </button>
       <button
-        aria-label="right"
+        aria-label="Next slide"
         title="Next slide"
         id="right"
         onclick="right()"
@@ -49,7 +47,7 @@
         ▶
       </button>
       <input
-        aria-label="slide number"
+        aria-label="Slide number"
         title="Slide number"
         id="slide_number"
         min="1"
@@ -59,7 +57,7 @@
         onmouseover="this.focus()"
       />
       <button
-        aria-label="add text"
+        aria-label="Add text"
         title="Add text"
         id="add_text"
         onclick="createNewText()"
@@ -67,15 +65,15 @@
         abc
       </button>
       <button
-        aria-label="add big text"
-        title="Add BIG text"
+        aria-label="Add big text"
+        title="Add big text"
         id="add_big_text"
         onclick="createNewBigText()"
       >
         &nbsp;
       </button>
       <button
-        aria-label="add image"
+        aria-label="Add image"
         title="Add image"
         id="add_image"
         onclick="triggerCreateNewImage()"
@@ -83,7 +81,7 @@
         <i class="material-icons">image</i>
       </button>
       <button
-        aria-label="full screen"
+        aria-label="Full screen"
         title="Full screen"
         id="fullscreen"
         onclick="fullscreen()"
@@ -91,7 +89,7 @@
         <i class="material-icons">fullscreen</i>
       </button>
       <input
-        aria-label="select image"
+        aria-label="Select image"
         title="Select image"
         id="select_image"
         onchange="readImage(this)"
@@ -99,7 +97,7 @@
         accept="image/*"
       />
       <button
-        aria-label="save slide data"
+        aria-label="Save slide data as JSON"
         title="Save slide data"
         id="save"
         onclick="save()"
@@ -107,7 +105,7 @@
         <i class="material-icons">save</i>
       </button>
       <button
-        aria-label="reuse slide data"
+        aria-label="Reuse JSON format slide data"
         title="Reuse slide data"
         id="upload"
         onclick="upload()"
@@ -115,7 +113,7 @@
         <i class="material-icons">upload</i>
       </button>
       <input
-        aria-label="select JSON file"
+        aria-label="Select JSON file"
         title="Select JSON file"
         id="select_json_file"
         type="file"

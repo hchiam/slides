@@ -1,4 +1,6 @@
-var currentSlide = document.querySelector("#current_slide");
+var currentSlide = document.getElementById("current_slide");
+var leftButton = document.getElementById("left");
+var rightButton = document.getElementById("right");
 
 var isInitializingMemory = true;
 useMemory(createTextCallback, createImageCallback);
@@ -68,31 +70,31 @@ function right() {
   showSlide(currentSlideIndex);
   styleLeftRightButtons();
   setSlideNumber(currentSlideIndex + 1);
-  document.getElementById("left").classList.remove("hide-on-first-load");
+  leftButton.classList.remove("hide-on-first-load");
 }
 
 function styleLeftRightButtons() {
   // left
   var isOnFirstSlide = currentSlideIndex < 1;
   if (isOnFirstSlide) {
-    document.getElementById("left").setAttribute("disabled", true);
+    leftButton.setAttribute("disabled", true);
     document
       .getElementById("left")
       .setAttribute("title", "(You're on the first slide)");
   } else {
-    document.getElementById("left").removeAttribute("disabled");
-    document.getElementById("left").setAttribute("title", "Previous slide");
+    leftButton.removeAttribute("disabled");
+    leftButton.setAttribute("title", "Previous slide");
   }
   // right
   var isOnLastSlide = currentSlideIndex === memory.slides.length - 1;
   if (isOnLastSlide && !haveContentInSlide(currentSlideIndex)) {
-    document.getElementById("right").setAttribute("disabled", true);
+    rightButton.setAttribute("disabled", true);
     document
       .getElementById("right")
       .setAttribute("title", "(You're on the last slide)");
   } else {
-    document.getElementById("right").removeAttribute("disabled");
-    document.getElementById("right").setAttribute("title", "Next slide");
+    rightButton.removeAttribute("disabled");
+    rightButton.setAttribute("title", "Next slide");
   }
 }
 
