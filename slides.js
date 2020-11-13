@@ -127,21 +127,12 @@ function showSlide(slideIndex) {
 }
 
 function setUpInitialSlide() {
-  if (isSavedFile()) {
-    disableControls();
-    return;
-  } else {
-    var currentSlideTexts = getCurrentSlide().texts;
-    var haveTextsInMemory = Object.keys(currentSlideTexts).length > 0;
-    if (haveTextsInMemory) return;
-    createNewText(currentSlide);
-  }
+  var currentSlideTexts = getCurrentSlide().texts;
+  var haveTextsInMemory = Object.keys(currentSlideTexts).length > 0;
+  if (haveTextsInMemory) return;
+  createNewText(currentSlide);
 }
 
-function disableControls() {
-  document
-    .querySelectorAll("button:not(#left):not(#right)")
-    .forEach(function (button) {
-      button.style.display = "none";
-    });
+function clearSlides() {
+  document.querySelector("#current_slide").innerHTML = "";
 }

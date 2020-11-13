@@ -71,26 +71,47 @@
         onclick="createNewBigText()"
       ></button>
       <button
-        id="add_image"
+        aria-label="Add image"
         title="Add image"
+        id="add_image"
         onclick="triggerCreateNewImage()"
       >
         <i class="material-icons">image</i>
       </button>
       <input
         aria-label="select image"
+        title="Select image"
         id="select_image"
         onchange="readImage(this)"
         type="file"
         accept="image/*"
       />
-      <button id="save" onclick="save()">
+      <button
+        aria-label="save slide data"
+        title="Save slide data"
+        id="save"
+        onclick="save()"
+      >
         <i class="material-icons">save</i>
       </button>
+      <button
+        aria-label="reuse slide data"
+        title="Reuse slide data"
+        id="upload"
+        onclick="upload()"
+      >
+        <i class="material-icons">upload</i>
+      </button>
+      <input
+        aria-label="select JSON file"
+        title="Select JSON file"
+        id="select_json_file"
+        type="file"
+        accept=".json"
+      />
     </section>
     <section id="current_slide"></section>
     <link rel="stylesheet" href="slides.css" />
-    <script id="save_memory_script" type="text/javascript"></script>
     <script type="text/javascript" src="other-js/memory.js"></script>
     <script type="text/javascript" src="slides.js"></script>
   </body>

@@ -155,6 +155,7 @@ function updatePersistentMemory(memoryObject) {
   } else {
     localStorage.slidesMemory = JSON.stringify(memoryObject || memory);
   }
+  memory = memoryObject;
 }
 
 function readPersistentMemory() {
@@ -167,7 +168,6 @@ function readPersistentMemory() {
 }
 
 function useMemory(createTextCallback, createImageCallback) {
-  if (isSavedFile()) memory = readPersistentMemory();
   var slides = memory.slides;
 
   if (slides.length === 0) return;
@@ -187,7 +187,7 @@ function useTextsFromMemory(slide, slideIndex, createTextCallback) {
   var textIds = Object.keys(slide.texts);
   textIds.forEach(function (textId) {
     var textObject = slide.texts[textId];
-    createTextCallback(textObject, slideIndex);
+    if (createTextCallback) createTextCallback(textObject, slideIndex);
   });
 }
 
@@ -195,7 +195,7 @@ function useImagesFromMemory(slide, slideIndex, createImageCallback) {
   var imageIds = Object.keys(slide.images);
   imageIds.forEach(function (imageId) {
     var imageObject = slide.images[imageId];
-    createImageCallback(imageObject, slideIndex);
+    if (createImageCallback) createImageCallback(imageObject, slideIndex);
   });
 }
 
@@ -230,68 +230,38 @@ function removeImageFromMemory(id, callback) {
   if (callback) callback();
 }
 
-function markAsSavedFile() {
-  document.body.setAttribute("saved", true);
-}
-
-function isSavedFile() {
-  return document.body.getAttribute("saved");
-}
-
-function recreateSlidesFromMemory() {
-  if (!isSavedFile()) return;
-  sessionStorage.slidesMemory = JSON.stringify({});
-  var existingTexts = document.body.querySelectorAll("p");
-  existingTexts.forEach(function (existingText) {
-    var text = existingText.text;
-    var left = existingText.style.left;
-    var top = existingText.style.top;
-    var slide = existingText.getAttribute("data-slide");
-    var id = existingText.id;
-    var alreadyHaveSlide = memory.slides[slide];
-    if (!alreadyHaveSlide) {
-      memory.slides[slide] = { texts: {}, images: {} };
-    }
-    memory.slides[slide].texts[id] = {
-      text: text,
-      left: left,
-      top: top,
-      slide: slide,
-      id: id,
-    };
-  });
-  var existingImages = document.body.querySelectorAll("img");
-  existingImages.forEach(function (existingImage) {
-    var src = existingImage.src;
-    var left = existingImage.style.left;
-    var top = existingImage.style.top;
-    var slide = existingImage.getAttribute("data-slide");
-    var id = existingImage.id;
-    var alreadyHaveSlide = memory.slides[slide];
-    if (!alreadyHaveSlide) {
-      memory.slides[slide] = { texts: {}, images: {} };
-    }
-    memory.slides[slide].images[id] = {
-      file: src,
-      left: left,
-      top: top,
-      slide: slide,
-      id: id,
-    };
-  });
-  updatePersistentMemory(memory);
+function recreateSlidesFromMemory(memoryObject) {
+  updatePersistentMemory(memoryObject);
+  clearSlides();
+  useMemory(createTextCallback, createImageCallback);
 }
 
 function save() {
-  markAsSavedFile();
-  var script = document.getElementById("save_memory_script");
-  script.innerText =
-    "sessionStorage.slidesMemory = JSON.stringify(" +
-    JSON.stringify(readPersistentMemory()) +
-    ")";
-  document.getElementById("current_slide").innerHTML = "";
+  var jsonText = JSON.stringify(readPersistentMemory());
+  download(jsonText, "slides.json", "application/json");
+}
 
-  // TODO: trigger save page dialog
+function download(text, name, type) {
+  var a = document.createElement("a");
+  var file = new Blob([text], { type: type });
+  a.href = URL.createObjectURL(file);
+  a.download = name;
+  a.click();
+  a.remove();
+}
 
-  // TODO: reload this page so you can continue editing
+function upload() {
+  var selectJsonFileInput = document.getElementById("select_json_file");
+  selectJsonFileInput.onchange = (e) => {
+    var file = e.target.files[0];
+    var reader = new FileReader();
+    reader.readAsText(file, "UTF-8");
+    reader.onload = (e) => {
+      var content = e.target.result;
+      var json = JSON.parse(content);
+      recreateSlidesFromMemory(json);
+      console.log(memory);
+    };
+  };
+  selectJsonFileInput.click();
 }
