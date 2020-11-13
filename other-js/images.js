@@ -36,6 +36,8 @@ function createImage(
   img.tabIndex = 0;
   img.ariaLabel = getAriaLabelFromImage(img);
 
+  setMaxImageSize(img);
+
   img.setAttribute("data-slide", slideIndex);
 
   img.addEventListener("dblclick", function () {
@@ -89,5 +91,17 @@ function readImage(inputElement) {
     };
     const image = inputElement.files[0];
     reader.readAsDataURL(image);
+  }
+}
+
+function setMaxImageSize(img) {
+  var maxHeight = document.documentElement.clientHeight; // not screen.height
+  var maxWidth = document.documentElement.clientWidth; // not screen.width
+  var heightDifference = img.height - maxHeight;
+  var widthDifference = img.width - maxWidth;
+  if (heightDifference > widthDifference && heightDifference > 0) {
+    img.style.height = (img.height > maxHeight ? maxHeight : img.height) + "px";
+  } else if (widthDifference >= heightDifference && widthDifference > 0) {
+    img.style.width = (img.width > maxWidth ? maxWidth : img.width) + "px";
   }
 }
