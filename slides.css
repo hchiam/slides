@@ -49,32 +49,17 @@ input {
   padding-left: 20px;
 }
 
-button {
-  height: 32px;
-}
-
 button#add_big_text {
   position: relative;
-  top: -0.2rem;
-}
-
-button#add_big_text span {
-  font-size: 1.5rem;
-  position: relative;
-  top: 0.25rem;
-  left: 0.6rem;
-  margin-left: -1.2rem;
 }
 
 button#add_big_text:after {
   content: "abc";
-  position: relative;
-  margin-top: -1rem;
-  margin-left: -0.25rem;
+  position: absolute;
   font-size: 1.5rem;
-  width: 0;
-  height: 0;
-  display: table-caption;
+  align-items: center;
+  left: 0.25rem;
+  top: 0;
 }
 
 input#select_image,
@@ -120,4 +105,9 @@ input#select_json_file {
     color: black;
     box-shadow: 5px 5px 15px 2px black;
   }
+}
+
+p {
+  color: white;
+  mix-blend-mode: difference;
 }
