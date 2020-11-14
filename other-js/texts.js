@@ -85,10 +85,10 @@ function createText(
 function getAriaLabelFromTextElement(textElement) {
   var startOfTextString = getStartOfTextStringForA11y(textElement.innerText);
   var output = startOfTextString
-    ? "Text starting with: " + startOfTextString
+    ? 'Text starting with: "' + startOfTextString
     : "(empty text)";
   output +=
-    " at " +
+    '" at ' +
     textElement.style.left +
     " left and " +
     textElement.style.top +
