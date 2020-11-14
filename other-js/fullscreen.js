@@ -1,3 +1,8 @@
+document.addEventListener("fullscreenchange", styleFullscreenButton);
+document.addEventListener("webkitfullscreenchange", styleFullscreenButton);
+document.addEventListener("mozfullscreenchange", styleFullscreenButton);
+document.addEventListener("MSFullscreenChange", styleFullscreenButton);
+
 function fullscreen() {
   var inFullscreen = window.innerHeight == screen.height;
   if (inFullscreen) {
@@ -8,8 +13,6 @@ function fullscreen() {
 }
 
 function exitFullscreen() {
-  var fullscreenButton = document.getElementById("fullscreen");
-
   var requestExitFullscreen =
     document.exitFullscreen ||
     document.webkitExitFullscreen ||
@@ -17,19 +20,12 @@ function exitFullscreen() {
     document.msExitFullscreen;
   if (requestExitFullscreen) {
     requestExitFullscreen.call(document);
-    fullscreenButton.getElementsByTagName("i")[0].innerText = "fullscreen";
-    fullscreenButton.nextElementSibling.setAttribute(
-      "data-before",
-      "Fullscreen"
-    );
-    fullscreenButton.nextElementSibling.style.setProperty("--left", "-4.1em");
+    styleFullscreenButton();
   }
 }
 
 function enterFullscreen() {
   var body = document.body;
-  var fullscreenButton = document.getElementById("fullscreen");
-
   var requestEnterFullscreen =
     body.requestFullScreen ||
     body.webkitRequestFullScreen ||
@@ -37,11 +33,27 @@ function enterFullscreen() {
     body.msRequestFullScreen;
   if (requestEnterFullscreen) {
     requestEnterFullscreen.call(body);
+    styleFullscreenButton();
+  }
+}
+
+function styleFullscreenButton() {
+  var fullscreenButton = document.getElementById("fullscreen");
+  var inFullscreen = window.innerHeight == screen.height;
+  if (inFullscreen) {
     fullscreenButton.getElementsByTagName("i")[0].innerText = "fullscreen_exit";
     fullscreenButton.nextElementSibling.setAttribute(
       "data-before",
       "Exit fullscreen"
     );
     fullscreenButton.nextElementSibling.style.setProperty("--left", "-5.1em");
+  } else {
+    var fullscreenButton = document.getElementById("fullscreen");
+    fullscreenButton.getElementsByTagName("i")[0].innerText = "fullscreen";
+    fullscreenButton.nextElementSibling.setAttribute(
+      "data-before",
+      "Fullscreen"
+    );
+    fullscreenButton.nextElementSibling.style.setProperty("--left", "-4.1em");
   }
 }
