@@ -174,8 +174,8 @@ button#add_image:hover + span:before {
 }
 
 button#fullscreen:hover + span:before {
-  content: "Fullscreen";
-  left: -4.1em;
+  content: attr(data-before);
+  left: var(--left);
 }
 
 button#save:hover + span:before {
