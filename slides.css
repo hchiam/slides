@@ -198,8 +198,6 @@ button#delete:hover + span:before {
 
 #laser {
   position: absolute;
-  box-shadow: 0 0 50px 50px rgba(0, 0, 0, 0.1);
-  transition: 0s !important;
   background: red;
   width: 10px;
   height: 10px;
