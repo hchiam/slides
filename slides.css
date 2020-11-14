@@ -195,3 +195,32 @@ button#delete:hover + span:before {
   left: -3.2em;
   white-space: nowrap;
 }
+
+@media only screen and (max-width: 600px) {
+  #controls {
+    display: flex;
+    justify-content: center;
+    width: 90vw;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    left: calc(50% - 90vw / 2 - 0.5rem / 2);
+  }
+
+  button,
+  input {
+    flex: 0 0 auto;
+    position: relative;
+  }
+
+  span:before {
+    z-index: 1;
+    position: fixed !important;
+    left: 1rem !important;
+    top: -4rem;
+  }
+
+  :hover + span:before {
+    top: 1rem;
+  }
+}
