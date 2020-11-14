@@ -56,6 +56,7 @@ function createImage(
 
   setTimeout(function () {
     setMaxImageSize(img);
+    centerImage(img);
   }, 0); // 0 ms, but need timeout so img src sizes are defined
 }
 
@@ -106,4 +107,11 @@ function setMaxImageSize(img) {
   } else if (widthDifference >= heightDifference && widthDifference > 0) {
     img.style.width = (img.width > maxWidth ? maxWidth : img.width) + "px";
   }
+}
+
+function centerImage(img) {
+  var screenHeight = document.documentElement.clientHeight; // not screen.height
+  var screenWidth = document.documentElement.clientWidth; // not screen.width
+  img.style.top = screenHeight / 2 - img.height / 2 + "px";
+  img.style.left = screenWidth / 2 - img.width / 2 + "px";
 }
