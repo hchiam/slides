@@ -56,4 +56,14 @@ function styleFullscreenButton() {
     );
     fullscreenButton.nextElementSibling.style.setProperty("--left", "-4.1em");
   }
+  blurFullscreenButton(3000);
+}
+
+var fullscreenButtonFocusTimer = null;
+function blurFullscreenButton(milliseconds) {
+  var fullscreenButton = document.getElementById("fullscreen");
+  clearTimeout(fullscreenButtonFocusTimer);
+  fullscreenButtonFocusTimer = setTimeout(function () {
+    fullscreenButton.blur();
+  }, milliseconds);
 }
