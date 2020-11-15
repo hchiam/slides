@@ -15,12 +15,12 @@ var memory = {
   ],
 };
 
-var defaultTextString = "Drag to move around. Double-click to edit.";
+var defaultTextString = "Drag this to move around. Double-click to edit text.";
 
 var defaultText = {
   text: defaultTextString,
-  left: document.documentElement.clientWidth / 2 - 309 / 2,
-  top: document.documentElement.clientHeight / 2 - 16,
+  left: document.documentElement.clientWidth / 2 - 372 / 2,
+  top: document.documentElement.clientHeight / 2 - 32,
   slide: 0,
 };
 
