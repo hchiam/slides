@@ -218,7 +218,7 @@ function addImageToMemory(image, id) {
 }
 
 function removeImageFromMemory(id, callback) {
-  var yes = confirm("Do you want to remove this image?");
+  var yes = confirm("Do you want to delete this image?");
   if (!yes) return;
   delete memory.slides[currentSlideIndex].images[id];
   updatePersistentMemory(memory);

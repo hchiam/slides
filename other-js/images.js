@@ -51,7 +51,7 @@ function createImage(
   });
 
   if (!isInitializingMemory) {
-    alert("Note: you can remove images by double-clicking on them.");
+    alert("Note: you can delete images by double-clicking on them.");
   }
 
   setTimeout(function () {
