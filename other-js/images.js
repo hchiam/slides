@@ -76,6 +76,7 @@ function createImageCallback(imageObject, slideIndex) {
 }
 
 function triggerCreateNewImage() {
+  document.getElementById("select_image").value = "";
   document.getElementById("select_image").click();
 }
 
