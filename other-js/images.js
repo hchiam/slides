@@ -49,6 +49,17 @@ function createImage(
     });
   });
 
+  img.addEventListener("keyup", function (e) {
+    var key = event.code || event.keyCode || event.which || window.event;
+    var isBackspace = key === "Backspace" || key === 8;
+    var isDelete = key === "Delete" || key === 46;
+    if (isBackspace || isDelete) {
+      removeImageFromMemory(img.id, function () {
+        img.remove();
+      });
+    }
+  });
+
   parentElement.appendChild(img);
 
   makeElementDraggable(img, {
