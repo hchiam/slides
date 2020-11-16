@@ -50,14 +50,12 @@ function createImage(
     mouseMoveCallback: updateImagePosition,
   });
 
+  setMaxImageSize(img);
+  centerImage(img);
+
   if (!isInitializingMemory) {
     alert("Note: you can delete images by double-clicking on them.");
   }
-
-  setTimeout(function () {
-    setMaxImageSize(img);
-    centerImage(img);
-  }, 0); // 0 ms, but need timeout so img src sizes are defined
 }
 
 function getAriaLabelFromImage(img) {
@@ -110,8 +108,10 @@ function setMaxImageSize(img) {
 }
 
 function centerImage(img) {
+  if (isInitializingMemory) return;
   var screenHeight = document.documentElement.clientHeight; // not screen.height
   var screenWidth = document.documentElement.clientWidth; // not screen.width
   img.style.top = screenHeight / 2 - img.height / 2 + "px";
   img.style.left = screenWidth / 2 - img.width / 2 + "px";
+  updateImagePosition(img);
 }
