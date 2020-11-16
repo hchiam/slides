@@ -22,11 +22,19 @@ function setSlideNumber(slideNumber) {
   var slideIndex = slideNumber - 1;
   var slideNumberInput = document.getElementById("slide_number");
   slideNumberInput.value = slideNumber;
+  if (slideIndex === memory.slides.length && !isLastSlideBlank()) {
+    createSlideInMemory();
+    updateSlideNumberInputMax();
+    leftButton.classList.remove("hide-on-first-load");
+  }
   var isValidSlideNumber =
     0 < slideNumber && slideNumber < memory.slides.length + 1;
   if (!isValidSlideNumber) {
     slideNumberInput.value = currentSlideIndex + 1;
     return;
+  }
+  if (slideIndex > 0) {
+    leftButton.classList.remove("hide-on-first-load");
   }
   hideSlide(currentSlideIndex);
   currentSlideIndex = slideIndex;
@@ -110,7 +118,9 @@ function styleLeftRightButtons() {
 
 function updateSlideNumberInputMax() {
   var slideNumberInput = document.getElementById("slide_number");
-  slideNumberInput.setAttribute("max", memory.slides.length);
+  var maxEnablingAddingNewSlide = memory.slides.length + 1;
+  slideNumberInput.setAttribute("max", maxEnablingAddingNewSlide);
+  // elsewhere handle actual (dis)enabling of adding slides
 }
 
 var slideNumberTimer;
@@ -158,4 +168,11 @@ function setUpInitialSlide() {
 
 function clearSlides() {
   document.querySelector("#current_slide").innerHTML = "";
+}
+
+function isLastSlideBlank() {
+  var lastIndex = memory.slides.length - 1;
+  var numberOfTexts = Object.keys(memory.slides[lastIndex].texts).length;
+  var numberOfImages = Object.keys(memory.slides[lastIndex].images).length;
+  return numberOfTexts === 0 && numberOfImages === 0;
 }
