@@ -1,12 +1,16 @@
+var recreatingImage = true;
 function recreateImage(parentElement = currentSlide, imageId, slideIndex) {
+  recreatingImage = true;
   var imageObject = getSlide(slideIndex).images[imageId];
   var src = imageObject.file;
   var left = imageObject.left;
   var top = imageObject.top;
+  isInitializingMemory = true;
   createImage(currentSlide, src, left, top, imageId, slideIndex);
 }
 
 function createNewImage(src) {
+  recreatingImage = false;
   var image = new Image(src);
   addImageToMemory(image, image.id);
 
@@ -14,6 +18,7 @@ function createNewImage(src) {
   var left = image.left;
   var top = image.top;
   var imageId = image.id;
+  isInitializingMemory = false;
   createImage(currentSlide, src, left, top, imageId, currentSlideIndex);
 }
 
@@ -50,12 +55,14 @@ function createImage(
     mouseMoveCallback: updateImagePosition,
   });
 
-  setMaxImageSize(img);
-  centerImage(img);
-
   if (!isInitializingMemory) {
     alert("Note: you can delete images by double-clicking on them.");
   }
+
+  setTimeout(() => {
+    setMaxImageSize(img);
+    centerImage(img);
+  }, 0); // 0 ms, but timeout helps make sure img src sizes are defined
 }
 
 function getAriaLabelFromImage(img) {
@@ -109,7 +116,9 @@ function setMaxImageSize(img) {
 }
 
 function centerImage(img) {
-  if (isInitializingMemory) return;
+  if (!img.height || !img.width) return;
+  // don't center if reusing data:
+  if (isInitializingMemory || recreatingImage) return;
   var screenHeight = document.documentElement.clientHeight; // not screen.height
   var screenWidth = document.documentElement.clientWidth; // not screen.width
   img.style.top = screenHeight / 2 - img.height / 2 + "px";
