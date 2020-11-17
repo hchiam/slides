@@ -64,6 +64,11 @@ function createImage(
 
   makeElementDraggable(img, {
     mouseMoveCallback: updateImagePosition,
+    touchEndCallback: onDoubleTap.bind(this, img, function (element) {
+      removeImageFromMemory(element.id, function () {
+        element.remove();
+      });
+    }),
   });
 
   if (!isInitializingMemory) {
@@ -135,4 +140,13 @@ function centerImage(img) {
   img.style.top = screenHeight / 2 - img.height / 2 + "px";
   img.style.left = screenWidth / 2 - img.width / 2 + "px";
   updateImagePosition(img);
+}
+
+var timeOfLastTap;
+function onDoubleTap(element, callback) {
+  var now = new Date().getTime();
+  var delay = now - timeOfLastTap;
+  var detectedDoubleTap = 0 < delay && delay < 600;
+  if (detectedDoubleTap && callback) callback(element);
+  timeOfLastTap = new Date().getTime();
 }
