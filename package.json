@@ -1,0 +1,25 @@
+{
+  "name": "slides",
+  "version": "2.3.0",
+  "description": "Edit. Present. Try it: https://hchiam-slides.surge.sh",
+  "main": "slides.js",
+  "scripts": {
+    "test": "cypress open",
+    "test-cli": "yarn test-background",
+    "test-background": "cypress run",
+    "test-site": "bash setup-test-site.sh # update test site"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hchiam/slides.git"
+  },
+  "author": "hchiam",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hchiam/slides/issues"
+  },
+  "homepage": "https://github.com/hchiam/slides#readme",
+  "devDependencies": {
+    "cypress": "^5.6.0"
+  }
+}
