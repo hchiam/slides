@@ -1,4 +1,4 @@
-# slides ![version](https://img.shields.io/github/release/hchiam/slides?style=flat-square) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
+# slides ![version](https://img.shields.io/github/release/hchiam/slides?style=flat-square) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://github.com/hchiam/slides/blob/main/LICENSE)
 
 Edit. Present.
 
