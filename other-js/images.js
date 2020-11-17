@@ -49,7 +49,7 @@ function createImage(
     });
   });
 
-  img.addEventListener("keyup", function (e) {
+  img.addEventListener("keyup", function (event) {
     var key = event.code || event.keyCode || event.which || window.event;
     var isBackspace = key === "Backspace" || key === 8;
     var isDelete = key === "Delete" || key === 46;

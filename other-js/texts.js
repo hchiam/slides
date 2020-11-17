@@ -69,6 +69,7 @@ function createText(
     mouseMoveCallback: updateTextPosition,
     blurCallback: updateText,
   });
+
   p.onpaste = function handlePaste(e) {
     // prevent actually pasting HTML:
     e.stopPropagation();
@@ -78,6 +79,22 @@ function createText(
     var pastedText = clipboardData.getData("Text");
     p.innerText = pastedText;
   };
+
+  p.addEventListener("keyup", function (event) {
+    var key = event.code || event.keyCode || event.which || window.event;
+    var isBackspace = key === "Backspace" || key === 8;
+    var isDelete = key === "Delete" || key === 46;
+    if (isBackspace || isDelete) {
+      var yes = confirm(
+        "Do you want to delete this text? It starts with: " +
+          getStartOfTextStringForA11y(p.innerText)
+      );
+      if (!yes) return;
+      removeTextFromMemory(p.id, function () {
+        p.remove();
+      });
+    }
+  });
 
   parentElement.appendChild(p);
 }
