@@ -19,7 +19,14 @@
     "url": "https://github.com/hchiam/slides/issues"
   },
   "homepage": "https://github.com/hchiam/slides#readme",
+  "dependencies": {},
   "devDependencies": {
-    "cypress": "^5.6.0"
+    "cypress": "^5.6.0",
+    "husky": "^4.3.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn test-site && yarn test-cli"
+    }
   }
 }
