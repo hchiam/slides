@@ -45,7 +45,9 @@ function setSlideNumber(slideNumber) {
 }
 
 function detectArrowKeys(event) {
-  if (document.activeElement !== document.body) return;
+  var isOnBody = document.activeElement === document.body;
+  var isOnButton = document.activeElement.tagName === "BUTTON";
+  if (!isOnBody && !isOnButton) return;
   var key = event.code || event.keyCode || event.which || window.event;
   var isLeft = key === "ArrowLeft" || key === 37;
   var isUp = key === "ArrowUp" || key === 38;

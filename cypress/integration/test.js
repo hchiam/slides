@@ -17,6 +17,202 @@ describe("slide left/right/number", function () {
     cy.get("#slide_number").type("{uparrow}").should("have.value", 2);
     cy.get("#slide_number").type("{downarrow}").should("have.value", 1);
   });
+
+  it("can go left/right when arrow keys on body", function () {
+    cy.visit("/");
+    cy.get("body")
+      .focus()
+      .type("{downarrow}")
+      .get("#slide_number")
+      .should("have.value", 2);
+    cy.get("body")
+      .focus()
+      .type("{uparrow}")
+      .get("#slide_number")
+      .should("have.value", 1);
+    cy.get("body")
+      .focus()
+      .type("{rightarrow}")
+      .get("#slide_number")
+      .should("have.value", 2);
+    cy.get("body")
+      .focus()
+      .type("{leftarrow}")
+      .get("#slide_number")
+      .should("have.value", 1);
+  });
+
+  it("can go left/right when arrow keys on any buttons", function () {
+    cy.visit("/");
+
+    cy.get("#right")
+      .focus()
+      .type("{downarrow}")
+      .get("#slide_number")
+      .should("have.value", 2);
+    cy.get("#left")
+      .focus()
+      .type("{uparrow}")
+      .get("#slide_number")
+      .should("have.value", 1);
+    cy.get("#right")
+      .focus()
+      .type("{rightarrow}")
+      .get("#slide_number")
+      .should("have.value", 2);
+    cy.get("#left")
+      .focus()
+      .type("{leftarrow}")
+      .get("#slide_number")
+      .should("have.value", 1);
+
+    cy.get("#add_text")
+      .focus()
+      .type("{downarrow}")
+      .get("#slide_number")
+      .should("have.value", 2);
+    cy.get("#add_text")
+      .focus()
+      .type("{uparrow}")
+      .get("#slide_number")
+      .should("have.value", 1);
+    cy.get("#add_text")
+      .focus()
+      .type("{rightarrow}")
+      .get("#slide_number")
+      .should("have.value", 2);
+    cy.get("#add_text")
+      .focus()
+      .type("{leftarrow}")
+      .get("#slide_number")
+      .should("have.value", 1);
+
+    cy.get("#add_big_text")
+      .focus()
+      .type("{downarrow}")
+      .get("#slide_number")
+      .should("have.value", 2);
+    cy.get("#add_big_text")
+      .focus()
+      .type("{uparrow}")
+      .get("#slide_number")
+      .should("have.value", 1);
+    cy.get("#add_big_text")
+      .focus()
+      .type("{rightarrow}")
+      .get("#slide_number")
+      .should("have.value", 2);
+    cy.get("#add_big_text")
+      .focus()
+      .type("{leftarrow}")
+      .get("#slide_number")
+      .should("have.value", 1);
+
+    cy.get("#add_image")
+      .focus()
+      .type("{downarrow}")
+      .get("#slide_number")
+      .should("have.value", 2);
+    cy.get("#add_image")
+      .focus()
+      .type("{uparrow}")
+      .get("#slide_number")
+      .should("have.value", 1);
+    cy.get("#add_image")
+      .focus()
+      .type("{rightarrow}")
+      .get("#slide_number")
+      .should("have.value", 2);
+    cy.get("#add_image")
+      .focus()
+      .type("{leftarrow}")
+      .get("#slide_number")
+      .should("have.value", 1);
+
+    cy.get("#fullscreen")
+      .focus()
+      .type("{downarrow}")
+      .get("#slide_number")
+      .should("have.value", 2);
+    cy.get("#fullscreen")
+      .focus()
+      .type("{uparrow}")
+      .get("#slide_number")
+      .should("have.value", 1);
+    cy.get("#fullscreen")
+      .focus()
+      .type("{rightarrow}")
+      .get("#slide_number")
+      .should("have.value", 2);
+    cy.get("#fullscreen")
+      .focus()
+      .type("{leftarrow}")
+      .get("#slide_number")
+      .should("have.value", 1);
+
+    cy.get("#save")
+      .focus()
+      .type("{downarrow}")
+      .get("#slide_number")
+      .should("have.value", 2);
+    cy.get("#save")
+      .focus()
+      .type("{uparrow}")
+      .get("#slide_number")
+      .should("have.value", 1);
+    cy.get("#save")
+      .focus()
+      .type("{rightarrow}")
+      .get("#slide_number")
+      .should("have.value", 2);
+    cy.get("#save")
+      .focus()
+      .type("{leftarrow}")
+      .get("#slide_number")
+      .should("have.value", 1);
+
+    cy.get("#upload")
+      .focus()
+      .type("{downarrow}")
+      .get("#slide_number")
+      .should("have.value", 2);
+    cy.get("#upload")
+      .focus()
+      .type("{uparrow}")
+      .get("#slide_number")
+      .should("have.value", 1);
+    cy.get("#upload")
+      .focus()
+      .type("{rightarrow}")
+      .get("#slide_number")
+      .should("have.value", 2);
+    cy.get("#upload")
+      .focus()
+      .type("{leftarrow}")
+      .get("#slide_number")
+      .should("have.value", 1);
+
+    cy.get("#delete")
+      .focus()
+      .type("{downarrow}")
+      .get("#slide_number")
+      .should("have.value", 2);
+    cy.get("#delete")
+      .focus()
+      .type("{uparrow}")
+      .get("#slide_number")
+      .should("have.value", 1);
+    cy.get("#delete")
+      .focus()
+      .type("{rightarrow}")
+      .get("#slide_number")
+      .should("have.value", 2);
+    cy.get("#delete")
+      .focus()
+      .type("{leftarrow}")
+      .get("#slide_number")
+      .should("have.value", 1);
+  });
 });
 
 describe("text", function () {
