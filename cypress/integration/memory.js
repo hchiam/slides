@@ -9,7 +9,7 @@ describe("memory", function () {
       cy.get("input#select_image").attachFile("cells-grid.png");
     });
 
-    cy.wait(1);
+    cy.get("body").click(); // instead of cy.wait(1);
 
     cy.get("#right").click();
 
@@ -44,7 +44,7 @@ describe("memory", function () {
       cy.get("input#select_image").attachFile("cells-grid.png");
     });
 
-    cy.wait(1);
+    cy.get("body").click(); // instead of cy.wait(1);
 
     cy.get("#right").click();
 
@@ -53,9 +53,46 @@ describe("memory", function () {
 
     cy.get("#delete").click();
 
-    cy.get("p").should("have.length", 1);
+    cy.get("p:visible").should("have.length", 1);
 
-    cy.get("p").should("have.text", defaultTextString);
+    cy.get("p:visible").should("have.text", defaultTextString);
+  });
+
+  it("can reuse slides", function () {
+    cy.visit("/");
+
+    cy.get("p").should("have.length", 1).should("have.text", defaultTextString);
+
+    cy.get("#upload").click();
+    cy.fixture("slides_data.json").then((fileContent) => {
+      cy.get("input#select_json_file").attachFile("slides_data.json");
+    });
+
+    cy.get("body").click(); // instead of cy.wait(1);
+
+    cy.get("p:visible").its("length").should("be.gt", 1);
+    cy.get("img:visible").should("exist");
+
+    cy.get("#right").click();
+    cy.get("#slide_number").should("have.value", 2);
+    cy.get("p:visible").its("length").should("be.gt", 1);
+    cy.get("img:visible").should("exist");
+
+    cy.get("#right").click();
+    cy.get("#slide_number").should("have.value", 3);
+    cy.get("p:visible").should("have.length", 1).should("have.text", "3");
+    cy.get("img:visible").should("exist");
+
+    cy.get("#right").click();
+    cy.get("#slide_number").should("have.value", 4);
+    cy.get("p:visible").should("have.text", "4");
+    cy.get("img:visible").should("not.exist");
+
+    cy.get("#slide_number").type("{selectall}6{enter}");
+    cy.get("p:visible").should("not.exist");
+    cy.get("img:visible").should("not.exist");
+
+    cy.get("#slide_number").type("{selectall}1");
   });
 });
 
