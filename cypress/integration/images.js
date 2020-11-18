@@ -29,4 +29,23 @@ describe("images", function () {
 
     cy.get("img").should("not.exist");
   });
+
+  it("can drag image", function () {
+    cy.visit("/");
+
+    cy.get("#add_image").click();
+    cy.fixture("cells-grid.png").then((fileContent) => {
+      cy.get("input#select_image").attachFile("cells-grid.png");
+    });
+
+    cy.get("img")
+      .should("have.css", "left", "182px")
+      .should("have.css", "top", "21px");
+    cy.get("img")
+      .trigger("mousedown", { which: 1, clientX: 182, clientY: 21 })
+      .trigger("mousemove", { clientX: 700, clientY: 100 })
+      .trigger("mouseup", { force: true })
+      .should("have.css", "left", "700px")
+      .should("have.css", "top", "100px");
+  });
 });

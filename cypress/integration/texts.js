@@ -41,5 +41,16 @@ describe("texts", function () {
       .should("equal", "Drag this to move around. Double-click to edit text.");
   });
 
-  // TODO: test dragging text (will need to check positions changed)
+  it("can drag text", function () {
+    cy.visit("/");
+    cy.get("p")
+      .should("have.css", "left", "314px")
+      .should("have.css", "top", "298px");
+    cy.get("p")
+      .trigger("mousedown", { which: 1, clientX: 314, clientY: 298 })
+      .trigger("mousemove", { clientX: 700, clientY: 100 })
+      .trigger("mouseup", { force: true })
+      .should("have.css", "left", "700px")
+      .should("have.css", "top", "100px");
+  });
 });
