@@ -24,6 +24,7 @@ function createNewText(
   addTextToMemory(textObject, id, textProps);
   createText(parentElement, text, left, top, id, currentSlideIndex, textProps);
   styleLeftRightButtons();
+  announce("Added new text."); // TODO: not working
 }
 
 function createNewBigText(

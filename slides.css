@@ -205,6 +205,12 @@ button#delete:hover + span:before {
   top: -20px;
 }
 
+#aria_announcer {
+  position: fixed;
+  top: -5vh;
+  left: -5vw;
+}
+
 @media only screen and (max-width: 600px) {
   #controls {
     display: flex;

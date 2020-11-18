@@ -20,6 +20,7 @@ function createNewImage(src) {
   var imageId = image.id;
   isInitializingMemory = false;
   createImage(currentSlide, src, left, top, imageId, currentSlideIndex);
+  announce("Added new image."); // TODO: not working
 }
 
 function createImage(

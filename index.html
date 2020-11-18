@@ -22,6 +22,7 @@
     ></script>
     <link rel="stylesheet" href="other-css/boilerplate.css" />
     <script type="text/javascript" src="other-js/debug.js"></script>
+    <script type="text/javascript" src="other-js/a11y.js"></script>
     <script type="text/javascript" src="other-js/texts.js"></script>
     <script type="text/javascript" src="other-js/images.js"></script>
     <script type="text/javascript" src="other-js/fullscreen.js"></script>
@@ -141,6 +142,12 @@
     </section>
     <section id="current_slide"></section>
     <div id="laser"></div>
+    <div
+      id="aria_announcer"
+      role="alert"
+      aria-live="assertive"
+      tabindex="-1"
+    ></div>
     <link rel="stylesheet" href="slides.css" />
     <script type="text/javascript" src="other-js/memory.js"></script>
     <script type="text/javascript" src="slides.js"></script>

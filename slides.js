@@ -39,6 +39,7 @@ function setSlideNumber(slideNumber) {
   hideSlide(currentSlideIndex);
   currentSlideIndex = slideIndex;
   showSlide(currentSlideIndex);
+  announceSlideNumber(currentSlideIndex + 1);
   styleLeftRightButtons();
   // style slide number input:
   slideNumberInput.style.width = slideNumberInput.value.length + 5 + "ch";
@@ -67,6 +68,7 @@ function left() {
   showSlide(currentSlideIndex);
   styleLeftRightButtons();
   setSlideNumber(currentSlideIndex + 1);
+  announceSlideNumber(currentSlideIndex + 1);
 }
 
 function right() {
@@ -81,6 +83,7 @@ function right() {
   styleLeftRightButtons();
   setSlideNumber(currentSlideIndex + 1);
   leftButton.classList.remove("hide-on-first-load");
+  announceSlideNumber(currentSlideIndex + 1);
 }
 
 function styleLeftRightButtons() {
