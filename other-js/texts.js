@@ -94,6 +94,8 @@ function createText(
       removeTextFromMemory(p.id, function () {
         p.remove();
       });
+    } else {
+      runTextPluginsWhenTextUpdated(p);
     }
   });
 
@@ -133,7 +135,6 @@ function updateTextPosition(htmlElement) {
 
 function updateText(htmlElement) {
   var text = htmlElement.innerText;
-  runTextPluginsWhenTextUpdated(htmlElement);
   htmlElement.innerText = text;
   updateTextInMemory(htmlElement.id, text);
   htmlElement.ariaLabel = getAriaLabelFromTextElement(htmlElement);
