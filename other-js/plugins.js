@@ -11,7 +11,6 @@ function runTextPluginsWhenTextUpdated(textElement, internalCallback) {
     cb(textElement);
   });
   if (internalCallback) internalCallback(textElement);
-  console.log("text plugins");
 }
 
 function runImagePluginsWhenImageCreated(imageElement, internalCallback) {
@@ -20,5 +19,4 @@ function runImagePluginsWhenImageCreated(imageElement, internalCallback) {
     cb(imageElement);
   });
   if (internalCallback) internalCallback(imageElement);
-  console.log("image plugins");
 }
