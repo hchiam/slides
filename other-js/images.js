@@ -79,6 +79,7 @@ function createImage(
   setTimeout(() => {
     setMaxImageSize(img);
     centerImage(img);
+    runImagePluginsWhenImageCreated(img);
   }, 0); // 0 ms, but timeout helps make sure img src sizes are defined
 }
 
