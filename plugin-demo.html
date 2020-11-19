@@ -152,46 +152,66 @@
     <script type="text/javascript" src="other-js/memory.js"></script>
     <script type="text/javascript" src="slides.js"></script>
     <script
-      src="https://cdn.jsdelivr.net/gh/hchiam/verse-retriever@2.0.0/verse-retriever.js"
-      integrity="sha384-xJh5lHAnNs01jNNsYjM1G1PhXCdCmcbTVHPOQugWwnSBHrW0E3nbJaZ8GczwE2qr"
+      src="https://cdn.jsdelivr.net/gh/hchiam/verse-retriever@3.0.0/verse-retriever.js"
+      integrity="sha384-6XOcJ0/cieEomxQzsHciMQTArsKFsv5p3OHz2XHx7UINIWH9/P31s+2jnwDc7qKm"
       crossorigin="anonymous"
     ></script>
     <script>
       // use verse-retriever:
       usePlugins = true;
       useTextPlugins = true;
-      var verseRetrieverTimer;
-      pluginCallbacksToParseTexts.push(async function (element) {
-        if (!verseRetriever.containsBookName(element.innerText)) return;
-        clearTimeout(verseRetrieverTimer);
-        verseRetrieverTimer = setTimeout(async function () {
-          const verse = await verseRetriever.getVerseWords(element.innerText);
-          if (!verse || !verse.words) return;
-          var yes = confirm(
-            "Do you want to use this verse? " + htmlToText(verse.words)
-          );
-          if (yes) {
-            insertText(element, verse.words);
-          }
-        }, 3000);
-      });
-
-      function insertText(element, htmlToInsert) {
-        var insertionIndex = window.getSelection().anchorOffset;
-        var before = element.innerText.slice(0, insertionIndex);
-        var after = element.innerText.slice(insertionIndex);
-        element.innerText =
-          before + "\n" + htmlToText(htmlToInsert) + "\n" + after;
-      }
-
-      function htmlToText(html) {
-        var temp = document.createElement("div");
-        temp.innerHTML = html;
-        temp.querySelectorAll(".v").forEach(function (verseNumberElement) {
-          verseNumberElement.innerText = verseNumberElement.innerText + " ";
+      (function () {
+        var verseRetrieverTimer;
+        pluginCallbacksToParseTexts.push(async function (element) {
+          if (!verseRetriever.containsBookName(element.innerText)) return;
+          clearTimeout(verseRetrieverTimer);
+          verseRetrieverTimer = setTimeout(async function () {
+            const verse = await verseRetriever.getVerseWords(element.innerText);
+            if (!verse || !verse.words) return;
+            var verseWordsText = htmlToText(verse.words);
+            var verseNumbers = verse.location.split(" ").slice(-1);
+            var verseShortName = getVerseShortName(verse.words);
+            var verseLocationIntentionallyNonMatchable =
+              verseShortName + " " + verseNumbers;
+            var textToInsert =
+              "(" +
+              verseLocationIntentionallyNonMatchable +
+              ") " +
+              verseWordsText;
+            var yes = confirm("Do you want to use this verse? " + textToInsert);
+            if (yes) {
+              insertText(element, verse.location, textToInsert);
+            }
+          }, 3000);
         });
-        return temp.textContent;
-      }
+
+        function insertText(element, textToReplace, textToInsert) {
+          var updatedText = element.innerText.replace(
+            textToReplace,
+            textToInsert
+          );
+          element.innerText = updatedText;
+        }
+
+        function htmlToText(htmlString) {
+          var temp = document.createElement("div");
+          temp.innerHTML = htmlString;
+          temp.querySelectorAll(".v").forEach(function (verseNumberElement) {
+            verseNumberElement.innerText = verseNumberElement.innerText + " ";
+          });
+          return temp.textContent;
+        }
+
+        function getVerseShortName(htmlString) {
+          var temp = document.createElement("div");
+          temp.innerHTML = htmlString;
+          var shortName = temp
+            .querySelector(".v")
+            .getAttribute("data-sid")
+            .split(" ")[0];
+          return shortName;
+        }
+      })();
     </script>
   </body>
 </html>
