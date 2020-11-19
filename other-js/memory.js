@@ -128,18 +128,21 @@ function removeTextFromMemory(id, callbackOnDelete) {
 }
 
 function updateTextPositionInMemory(textId, left, top) {
+  if (!memory.slides[currentSlideIndex].texts[textId]) return;
   memory.slides[currentSlideIndex].texts[textId].left = left;
   memory.slides[currentSlideIndex].texts[textId].top = top;
   updatePersistentMemory(memory);
 }
 
 function updateImagePositionInMemory(imageId, left, top) {
+  if (!memory.slides[currentSlideIndex].images[imageId]) return;
   memory.slides[currentSlideIndex].images[imageId].left = left;
   memory.slides[currentSlideIndex].images[imageId].top = top;
   updatePersistentMemory(memory);
 }
 
 function updateTextInMemory(textId, text) {
+  if (!memory.slides[currentSlideIndex].texts[textId]) return;
   memory.slides[currentSlideIndex].texts[textId].text = text;
   updatePersistentMemory(memory);
 }
