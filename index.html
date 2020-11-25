@@ -37,7 +37,6 @@
     <section id="controls">
       <button
         aria-label="Previous slide"
-        title="Previous slide"
         id="left"
         onclick="left()"
         disabled
@@ -46,18 +45,10 @@
         ◀
       </button>
       <span data-before="Previous slide" style="--left: -5em"></span>
-      <button
-        aria-label="Next slide"
-        title="Next slide"
-        id="right"
-        onclick="right()"
-      >
-        ▶
-      </button>
+      <button aria-label="Next slide" id="right" onclick="right()">▶</button>
       <span data-before="Next slide" style="--left: -4.2em"></span>
       <input
         aria-label="Slide number"
-        title="Slide number"
         id="slide_number"
         min="1"
         type="number"
@@ -66,18 +57,12 @@
         onmouseover="focusSlideNumberInput()"
       />
       <span></span>
-      <button
-        aria-label="Add text"
-        title="Add text"
-        id="add_text"
-        onclick="createNewText()"
-      >
+      <button aria-label="Add text" id="add_text" onclick="createNewText()">
         abc
       </button>
       <span></span>
       <button
         aria-label="Add big text"
-        title="Add big text"
         id="add_big_text"
         onclick="createNewBigText()"
       >
@@ -86,7 +71,6 @@
       <span></span>
       <input
         aria-label="Select image"
-        title="Select image"
         id="select_image"
         onchange="readImage(this)"
         type="file"
@@ -94,53 +78,35 @@
       />
       <button
         aria-label="Add image"
-        title="Add image"
         id="add_image"
         onclick="triggerCreateNewImage()"
       >
         <i class="material-icons">image</i>
       </button>
       <span></span>
-      <button
-        aria-label="Fullscreen"
-        title="Fullscreen"
-        id="fullscreen"
-        onclick="fullscreen()"
-      >
+      <button aria-label="Fullscreen" id="fullscreen" onclick="fullscreen()">
         <i class="material-icons">fullscreen</i>
       </button>
       <span data-before="Fullscreen" style="--left: -4.1em"></span>
-      <button
-        aria-label="Save slide data as JSON"
-        title="Save slide data"
-        id="save"
-        onclick="save()"
-      >
+      <button aria-label="Save slide data as JSON" id="save" onclick="save()">
         <i class="material-icons">download</i>
       </button>
       <span></span>
       <input
         aria-label="Select JSON file"
-        title="Select JSON file"
         id="select_json_file"
         type="file"
         accept=".json"
       />
       <button
         aria-label="Reuse JSON format slide data"
-        title="Reuse slide data"
         id="upload"
         onclick="upload()"
       >
         <i class="material-icons">upload</i>
       </button>
       <span></span>
-      <button
-        aria-label="Delete"
-        title="Delete"
-        id="delete"
-        onclick="deleteAll()"
-      >
+      <button aria-label="Delete" id="delete" onclick="deleteAll()">
         <i class="material-icons">delete</i>
       </button>
       <span></span>
