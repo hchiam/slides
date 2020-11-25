@@ -259,4 +259,19 @@ button#delete:focus + span:before {
   #laser {
     display: none;
   }
+
+  #mobile_message:before {
+    content: "Mobile isn't fully supported.";
+    position: absolute;
+    top: calc(30% - 1rem);
+    left: calc(50% - 23ch / 2);
+    width: 23ch;
+    animation: fade 5s forwards;
+  }
+
+  @keyframes fade {
+    to {
+      opacity: 0;
+    }
+  }
 }
