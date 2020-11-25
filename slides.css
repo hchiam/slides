@@ -143,59 +143,70 @@ span:before {
   content: "";
 }
 
-:hover + span:before {
+:hover + span:before,
+:focus + span:before {
   top: -2rem;
   padding: 3px;
 }
 
-button#left:hover + span:before {
+button#left:hover + span:before,
+button#left:focus + span:before {
   content: attr(data-before);
   left: var(--left);
 }
 
-button#right:hover + span:before {
+button#right:hover + span:before,
+button#right:focus + span:before {
   content: attr(data-before);
   left: var(--left);
 }
 
-input#slide_number:hover + span:before {
+input#slide_number:hover + span:before,
+input#slide_number:focus + span:before {
   content: "Slide number";
   left: -5.75em;
 }
 
-button#add_text:hover + span:before {
+button#add_text:hover + span:before,
+button#add_text:focus + span:before {
   content: "Add text";
   left: -3.85em;
 }
 
-button#add_big_text:hover + span:before {
+button#add_big_text:hover + span:before,
+button#add_big_text:focus + span:before {
   content: "Add big text";
   left: -4.7em;
 }
 
-button#add_image:hover + span:before {
+button#add_image:hover + span:before,
+button#add_image:focus + span:before {
   content: "Add image";
   left: -4.45em;
 }
 
-button#fullscreen:hover + span:before {
+button#fullscreen:hover + span:before,
+button#fullscreen:focus + span:before {
   content: attr(data-before);
   left: var(--left);
 }
 
-button#save:hover + span:before {
+button#save:hover + span:before,
+button#save:focus + span:before {
   content: "Save slide data";
   left: -5.35em;
   white-space: nowrap;
 }
 
-button#upload:hover + span:before {
+button#upload:hover + span:before,
+button#upload:focus + span:before {
   content: "Reuse slide data";
   left: -5.25em;
   white-space: nowrap;
 }
 
-button#delete:hover + span:before {
+button#delete:hover + span:before,
+button#delete:focus + span:before {
   content: "Delete";
   left: -3.2em;
   white-space: nowrap;
@@ -240,7 +251,8 @@ button#delete:hover + span:before {
     top: -4rem;
   }
 
-  :hover + span:before {
+  :hover + span:before,
+  :focus + span:before {
     top: 1rem;
   }
 

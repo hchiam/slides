@@ -88,7 +88,7 @@ describe("memory", function () {
     cy.get("p:visible").should("have.text", "4");
     cy.get("img:visible").should("not.exist");
 
-    cy.get("#slide_number").type("{selectall}6{enter}");
+    cy.get("#slide_number").focus().type("{selectall}6{enter}");
     cy.get("p:visible").should("not.exist");
     cy.get("img:visible").should("not.exist");
 
