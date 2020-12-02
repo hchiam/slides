@@ -10,9 +10,7 @@ styleLeftRightButtons();
 updateSlideNumberInputMax();
 setSlideNumber(currentSlideIndex + 1);
 
-document.body.addEventListener("keyup", function (event) {
-  if (detectArrowKeys) detectArrowKeys(event);
-});
+document.body.addEventListener("keyup", detectArrowKeys);
 
 var slideNumberTimer = null;
 function delayedSetSlideNumber(slideNumber) {
