@@ -1,23 +1,28 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Slides</title>
+    <title>Simple Slides</title>
+    <link rel="icon" type="image/png" href="favicon.png" />
     <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap"
       rel="stylesheet"
     />
+    <!-- <script src="https://cdn.jsdelivr.net/gh/hchiam/draggable@main/makeElementDraggable.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/hchiam/draggable@main/makeElementDraggableAndEditable.js"></script> -->
     <script
-      src="https://cdn.jsdelivr.net/gh/hchiam/draggable@2.2.0/makeElementDraggable.js"
-      integrity="sha384-sBO5ePJn4TDun0wc6ersIT39qtbT2/datyTqPh0lftrOLn3plYA64K0alj79pCik"
+      src="https://cdn.jsdelivr.net/gh/hchiam/draggable@3.0.0/makeElementDraggable.js"
+      integrity="sha384-QMYHwpvHc+xLaSjcXWMNVHfXgcYk3Q0zXa8BiMdP5Fx8c7HNGS3aJrQSu63/+P0a"
       crossorigin="anonymous"
     ></script>
     <script
-      src="https://cdn.jsdelivr.net/gh/hchiam/draggable@2.2.0/makeElementDraggableAndEditable.js"
-      integrity="sha384-s/FfyjyJF4K8JsBN/muyl5Nj5bligUsrJLeGWQINnY9cFNf91GXHUShJFyMJCxum"
+      src="https://cdn.jsdelivr.net/gh/hchiam/draggable@3.0.0/makeElementDraggableAndEditable.js"
+      integrity="sha384-32xYDmwCsT5TKRH10cHvjzyZmOk08xBgVk5wsWCeOsEtW0Hn3iIYJEJRBozEst0P"
       crossorigin="anonymous"
     ></script>
+    <!-- <script src="makeElementDraggable.js"></script>
+    <script src="makeElementDraggableAndEditable.js"></script> -->
     <link rel="stylesheet" href="other-css/boilerplate.css" />
     <script type="text/javascript" src="other-js/debug.js"></script>
     <script type="text/javascript" src="other-js/plugins.js"></script>
@@ -27,12 +32,12 @@
     <script type="text/javascript" src="other-js/fullscreen.js"></script>
     <script type="text/javascript" src="other-js/laser.js"></script>
   </head>
-  <body onkeyup="detectArrowKeys(event)">
+  <body>
     <!-- Found a bug? Feel free to report suggestions here: https://github.com/hchiam/slides/issues -->
+    <section id="mobile_message"></section>
     <section id="controls">
       <button
         aria-label="Previous slide"
-        title="Previous slide"
         id="left"
         onclick="left()"
         disabled
@@ -41,18 +46,10 @@
         ◀
       </button>
       <span data-before="Previous slide" style="--left: -5em"></span>
-      <button
-        aria-label="Next slide"
-        title="Next slide"
-        id="right"
-        onclick="right()"
-      >
-        ▶
-      </button>
+      <button aria-label="Next slide" id="right" onclick="right()">▶</button>
       <span data-before="Next slide" style="--left: -4.2em"></span>
       <input
         aria-label="Slide number"
-        title="Slide number"
         id="slide_number"
         min="1"
         type="number"
@@ -61,18 +58,12 @@
         onmouseover="focusSlideNumberInput()"
       />
       <span></span>
-      <button
-        aria-label="Add text"
-        title="Add text"
-        id="add_text"
-        onclick="createNewText()"
-      >
+      <button aria-label="Add text" id="add_text" onclick="createNewText()">
         abc
       </button>
       <span></span>
       <button
         aria-label="Add big text"
-        title="Add big text"
         id="add_big_text"
         onclick="createNewBigText()"
       >
@@ -81,7 +72,6 @@
       <span></span>
       <input
         aria-label="Select image"
-        title="Select image"
         id="select_image"
         onchange="readImage(this)"
         type="file"
@@ -89,53 +79,35 @@
       />
       <button
         aria-label="Add image"
-        title="Add image"
         id="add_image"
         onclick="triggerCreateNewImage()"
       >
         <i class="material-icons">image</i>
       </button>
       <span></span>
-      <button
-        aria-label="Fullscreen"
-        title="Fullscreen"
-        id="fullscreen"
-        onclick="fullscreen()"
-      >
+      <button aria-label="Fullscreen" id="fullscreen" onclick="fullscreen()">
         <i class="material-icons">fullscreen</i>
       </button>
       <span data-before="Fullscreen" style="--left: -4.1em"></span>
-      <button
-        aria-label="Save slide data as JSON"
-        title="Save slide data"
-        id="save"
-        onclick="save()"
-      >
+      <button aria-label="Save slide data as JSON" id="save" onclick="save()">
         <i class="material-icons">download</i>
       </button>
       <span></span>
       <input
         aria-label="Select JSON file"
-        title="Select JSON file"
         id="select_json_file"
         type="file"
         accept=".json"
       />
       <button
         aria-label="Reuse JSON format slide data"
-        title="Reuse slide data"
         id="upload"
         onclick="upload()"
       >
         <i class="material-icons">upload</i>
       </button>
       <span></span>
-      <button
-        aria-label="Delete"
-        title="Delete"
-        id="delete"
-        onclick="deleteAll()"
-      >
+      <button aria-label="Delete" id="delete" onclick="deleteAll()">
         <i class="material-icons">delete</i>
       </button>
       <span></span>

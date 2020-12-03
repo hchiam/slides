@@ -7,7 +7,8 @@
     "test": "cypress open",
     "test-cli": "yarn test-background",
     "test-background": "cypress run",
-    "test-site": "bash setup-test-site.sh # update test site"
+    "test-site": "bash setup-test-site.sh # update test site",
+    "test-quality": "bash website-quality-test.sh"
   },
   "repository": {
     "type": "git",
@@ -23,7 +24,8 @@
   "devDependencies": {
     "cypress": "^5.6.0",
     "cypress-file-upload": "^4.1.1",
-    "husky": "^4.3.0"
+    "husky": "^4.3.0",
+    "lighthouse": "^6.4.1"
   },
   "husky": {
     "hooks": {

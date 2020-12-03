@@ -8,13 +8,41 @@ describe("texts", function () {
       .should("match", /.*edited.*/i);
   });
 
-  it("can delete text", function () {
+  it("can delete text via emptying text, but must be after click, not after dragging", function () {
     cy.visit("/");
     cy.contains("Drag this to move around. Double-click to edit text.")
-      .click()
+      .trigger("mousedown", { which: 1, clientX: 314, clientY: 298 })
+      .trigger("mousemove", { clientX: 700, clientY: 100 })
+      .trigger("mouseup", { force: true })
+      .type("{selectall} ");
+    cy.get("body").click();
+    cy.get("p").should("exist");
+
+    cy.contains("Drag this to move around. Double-click to edit text.")
+      .dblclick()
       .type("{selectall} "); // trigger deleting text
     cy.get("body").click();
     cy.get("p").should("not.exist");
+  });
+
+  it("can delete text via dragging once and hitting delete", function () {
+    cy.visit("/");
+    cy.contains("Drag this to move around. Double-click to edit text.")
+      .trigger("mousedown", { which: 1, clientX: 314, clientY: 298 })
+      .trigger("mousemove", { clientX: 700, clientY: 100 })
+      .trigger("mouseup", { force: true })
+      .type("{del}");
+    cy.get("body").click();
+    cy.get("p").should("not.exist");
+  });
+
+  it("hitting delete while editing text should not trigger deleting whole text", function () {
+    cy.visit("/");
+    cy.contains("Drag this to move around. Double-click to edit text.")
+      .dblclick()
+      .type("edit and then hit delete key{del}");
+    cy.get("body").click();
+    cy.get("p").should("exist");
   });
 
   it("cannot add new default text when default text is in default position", function () {

@@ -2,6 +2,32 @@ document.addEventListener("fullscreenchange", styleFullscreenButton);
 document.addEventListener("webkitfullscreenchange", styleFullscreenButton);
 document.addEventListener("mozfullscreenchange", styleFullscreenButton);
 document.addEventListener("MSFullscreenChange", styleFullscreenButton);
+document.addEventListener("keydown", detectFullscreenKeyboardShortcuts);
+
+var fullscreenKeysDebounce;
+function detectFullscreenKeyboardShortcuts(event) {
+  var isOnBody = document.activeElement === document.body;
+  var isOnButton = document.activeElement.tagName === "BUTTON";
+  if (!isOnBody && !isOnButton) return;
+  var key = event.code || event.keyCode || event.which || window.event;
+  var isFOnly =
+    (key === "KeyF" || key === 70) &&
+    !event.ctrlKey &&
+    !event.metaKey &&
+    !event.altKey &&
+    !event.shiftKey;
+  var isF11 = key === "F11" || key === 122;
+  var isCmdShiftF =
+    (event.ctrlKey || event.metaKey) &&
+    event.shiftKey &&
+    (key === "KeyF" || key === 70);
+  if (isFOnly || isF11 || isCmdShiftF) {
+    clearTimeout(fullscreenKeysDebounce);
+    fullscreenKeysDebounce = setTimeout(function () {
+      fullscreen();
+    }, 500);
+  }
+}
 
 function fullscreen() {
   var inFullscreen = window.innerHeight == screen.height;

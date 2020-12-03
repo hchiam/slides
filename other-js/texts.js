@@ -85,7 +85,7 @@ function createText(
     var key = event.code || event.keyCode || event.which || window.event;
     var isBackspace = key === "Backspace" || key === 8;
     var isDelete = key === "Delete" || key === 46;
-    if (isBackspace || isDelete) {
+    if ((isBackspace || isDelete) && p.contentEditable !== "true") {
       var yes = confirm(
         "Do you want to delete this text? It starts with: " +
           getStartOfTextStringForA11y(p.innerText)
@@ -95,6 +95,7 @@ function createText(
         p.remove();
       });
     } else {
+      p.contentEditable = true;
       runTextPluginsWhenTextUpdated(p);
     }
   });
