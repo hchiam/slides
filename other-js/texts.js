@@ -77,8 +77,13 @@ function createText(
     e.preventDefault();
 
     var clipboardData = e.clipboardData || window.clipboardData;
-    var pastedText = clipboardData.getData("Text");
-    p.innerText = pastedText;
+    var pastedText = clipboardData.getData("text/plain");
+    if (document.execCommand) {
+      document.execCommand("insertHTML", false, pastedText);
+    } else {
+      // at least do something:
+      p.innerText = pastedText;
+    }
   };
 
   p.addEventListener("keyup", function (event) {
