@@ -1,8 +1,8 @@
 function recreateText(parentElement = currentSlide, textId, slideIndex) {
   var textObject = getSlide(slideIndex).texts[textId];
   var text = textObject.text;
-  var left = textObject.left;
-  var top = textObject.top;
+  var left = textObject.left * getScaleForOriginalScreenSize(memory);
+  var top = textObject.top * getScaleForOriginalScreenSize(memory);
   var id = textObject.id;
   var textProps = textObject.textProps;
   createText(parentElement, text, left, top, id, slideIndex, textProps);

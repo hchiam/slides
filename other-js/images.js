@@ -3,8 +3,8 @@ function recreateImage(parentElement = currentSlide, imageId, slideIndex) {
   recreatingImage = true;
   var imageObject = getSlide(slideIndex).images[imageId];
   var src = imageObject.file;
-  var left = imageObject.left;
-  var top = imageObject.top;
+  var left = imageObject.left * getScaleForOriginalScreenSize(memory);
+  var top = imageObject.top * getScaleForOriginalScreenSize(memory);
   isInitializingMemory = true;
   createImage(currentSlide, src, left, top, imageId, slideIndex);
 }
