@@ -4,13 +4,11 @@ language: javascript
 
 node_js: v10
 
-addons:
-  chrome: stable
-
 cache:
   yarn: true
   directories:
     - node_modules
+    - ~/.cache # get Cypress working
 
 before_script:
   - yarn
