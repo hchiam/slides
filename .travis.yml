@@ -4,11 +4,6 @@ language: javascript
 
 node_js: v10
 
-# addons:
-#   apt:
-#     packages:
-#       - libgconf-2-4 # to get Cypress working
-
 cache:
   yarn: true
   directories:
@@ -20,9 +15,10 @@ before_script:
 
 script:
   - yarn test-site && yarn test-cli
-# notifications:
-#   email:
-#     # If you don't want to specify emails here,
-#     # you can set your email with git config --global user.email
-#     on_success: always
-#     on_failure: always
+
+notifications:
+  email:
+    # If you don't want to specify emails here,
+    # you can set your email with git config --global user.email
+    on_success: always
+    on_failure: always
