@@ -1,0 +1,14 @@
+# automatic testing with Travis CI!
+
+language: javascript
+
+cache:
+  yarn: true
+  directories:
+    - node_modules
+
+before_script:
+  - yarn
+
+script:
+  - yarn test-site && yarn test-cli
