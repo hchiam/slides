@@ -4,9 +4,9 @@
   "description": "Edit. Present. Try it: https://hchiam-slides.surge.sh",
   "main": "slides.js",
   "scripts": {
-    "test": "cypress open",
+    "test": "npx cypress open",
     "test-cli": "yarn test-background",
-    "test-background": "cypress run",
+    "test-background": "npx cypress run",
     "test-site": "bash setup-test-site.sh # update test site",
     "test-quality": "bash website-quality-test.sh"
   },
@@ -25,7 +25,8 @@
     "cypress": "^5.6.0",
     "cypress-file-upload": "^4.1.1",
     "husky": "^4.3.0",
-    "lighthouse": "^6.4.1"
+    "lighthouse": "^6.4.1",
+    "surge": "^0.21.7"
   },
   "husky": {
     "hooks": {

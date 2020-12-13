@@ -1,0 +1,23 @@
+# automatic testing with Travis CI!
+
+language: javascript
+
+node_js: v10
+
+addons:
+  apt:
+    packages:
+      - libgconf-2-4 # get Cypress working
+
+cache:
+  yarn: true
+  directories:
+    - node_modules
+    - ~/.cache # get Cypress working
+
+before_script:
+  - yarn
+  - cypress install
+
+script:
+  - yarn test-site && yarn test-cli
