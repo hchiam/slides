@@ -4,6 +4,11 @@ language: javascript
 
 node_js: v10
 
+addons:
+  apt:
+    packages:
+      - libgconf-2-4 # get Cypress working
+
 cache:
   yarn: true
   directories:
