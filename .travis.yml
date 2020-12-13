@@ -4,11 +4,13 @@ language: javascript
 
 node_js: v10
 
+addons:
+  chrome: stable
+
 cache:
   yarn: true
   directories:
     - node_modules
-    - cypress
 
 before_script:
   - yarn
