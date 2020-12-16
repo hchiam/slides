@@ -8,12 +8,23 @@ function announceSlideNumber(slideNumber) {
   announce("Now on slide " + (currentSlideIndex + 1));
 }
 
-_2DNote.setAs2DArea(document.documentElement, callbackUponUpdate);
+document.addEventListener("mousedown", function (event) {
+  var element = event.target;
+  if (element.tagName == "P" || element.tagName == "IMG") {
+    _2DNote.play(element, false);
+  }
+});
 
-function callbackUponUpdate(e) {
-  var tagName = document.activeElement.tagName;
-  var isText = tagName === "P";
-  var isImage = tagName === "IMG";
-  console.log(isText || isImage);
-  if (!isText && !isImage) _2DNote.stop();
-}
+document.addEventListener("mouseup", function (event) {
+  var element = event.target;
+  if (element.tagName == "P" || element.tagName == "IMG") {
+    _2DNote.stop(element);
+  }
+});
+
+document.addEventListener("mousemove", function (event) {
+  var element = event.target;
+  if (element.tagName == "P" || element.tagName == "IMG") {
+    _2DNote.update(element);
+  }
+});
