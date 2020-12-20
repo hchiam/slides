@@ -223,7 +223,7 @@ function addImageToMemory(image, id) {
     var src = image;
     var imageObject = new Image(src, id);
     memory.slides[currentSlideIndex].images[imageObject.id] = {
-      file: imageObject.file,
+      file: compressString(imageObject.file),
       left: imageObject.left,
       top: imageObject.top,
       slide: imageObject.slide,
@@ -231,7 +231,7 @@ function addImageToMemory(image, id) {
     };
   } else {
     memory.slides[currentSlideIndex].images[image.id] = {
-      file: image.file,
+      file: compressString(image.file),
       left: image.left,
       top: image.top,
       slide: image.slide,
