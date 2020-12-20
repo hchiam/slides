@@ -7,3 +7,24 @@ function announce(message) {
 function announceSlideNumber(slideNumber) {
   announce("Now on slide " + (currentSlideIndex + 1));
 }
+
+document.addEventListener("mousedown", function (event) {
+  var element = event.target;
+  if (element.tagName == "P" || element.tagName == "IMG") {
+    _2DNote.play(element, false);
+  }
+});
+
+document.addEventListener("mouseup", function (event) {
+  var element = event.target;
+  if (element.tagName == "P" || element.tagName == "IMG") {
+    _2DNote.stop(element);
+  }
+});
+
+document.addEventListener("mousemove", function (event) {
+  var element = event.target;
+  if (element.tagName == "P" || element.tagName == "IMG") {
+    _2DNote.update(element);
+  }
+});

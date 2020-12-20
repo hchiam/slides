@@ -1,0 +1,24 @@
+# automatic testing with Travis CI!
+
+language: javascript
+
+node_js: v10
+
+cache:
+  yarn: true
+  directories:
+    - node_modules
+
+before_script:
+  - yarn
+  - cypress install # to get Cypress working
+
+script:
+  - yarn test-site && yarn test-cli
+
+notifications:
+  email:
+    # If you don't want to specify emails here,
+    # you can set your email with git config --global user.email
+    on_success: always
+    on_failure: always

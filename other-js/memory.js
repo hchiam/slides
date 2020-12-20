@@ -3,6 +3,10 @@ var currentSlideIndex = 0;
 var idCounter = 0; // for uniqueness only
 
 var memory = {
+  originalScreenSize: {
+    width: document.documentElement.clientWidth,
+    height: document.documentElement.clientHeight,
+  },
   slides: [
     {
       texts: {
@@ -179,6 +183,10 @@ function useMemory(createTextCallback, createImageCallback) {
       useImagesFromMemory(slide, slideIndex, createImageCallback);
     }
   });
+
+  var scale = getScaleForOriginalScreenSize(memory);
+  var elementToScale = document.getElementById("current_slide");
+  elementToScale.style.transform = "scale(" + scale + ")";
 }
 
 function useTextsFromMemory(slide, slideIndex, createTextCallback) {
@@ -195,6 +203,19 @@ function useImagesFromMemory(slide, slideIndex, createImageCallback) {
     var imageObject = slide.images[imageId];
     if (createImageCallback) createImageCallback(imageObject, slideIndex);
   });
+}
+
+function getScaleForOriginalScreenSize(memory) {
+  var originalScreenSize = memory.originalScreenSize || {
+    width: document.documentElement.clientWidth,
+    height: document.documentElement.clientHeight,
+  };
+  var currentWidth = document.documentElement.clientWidth;
+  var currentHeight = document.documentElement.clientHeight;
+  var widthRatio = currentWidth / originalScreenSize.width;
+  var heightRatio = currentHeight / originalScreenSize.height;
+  var minRatio = Math.min(widthRatio, heightRatio);
+  return minRatio;
 }
 
 function addImageToMemory(image, id) {
@@ -279,6 +300,10 @@ function clearMemory() {
   sessionStorage.slidesMemory = "";
   localStorage.slidesMemory = "";
   memory = {
+    originalScreenSize: {
+      width: document.documentElement.clientWidth,
+      height: document.documentElement.clientHeight,
+    },
     slides: [
       {
         texts: {

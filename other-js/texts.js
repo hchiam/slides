@@ -1,8 +1,8 @@
 function recreateText(parentElement = currentSlide, textId, slideIndex) {
   var textObject = getSlide(slideIndex).texts[textId];
   var text = textObject.text;
-  var left = textObject.left;
-  var top = textObject.top;
+  var left = textObject.left * getScaleForOriginalScreenSize(memory);
+  var top = textObject.top * getScaleForOriginalScreenSize(memory);
   var id = textObject.id;
   var textProps = textObject.textProps;
   createText(parentElement, text, left, top, id, slideIndex, textProps);
@@ -77,8 +77,13 @@ function createText(
     e.preventDefault();
 
     var clipboardData = e.clipboardData || window.clipboardData;
-    var pastedText = clipboardData.getData("Text");
-    p.innerText = pastedText;
+    var pastedText = clipboardData.getData("text/plain");
+    if (document.execCommand) {
+      document.execCommand("insertHTML", false, pastedText);
+    } else {
+      // at least do something:
+      p.innerText = pastedText;
+    }
   };
 
   p.addEventListener("keyup", function (event) {
