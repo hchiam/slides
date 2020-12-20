@@ -158,6 +158,12 @@ function updatePersistentMemory(memoryObject) {
     localStorage.slidesMemory = JSON.stringify(memoryObject || memory);
   }
   memory = memoryObject;
+
+  // // new
+  // new localforage.setItem("key", "value").then(function () {
+  //   memory = localforage.getItem("key");
+  //   console.log(memory);
+  // });
 }
 
 function readPersistentMemory() {
@@ -166,6 +172,13 @@ function readPersistentMemory() {
   } else if (localStorage.slidesMemory) {
     return JSON.parse(localStorage.slidesMemory);
   }
+
+  // // new
+  // localforage.getItem("key").then(function (value) {
+  //   console.log(value);
+  //   // return memory;
+  // });
+
   return memory;
 }
 
