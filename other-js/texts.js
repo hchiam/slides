@@ -69,6 +69,10 @@ function createText(
   makeElementDraggableAndEditable(p, {
     mouseMoveCallback: updateTextPosition,
     blurCallback: updateText,
+    snapPoints: [
+      { x: window.innerWidth / 2, y: window.innerHeight / 10 },
+      { x: window.innerWidth / 2, y: window.innerHeight / 2 },
+    ],
   });
 
   p.onpaste = function handlePaste(e) {
