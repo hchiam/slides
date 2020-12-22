@@ -5,7 +5,6 @@ var rightButton = document.getElementById("right");
 var isInitializingMemory = true;
 useMemory(createTextCallback, createImageCallback);
 isInitializingMemory = false;
-setUpInitialSlide();
 styleLeftRightButtons();
 updateSlideNumberInputMax();
 setSlideNumber(currentSlideIndex + 1);

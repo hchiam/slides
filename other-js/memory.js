@@ -28,8 +28,8 @@ var defaultText = {
   slide: 0,
 };
 
-if (sessionStorage.slidesMemory || localStorage.slidesMemory) {
-  memory = readPersistentMemory();
+if (localforage || sessionStorage.slidesMemory || localStorage.slidesMemory) {
+  readPersistentMemory();
 } else {
   updatePersistentMemory(memory);
 }
@@ -152,54 +152,56 @@ function updateTextInMemory(textId, text) {
 }
 
 function updatePersistentMemory(memoryObject) {
-  if (sessionStorage.slidesMemory) {
+  if (arePromisesAvailable() && localforage) {
+    localforage.setItem("slidesMemory", JSON.stringify(memoryObject || memory));
+  } else if (sessionStorage.slidesMemory) {
     sessionStorage.slidesMemory = JSON.stringify(memoryObject || memory);
-  } else {
+  } else if (localStorage.slidesMemory) {
     localStorage.slidesMemory = JSON.stringify(memoryObject || memory);
   }
-  memory = memoryObject;
-
-  // // new
-  // new localforage.setItem("key", "value").then(function () {
-  //   memory = localforage.getItem("key");
-  //   console.log(memory);
-  // });
 }
 
-function readPersistentMemory() {
-  if (sessionStorage.slidesMemory) {
-    return JSON.parse(sessionStorage.slidesMemory);
+function readPersistentMemory(callback) {
+  if (arePromisesAvailable() && localforage) {
+    localforage.getItem("slidesMemory").then(async function (value) {
+      if (value) {
+        memory = await JSON.parse(value);
+      }
+      if (callback) callback();
+    });
+  } else if (sessionStorage.slidesMemory) {
+    memory = JSON.parse(sessionStorage.slidesMemory);
   } else if (localStorage.slidesMemory) {
-    return JSON.parse(localStorage.slidesMemory);
+    memory = JSON.parse(localStorage.slidesMemory);
   }
-
-  // // new
-  // localforage.getItem("key").then(function (value) {
-  //   console.log(value);
-  //   // return memory;
-  // });
-
-  return memory;
 }
 
 function useMemory(createTextCallback, createImageCallback) {
-  var slides = memory.slides;
+  readPersistentMemory(function () {
+    if (!memory || !memory.slides) return;
 
-  if (slides.length === 0) return;
+    var slides = memory.slides;
 
-  slides.forEach(function (slide, slideIndex) {
-    if (Object.keys(slide.texts).length > 0) {
-      useTextsFromMemory(slide, slideIndex, createTextCallback);
-    }
+    if (slides.length === 0) return;
 
-    if (Object.keys(slide.images).length > 0) {
-      useImagesFromMemory(slide, slideIndex, createImageCallback);
+    slides.forEach(function (slide, slideIndex) {
+      if (Object.keys(slide.texts).length > 0) {
+        useTextsFromMemory(slide, slideIndex, createTextCallback);
+      }
+
+      if (Object.keys(slide.images).length > 0) {
+        useImagesFromMemory(slide, slideIndex, createImageCallback);
+      }
+    });
+
+    var scale = getScaleForOriginalScreenSize(memory);
+    var elementToScale = document.getElementById("current_slide");
+    elementToScale.style.transform = "scale(" + scale + ")";
+
+    if (areAllSlidesBlankInMemory()) {
+      setUpInitialSlide();
     }
   });
-
-  var scale = getScaleForOriginalScreenSize(memory);
-  var elementToScale = document.getElementById("current_slide");
-  elementToScale.style.transform = "scale(" + scale + ")";
 }
 
 function useTextsFromMemory(slide, slideIndex, createTextCallback) {
@@ -273,7 +275,7 @@ function save() {
     "Your slides are already automatically saved in your browser, \nas long as you don't clear cache. \n\nDo you still want to save the slides data in a JSON file?"
   );
   if (!yes) return;
-  var jsonText = JSON.stringify(readPersistentMemory());
+  var jsonText = JSON.stringify(memory);
   download(jsonText, "slides_data.json", "application/json");
 }
 
@@ -312,6 +314,7 @@ function deleteAll() {
 function clearMemory() {
   sessionStorage.slidesMemory = "";
   localStorage.slidesMemory = "";
+  if (localforage) localforage.clear();
   memory = {
     originalScreenSize: {
       width: document.documentElement.clientWidth,
@@ -328,4 +331,28 @@ function clearMemory() {
       },
     ],
   };
+}
+
+function areAllSlidesBlankInMemory() {
+  var noJSMemoryAtAll = !memory;
+  var noSlides = !memory.slides || memory.slides.length === 0;
+  var only1Slide = memory.slides && memory.slides.length === 1;
+  var noTextsInFirstSlide =
+    only1Slide &&
+    memory.slides[0].texts &&
+    Object.keys(memory.slides[0].texts).length === 0;
+  var noImagesInFirstSlide =
+    only1Slide &&
+    memory.slides[0].images &&
+    Object.keys(memory.slides[0].images).length === 0;
+  return (
+    noJSMemoryAtAll || noSlides || (noTextsInFirstSlide && noImagesInFirstSlide)
+  );
+}
+
+function arePromisesAvailable() {
+  return (
+    typeof Promise !== "undefined" &&
+    Promise.toString().indexOf("[native code]") !== -1
+  );
 }
