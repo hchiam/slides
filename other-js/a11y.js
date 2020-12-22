@@ -22,9 +22,14 @@ document.addEventListener("mouseup", function (event) {
   }
 });
 
+var timerToPreventAccidentalForeverNote;
 document.addEventListener("mousemove", function (event) {
   var element = event.target;
   if (element.tagName == "P" || element.tagName == "IMG") {
+    clearTimeout(timerToPreventAccidentalForeverNote);
     _2DNote.update(element);
+    timerToPreventAccidentalForeverNote = setTimeout(function () {
+      _2DNote.stop(element);
+    }, 500);
   }
 });

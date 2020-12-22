@@ -70,6 +70,7 @@ function createImage(
         element.remove();
       });
     }),
+    snapPoints: [{ x: window.innerWidth / 2, y: window.innerHeight / 2 }],
   });
 
   if (!isInitializingMemory) {
