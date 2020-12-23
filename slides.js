@@ -3,12 +3,21 @@ var leftButton = document.getElementById("left");
 var rightButton = document.getElementById("right");
 
 var isInitializingMemory = true;
-useMemory(createTextCallback, createImageCallback);
+
+(function () {
+  if (
+    typeof localforage !== "undefined" ||
+    sessionStorage.slidesMemory ||
+    localStorage.slidesMemory
+  ) {
+    readPersistentMemory(recreateSlidesFromMemory);
+  } else {
+    updatePersistentMemory(memory);
+  }
+  setUpSlides();
+})();
+
 isInitializingMemory = false;
-setUpInitialSlide();
-styleLeftRightButtons();
-updateSlideNumberInputMax();
-setSlideNumber(currentSlideIndex + 1);
 
 document.body.addEventListener("keyup", detectArrowKeys);
 
@@ -18,6 +27,15 @@ function delayedSetSlideNumber(slideNumber) {
   slideNumberTimer = setTimeout(function () {
     setSlideNumber(slideNumber);
   }, 1000);
+}
+
+function setUpSlides() {
+  if (areAllSlidesBlankInMemory()) {
+    setUpInitialSlide();
+  }
+  styleLeftRightButtons();
+  updateSlideNumberInputMax();
+  setSlideNumber(currentSlideIndex + 1);
 }
 
 function setSlideNumber(slideNumber) {

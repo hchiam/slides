@@ -1,6 +1,14 @@
+import "../support/commands";
+
 describe("texts", function () {
-  it("can edit text", function () {
+  beforeEach(function () {
     cy.visit("/");
+    cy.get("#delete").click();
+    cy.clearLocalForage();
+    cy.wait(2000);
+  });
+
+  it("can edit text", function () {
     cy.contains("Drag this to move around. Double-click to edit text.")
       .click()
       .type("edited")
@@ -9,7 +17,6 @@ describe("texts", function () {
   });
 
   it("can delete text via emptying text, but must be after click, not after dragging", function () {
-    cy.visit("/");
     cy.contains("Drag this to move around. Double-click to edit text.")
       .trigger("mousedown", { which: 1, clientX: 314, clientY: 298 })
       .trigger("mousemove", { clientX: 700, clientY: 100 })
@@ -26,7 +33,6 @@ describe("texts", function () {
   });
 
   it("can delete text via dragging once and hitting delete", function () {
-    cy.visit("/");
     cy.contains("Drag this to move around. Double-click to edit text.")
       .trigger("mousedown", { which: 1, clientX: 314, clientY: 298 })
       .trigger("mousemove", { clientX: 700, clientY: 100 })
@@ -37,7 +43,6 @@ describe("texts", function () {
   });
 
   it("hitting delete while editing text should not trigger deleting whole text", function () {
-    cy.visit("/");
     cy.contains("Drag this to move around. Double-click to edit text.")
       .dblclick()
       .type("edit and then hit delete key{del}");
@@ -46,7 +51,6 @@ describe("texts", function () {
   });
 
   it("cannot add new default text when default text is in default position", function () {
-    cy.visit("/");
     cy.contains("Drag this to move around. Double-click to edit text.").should(
       "have.length",
       1
@@ -58,7 +62,6 @@ describe("texts", function () {
   });
 
   it("can add text", function () {
-    cy.visit("/");
     cy.get("p").click().type("{selectall} "); // trigger deleting text
     cy.get("body").click();
     cy.get("p").should("not.exist");
@@ -70,7 +73,6 @@ describe("texts", function () {
   });
 
   it("can drag text", function () {
-    cy.visit("/");
     cy.get("p")
       .should("have.css", "left", "314px")
       .should("have.css", "top", "298px");
