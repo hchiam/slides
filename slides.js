@@ -3,7 +3,20 @@ var leftButton = document.getElementById("left");
 var rightButton = document.getElementById("right");
 
 var isInitializingMemory = true;
-useMemory(createTextCallback, createImageCallback, setupCallback);
+
+(async function () {
+  if (
+    typeof localforage !== "undefined" ||
+    sessionStorage.slidesMemory ||
+    localStorage.slidesMemory
+  ) {
+    await readPersistentMemory(recreateSlidesFromMemory);
+  } else {
+    updatePersistentMemory(memory);
+  }
+  setUpSlides();
+})();
+
 isInitializingMemory = false;
 
 document.body.addEventListener("keyup", detectArrowKeys);
@@ -16,7 +29,7 @@ function delayedSetSlideNumber(slideNumber) {
   }, 1000);
 }
 
-function setupCallback() {
+function setUpSlides() {
   if (areAllSlidesBlankInMemory()) {
     setUpInitialSlide();
   }

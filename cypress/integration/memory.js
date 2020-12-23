@@ -1,9 +1,14 @@
+import "../support/commands";
+
 describe("memory", function () {
-  it("persists data after hitting refresh", function () {
+  beforeEach(function () {
     cy.visit("/");
-
     cy.get("#delete").click();
+    cy.clearLocalForage();
+    cy.wait(2000);
+  });
 
+  it("persists data after hitting refresh", function () {
     cy.get("p").click().type("{selectall}Edited text.").blur();
 
     cy.get("#add_image").click();
@@ -38,10 +43,6 @@ describe("memory", function () {
   });
 
   it("can delete all slides", function () {
-    cy.visit("/");
-
-    cy.get("#delete").click();
-
     cy.get("p").click().type("{selectall}Edited text.").blur();
 
     cy.get("#add_image").click();
@@ -57,6 +58,7 @@ describe("memory", function () {
     cy.get("p:visible").click().type("{selectall}text 2").blur();
 
     cy.get("#delete").click();
+    cy.wait(3000);
 
     cy.get("p:visible").should("have.length", 1);
 
@@ -64,10 +66,6 @@ describe("memory", function () {
   });
 
   it("can reuse slides", function () {
-    cy.visit("/");
-
-    cy.get("#delete").click();
-
     cy.get("p").should("have.length", 1).should("have.text", defaultTextString);
 
     cy.get("#upload").click();

@@ -20,7 +20,9 @@
     "url": "https://github.com/hchiam/slides/issues"
   },
   "homepage": "https://github.com/hchiam/slides#readme",
-  "dependencies": {},
+  "dependencies": {
+    "localforage": "^1.9.0"
+  },
   "devDependencies": {
     "cypress": "^6.2.0",
     "cypress-file-upload": "^4.1.1",

@@ -28,16 +28,6 @@ var defaultText = {
   slide: 0,
 };
 
-if (
-  typeof localforage !== "undefined" ||
-  sessionStorage.slidesMemory ||
-  localStorage.slidesMemory
-) {
-  readPersistentMemory();
-} else {
-  updatePersistentMemory(memory);
-}
-
 function Text(text = "", id) {
   this.text = text || defaultText.text;
   this.left = defaultText.left;
@@ -157,54 +147,47 @@ function updateTextInMemory(textId, text) {
 
 function updatePersistentMemory(memoryObject) {
   memory = memoryObject;
-  if (arePromisesAvailable() && typeof localforage !== "undefined") {
+  if (typeof localforage !== "undefined") {
     localforage.setItem("slidesMemory", JSON.stringify(memoryObject || memory));
   } else if (sessionStorage.slidesMemory) {
     sessionStorage.slidesMemory = JSON.stringify(memoryObject || memory);
-  } else if (localStorage.slidesMemory) {
+  } else {
     localStorage.slidesMemory = JSON.stringify(memoryObject || memory);
   }
 }
 
-function readPersistentMemory(callback) {
-  if (arePromisesAvailable() && typeof localforage !== "undefined") {
-    localforage.getItem("slidesMemory").then(async function (value) {
-      if (value) {
-        memory = await JSON.parse(value);
-      }
-      if (callback) callback();
-    });
+async function readPersistentMemory(callback) {
+  if (typeof localforage !== "undefined") {
+    memory = JSON.parse(await localforage.getItem("slidesMemory")) || memory;
   } else if (sessionStorage.slidesMemory) {
     memory = JSON.parse(sessionStorage.slidesMemory);
   } else if (localStorage.slidesMemory) {
     memory = JSON.parse(localStorage.slidesMemory);
   }
+
+  if (callback) callback(memory);
 }
 
 function useMemory(createTextCallback, createImageCallback, setupCallback) {
-  readPersistentMemory(function () {
-    if (!memory || !memory.slides) return;
+  var slides = memory.slides;
 
-    var slides = memory.slides;
+  if (slides.length === 0) return;
 
-    if (slides.length === 0) return;
+  slides.forEach(function (slide, slideIndex) {
+    if (Object.keys(slide.texts).length > 0) {
+      useTextsFromMemory(slide, slideIndex, createTextCallback);
+    }
 
-    slides.forEach(function (slide, slideIndex) {
-      if (Object.keys(slide.texts).length > 0) {
-        useTextsFromMemory(slide, slideIndex, createTextCallback);
-      }
-
-      if (Object.keys(slide.images).length > 0) {
-        useImagesFromMemory(slide, slideIndex, createImageCallback);
-      }
-    });
-
-    var scale = getScaleForOriginalScreenSize(memory);
-    var elementToScale = document.getElementById("current_slide");
-    elementToScale.style.transform = "scale(" + scale + ")";
-
-    if (setupCallback) setupCallback();
+    if (Object.keys(slide.images).length > 0) {
+      useImagesFromMemory(slide, slideIndex, createImageCallback);
+    }
   });
+
+  var scale = getScaleForOriginalScreenSize(memory);
+  var elementToScale = document.getElementById("current_slide");
+  elementToScale.style.transform = "scale(" + scale + ")";
+
+  if (setupCallback) setupCallback();
 }
 
 function useTextsFromMemory(slide, slideIndex, createTextCallback) {
@@ -268,19 +251,18 @@ function removeImageFromMemory(id, callback) {
 }
 
 function recreateSlidesFromMemory(memoryObject) {
-  console.log("memoryObject", memoryObject);
   updatePersistentMemory(memoryObject);
   clearSlides();
   useMemory(createTextCallback, createImageCallback);
 }
 
-function save() {
+async function save() {
   var yes = confirm(
     "Your slides are already automatically saved in your browser, \nas long as you don't clear cache. \n\nDo you still want to save the slides data in a JSON file?"
   );
   if (!yes) return;
-  var jsonText = JSON.stringify(memory);
-  download(jsonText, "slides_data.json", "application/json");
+  await readPersistentMemory();
+  download(memory, "slides_data.json", "application/json");
 }
 
 function download(text, name, type) {
@@ -318,7 +300,6 @@ function deleteAll() {
 function clearMemory() {
   sessionStorage.slidesMemory = "";
   localStorage.slidesMemory = "";
-  if (typeof localforage !== "undefined") localforage.clear();
   memory = {
     originalScreenSize: {
       width: document.documentElement.clientWidth,
@@ -335,6 +316,7 @@ function clearMemory() {
       },
     ],
   };
+  if (typeof localforage !== "undefined") localforage.clear();
 }
 
 function areAllSlidesBlankInMemory() {
@@ -351,12 +333,5 @@ function areAllSlidesBlankInMemory() {
     Object.keys(memory.slides[0].images).length === 0;
   return (
     noJSMemoryAtAll || noSlides || (noTextsInFirstSlide && noImagesInFirstSlide)
-  );
-}
-
-function arePromisesAvailable() {
-  return (
-    typeof Promise !== "undefined" &&
-    Promise.toString().indexOf("[native code]") !== -1
   );
 }

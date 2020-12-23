@@ -1,25 +1,30 @@
+import "../support/commands";
+
 describe("slides: left/right/number", function () {
-  it("can add/advance slide", function () {
+  beforeEach(function () {
     cy.visit("/");
+    cy.get("#delete").click();
+    cy.clearLocalForage();
+    cy.wait(2000);
+  });
+
+  it("can add/advance slide", function () {
     cy.get("#right").click();
     cy.get("#slide_number").should("have.value", 2);
   });
 
   it("can go to previous slide", function () {
-    cy.visit("/");
     cy.get("#right").click();
     cy.get("#left").click();
     cy.get("#slide_number").should("have.value", 1);
   });
 
   it("can go to next/previous slide using slide number input", function () {
-    cy.visit("/");
     cy.get("#slide_number").type("{uparrow}").should("have.value", 2);
     cy.get("#slide_number").type("{downarrow}").should("have.value", 1);
   });
 
   it("can go left/right when arrow keys on body", function () {
-    cy.visit("/");
     cy.get("body").focus().type("{downarrow}");
     cy.get("#slide_number").should("have.value", 2);
     cy.get("body").focus().type("{uparrow}");
@@ -31,8 +36,6 @@ describe("slides: left/right/number", function () {
   });
 
   it("can go left/right when arrow keys on any buttons", function () {
-    cy.visit("/");
-
     cy.get("#right").focus().type("{downarrow}");
     cy.get("#slide_number").should("have.value", 2);
     cy.get("#left").focus().type("{uparrow}");

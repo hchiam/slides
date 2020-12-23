@@ -1,9 +1,14 @@
+import "../support/commands";
+
 describe("images", function () {
-  it("can add image", function () {
+  beforeEach(function () {
     cy.visit("/");
-
     cy.get("#delete").click();
+    cy.clearLocalForage();
+    cy.wait(2000);
+  });
 
+  it("can add image", function () {
     cy.get("img").should("not.exist");
 
     cy.get("#add_image").click();
@@ -16,10 +21,6 @@ describe("images", function () {
   });
 
   it("can delete image", function () {
-    cy.visit("/");
-
-    cy.get("#delete").click();
-
     cy.get("img").should("not.exist");
 
     cy.get("#add_image").click();
@@ -35,10 +36,6 @@ describe("images", function () {
   });
 
   it("can drag image", function () {
-    cy.visit("/");
-
-    cy.get("#delete").click();
-
     cy.get("#add_image").click();
     cy.fixture("cells-grid.png").then((fileContent) => {
       cy.get("input#select_image").attachFile("cells-grid.png");

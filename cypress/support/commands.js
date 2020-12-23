@@ -25,3 +25,9 @@
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
 import "cypress-file-upload";
+
+import localforage from "localforage";
+
+Cypress.Commands.add("clearLocalForage", async () => {
+  await localforage.clear();
+});
