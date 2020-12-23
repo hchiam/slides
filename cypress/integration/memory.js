@@ -2,6 +2,8 @@ describe("memory", function () {
   it("persists data after hitting refresh", function () {
     cy.visit("/");
 
+    cy.get("#delete").click();
+
     cy.get("p").click().type("{selectall}Edited text.").blur();
 
     cy.get("#add_image").click();
@@ -17,6 +19,7 @@ describe("memory", function () {
     cy.get("p:visible").click().type("{selectall}text 2").blur();
 
     cy.reload();
+    cy.wait(2000);
 
     cy.get("p:visible").should("exist");
     cy.get("p:visible").should("have.text", "Edited text.");
@@ -36,6 +39,8 @@ describe("memory", function () {
 
   it("can delete all slides", function () {
     cy.visit("/");
+
+    cy.get("#delete").click();
 
     cy.get("p").click().type("{selectall}Edited text.").blur();
 
@@ -60,6 +65,8 @@ describe("memory", function () {
 
   it("can reuse slides", function () {
     cy.visit("/");
+
+    cy.get("#delete").click();
 
     cy.get("p").should("have.length", 1).should("have.text", defaultTextString);
 

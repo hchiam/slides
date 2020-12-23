@@ -3,11 +3,8 @@ var leftButton = document.getElementById("left");
 var rightButton = document.getElementById("right");
 
 var isInitializingMemory = true;
-useMemory(createTextCallback, createImageCallback);
+useMemory(createTextCallback, createImageCallback, setupCallback);
 isInitializingMemory = false;
-styleLeftRightButtons();
-updateSlideNumberInputMax();
-setSlideNumber(currentSlideIndex + 1);
 
 document.body.addEventListener("keyup", detectArrowKeys);
 
@@ -17,6 +14,15 @@ function delayedSetSlideNumber(slideNumber) {
   slideNumberTimer = setTimeout(function () {
     setSlideNumber(slideNumber);
   }, 1000);
+}
+
+function setupCallback() {
+  if (areAllSlidesBlankInMemory()) {
+    setUpInitialSlide();
+  }
+  styleLeftRightButtons();
+  updateSlideNumberInputMax();
+  setSlideNumber(currentSlideIndex + 1);
 }
 
 function setSlideNumber(slideNumber) {

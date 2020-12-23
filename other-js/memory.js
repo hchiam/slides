@@ -28,7 +28,11 @@ var defaultText = {
   slide: 0,
 };
 
-if (localforage || sessionStorage.slidesMemory || localStorage.slidesMemory) {
+if (
+  typeof localforage !== "undefined" ||
+  sessionStorage.slidesMemory ||
+  localStorage.slidesMemory
+) {
   readPersistentMemory();
 } else {
   updatePersistentMemory(memory);
@@ -152,7 +156,8 @@ function updateTextInMemory(textId, text) {
 }
 
 function updatePersistentMemory(memoryObject) {
-  if (arePromisesAvailable() && localforage) {
+  memory = memoryObject;
+  if (arePromisesAvailable() && typeof localforage !== "undefined") {
     localforage.setItem("slidesMemory", JSON.stringify(memoryObject || memory));
   } else if (sessionStorage.slidesMemory) {
     sessionStorage.slidesMemory = JSON.stringify(memoryObject || memory);
@@ -162,7 +167,7 @@ function updatePersistentMemory(memoryObject) {
 }
 
 function readPersistentMemory(callback) {
-  if (arePromisesAvailable() && localforage) {
+  if (arePromisesAvailable() && typeof localforage !== "undefined") {
     localforage.getItem("slidesMemory").then(async function (value) {
       if (value) {
         memory = await JSON.parse(value);
@@ -176,7 +181,7 @@ function readPersistentMemory(callback) {
   }
 }
 
-function useMemory(createTextCallback, createImageCallback) {
+function useMemory(createTextCallback, createImageCallback, setupCallback) {
   readPersistentMemory(function () {
     if (!memory || !memory.slides) return;
 
@@ -198,9 +203,7 @@ function useMemory(createTextCallback, createImageCallback) {
     var elementToScale = document.getElementById("current_slide");
     elementToScale.style.transform = "scale(" + scale + ")";
 
-    if (areAllSlidesBlankInMemory()) {
-      setUpInitialSlide();
-    }
+    if (setupCallback) setupCallback();
   });
 }
 
@@ -265,6 +268,7 @@ function removeImageFromMemory(id, callback) {
 }
 
 function recreateSlidesFromMemory(memoryObject) {
+  console.log("memoryObject", memoryObject);
   updatePersistentMemory(memoryObject);
   clearSlides();
   useMemory(createTextCallback, createImageCallback);
@@ -314,7 +318,7 @@ function deleteAll() {
 function clearMemory() {
   sessionStorage.slidesMemory = "";
   localStorage.slidesMemory = "";
-  if (localforage) localforage.clear();
+  if (typeof localforage !== "undefined") localforage.clear();
   memory = {
     originalScreenSize: {
       width: document.documentElement.clientWidth,
