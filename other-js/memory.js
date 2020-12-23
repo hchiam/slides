@@ -156,16 +156,20 @@ function updatePersistentMemory(memoryObject) {
   }
 }
 
-async function readPersistentMemory(callback) {
+function readPersistentMemory(callback) {
   if (typeof localforage !== "undefined") {
-    memory = JSON.parse(await localforage.getItem("slidesMemory")) || memory;
-  } else if (sessionStorage.slidesMemory) {
-    memory = JSON.parse(sessionStorage.slidesMemory);
-  } else if (localStorage.slidesMemory) {
-    memory = JSON.parse(localStorage.slidesMemory);
+    localforage.getItem("slidesMemory", function (err, value) {
+      memory = JSON.parse(value) || memory;
+      if (callback) callback(memory);
+    });
+  } else {
+    if (sessionStorage.slidesMemory) {
+      memory = JSON.parse(sessionStorage.slidesMemory);
+    } else if (localStorage.slidesMemory) {
+      memory = JSON.parse(localStorage.slidesMemory);
+    }
+    if (callback) callback(memory);
   }
-
-  if (callback) callback(memory);
 }
 
 function useMemory(createTextCallback, createImageCallback, setupCallback) {
@@ -256,12 +260,12 @@ function recreateSlidesFromMemory(memoryObject) {
   useMemory(createTextCallback, createImageCallback);
 }
 
-async function save() {
+function save() {
   var yes = confirm(
     "Your slides are already automatically saved in your browser, \nas long as you don't clear cache. \n\nDo you still want to save the slides data in a JSON file?"
   );
   if (!yes) return;
-  await readPersistentMemory();
+  readPersistentMemory();
   download(memory, "slides_data.json", "application/json");
 }
 

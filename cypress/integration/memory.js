@@ -24,7 +24,6 @@ describe("memory", function () {
     cy.get("p:visible").click().type("{selectall}text 2").blur();
 
     cy.reload();
-    cy.wait(2000);
 
     cy.get("p:visible").should("exist");
     cy.get("p:visible").should("have.text", "Edited text.");
@@ -58,7 +57,6 @@ describe("memory", function () {
     cy.get("p:visible").click().type("{selectall}text 2").blur();
 
     cy.get("#delete").click();
-    cy.wait(3000);
 
     cy.get("p:visible").should("have.length", 1);
 

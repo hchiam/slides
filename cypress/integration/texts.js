@@ -79,11 +79,7 @@ describe("texts", function () {
     cy.get("p")
       .trigger("mousedown", { which: 1, clientX: 314, clientY: 298 })
       .trigger("mousemove", { clientX: 700, clientY: 100 })
-      .trigger("mouseup", { force: true });
-
-    cy.wait(1000);
-
-    cy.get("p")
+      .trigger("mouseup", { force: true })
       .should("have.css", "left", "700px")
       .should("have.css", "top", "100px");
   });

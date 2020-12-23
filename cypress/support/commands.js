@@ -29,5 +29,6 @@ import "cypress-file-upload";
 import localforage from "localforage";
 
 Cypress.Commands.add("clearLocalForage", async () => {
+  // example usage: cy.clearLocalForage();
   await localforage.clear();
 });

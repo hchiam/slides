@@ -4,13 +4,13 @@ var rightButton = document.getElementById("right");
 
 var isInitializingMemory = true;
 
-(async function () {
+(function () {
   if (
     typeof localforage !== "undefined" ||
     sessionStorage.slidesMemory ||
     localStorage.slidesMemory
   ) {
-    await readPersistentMemory(recreateSlidesFromMemory);
+    readPersistentMemory(recreateSlidesFromMemory);
   } else {
     updatePersistentMemory(memory);
   }
