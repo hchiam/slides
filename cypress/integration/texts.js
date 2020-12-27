@@ -74,13 +74,13 @@ describe("texts", function () {
 
   it("can drag text", function () {
     cy.get("p")
-      .should("have.css", "left", "314px")
-      .should("have.css", "top", "298px");
+      .should("have.css", "left", "154.758px")
+      .should("have.css", "top", "309.5px");
     cy.get("p")
-      .trigger("mousedown", { which: 1, clientX: 314, clientY: 298 })
-      .trigger("mousemove", { clientX: 700, clientY: 100 })
+      .trigger("mousedown", { which: 1, clientX: 155, clientY: 310 })
+      .trigger("mousemove", { clientX: 100, clientY: 100 })
       .trigger("mouseup", { force: true })
-      .should("have.css", "left", "700px")
+      .should("have.css", "left", "100px")
       .should("have.css", "top", "100px");
   });
 });

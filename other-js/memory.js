@@ -21,18 +21,25 @@ var memory = {
 
 var defaultTextString = "Drag this to move around. Double-click to edit text.";
 
+var goldenRatio = 1.61; // for big text to use
+var defaultTextWidth = 690.484; // in px
+var defaultTextHeight = 41; // in px
 var defaultText = {
   text: defaultTextString,
-  left: document.documentElement.clientWidth / 2 - 372 / 2,
-  top: document.documentElement.clientHeight / 2 - 32,
+  left: document.documentElement.clientWidth / 2 - defaultTextWidth / 2,
+  top: document.documentElement.clientHeight / 2 - defaultTextHeight / 2,
   slide: 0,
+  fontSize: "30px",
 };
+var defaultTextWidthBig = defaultTextWidth * goldenRatio;
+var defaultTextHeightBig = defaultTextHeight * goldenRatio;
 
 function Text(text = "", id) {
   this.text = text || defaultText.text;
   this.left = defaultText.left;
   this.top = defaultText.top;
   this.slide = defaultText.slide;
+  this.fontSize = defaultText.fontSize;
   this.id = id || generateId();
 }
 

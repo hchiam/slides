@@ -6,6 +6,10 @@ describe("images", function () {
     cy.get("#delete").click();
     cy.clearLocalForage();
     cy.wait(2000);
+    cy.contains("Drag this to move around. Double-click to edit text.")
+      .dblclick()
+      .type("{selectall} "); // trigger deleting text
+    cy.get("body").click();
   });
 
   it("can add image", function () {
