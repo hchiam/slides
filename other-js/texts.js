@@ -30,10 +30,11 @@ function createNewText(
 function createNewBigText(
   parentElement = currentSlide,
   text = defaultText.text,
-  left = defaultText.left - (743 - 372) / 2, // 743 vs 372
-  top = defaultText.top
+  left = defaultText.left + defaultTextWidth / 2 - defaultTextWidthBig / 2,
+  top = defaultText.top + defaultTextHeight / 2 - defaultTextHeightBig / 2
 ) {
-  var textProps = { fontSize: "2rem" };
+  var fontSizeBig = defaultText.fontSize.replace("px", "") * goldenRatio;
+  var textProps = { fontSize: fontSizeBig + "px" };
   createNewText(parentElement, text, left, top, textProps);
 }
 
@@ -65,7 +66,10 @@ function createText(
     if (textProperties.fontSize) {
       p.style.fontSize = textProperties.fontSize;
     }
+  } else {
+    p.style.fontSize = defaultText.fontSize; // fallback size (if not in memory)
   }
+
   makeElementDraggableAndEditable(p, {
     mouseMoveCallback: updateTextPosition,
     blurCallback: updateText,
