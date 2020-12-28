@@ -21,7 +21,7 @@ var memory = {
 
 var defaultTextString = "Drag this to move around. Double-click to edit text.";
 
-var goldenRatio = 1.61; // for big text to use
+var goldenRatio = 1.6; // for big text to use
 var defaultTextWidth = 690.484; // in px
 var defaultTextHeight = 41; // in px
 var defaultText = {
