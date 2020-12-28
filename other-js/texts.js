@@ -77,6 +77,9 @@ function createText(
       { x: window.innerWidth / 2, y: window.innerHeight / 10 },
       { x: window.innerWidth / 2, y: window.innerHeight / 2 },
     ],
+    snapCallback: function (left, top) {
+      updateTextPosition(p);
+    },
   });
 
   p.onpaste = function handlePaste(e) {
