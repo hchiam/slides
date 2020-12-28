@@ -63,13 +63,14 @@ function createImage(
 
   parentElement.appendChild(img);
 
-  makeElementDraggable(img, {
+  makeElementDraggableAndEditable(img, {
     mouseMoveCallback: updateImagePosition,
     touchEndCallback: onDoubleTap.bind(this, img, function (element) {
       removeImageFromMemory(element.id, function () {
         element.remove();
       });
     }),
+    disableEditing: true,
     snapPoints: [{ x: window.innerWidth / 2, y: window.innerHeight / 2 }],
     snapCallback: function (left, top) {
       updateImagePosition(img);
