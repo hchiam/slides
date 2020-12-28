@@ -273,7 +273,11 @@ function save() {
   );
   if (!yes) return;
   readPersistentMemory();
-  download(memory, "slides_data.json", "application/json");
+  download(
+    JSON.stringify(memory, null, 2),
+    "slides_data.json",
+    "application/json"
+  );
 }
 
 function download(text, name, type) {
