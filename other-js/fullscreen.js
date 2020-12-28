@@ -21,20 +21,31 @@ function detectFullscreenKeyboardShortcuts(event) {
     (event.ctrlKey || event.metaKey) &&
     event.shiftKey &&
     (key === "KeyF" || key === 70);
-  if (isFOnly || isF11 || isCmdShiftF) {
+  var isEsc = key === "Escape" || key === 27;
+  if (isFOnly || isF11) {
     clearTimeout(fullscreenKeysDebounce);
     fullscreenKeysDebounce = setTimeout(function () {
       fullscreen();
     }, 500);
+  } else if (isCmdShiftF) {
+    clearTimeout(fullscreenKeysDebounce);
+    fullscreenKeysDebounce = setTimeout(function () {
+      var areControlsToBeShown = false;
+      fullscreen(areControlsToBeShown);
+    }, 500);
+  } else if (isEsc) {
+    showControls();
   }
 }
 
-function fullscreen() {
+function fullscreen(areControlsToBeShown = true) {
   var inFullscreen = window.innerHeight == screen.height;
   if (inFullscreen) {
     exitFullscreen();
+    showControls();
   } else {
     enterFullscreen();
+    showControls(areControlsToBeShown);
   }
 }
 
@@ -81,6 +92,7 @@ function styleFullscreenButton() {
       "Fullscreen"
     );
     fullscreenButton.nextElementSibling.style.setProperty("--left", "-4.1em");
+    showControls();
   }
   blurFullscreenButton(3000);
 }
@@ -92,4 +104,10 @@ function blurFullscreenButton(milliseconds) {
   fullscreenButtonFocusTimer = setTimeout(function () {
     fullscreenButton.blur();
   }, milliseconds);
+}
+
+function showControls(areControlsToBeShown = true) {
+  document.getElementById("controls").style.visibility = areControlsToBeShown
+    ? ""
+    : "hidden";
 }
