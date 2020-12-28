@@ -71,6 +71,9 @@ function createImage(
       });
     }),
     snapPoints: [{ x: window.innerWidth / 2, y: window.innerHeight / 2 }],
+    snapCallback: function (left, top) {
+      updateTextPosition(img);
+    },
   });
 
   if (!isInitializingMemory) {
