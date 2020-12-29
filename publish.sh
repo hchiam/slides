@@ -1,4 +1,5 @@
 mkdir to-publish
+rm to-publish/*
 mkdir to-publish/other-css
 mkdir to-publish/other-js
 cp -r other-css to-publish
