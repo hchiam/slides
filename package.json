@@ -4,11 +4,13 @@
   "description": "Edit. Present. Try it: https://hchiam-slides.surge.sh",
   "main": "slides.js",
   "scripts": {
-    "test": "yarn test-site && npx cypress open",
-    "test-cli": "yarn test-background",
+    "test": "yarn test-site-prep && npx cypress open",
+    "test-pre-commit": "yarn test-site-prep && yarn test-cli",
+    "test-cli": "yarn test-background # just a semantic alias",
     "test-background": "npx cypress run",
-    "test-site": "bash setup-test-site.sh # update test site",
-    "test-quality": "bash website-quality-test.sh"
+    "test-site-prep": "bash bash-scripts/setup-test-site.sh # update test site",
+    "test-quality": "bash bash-scripts/website-quality-test.sh",
+    "publish": "bash bash-scripts/publish.sh"
   },
   "repository": {
     "type": "git",
@@ -29,7 +31,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn test-site && yarn test-cli"
+      "pre-commit": "yarn test-pre-commit"
     }
   },
   "dependencies": {
