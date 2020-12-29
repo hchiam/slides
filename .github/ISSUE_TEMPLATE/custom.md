@@ -1,3 +1,11 @@
+---
+name: Custom issue template
+about: My simpler custom issue template
+title: ""
+labels: ""
+assignees: ""
+---
+
 # Problem/Need:
 
 <!-- problem description or why something should be fixed/added -->
