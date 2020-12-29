@@ -1,5 +1,6 @@
 {
   "baseUrl": "https://test-slides.surge.sh",
   "video": false,
-  "screenshotOnRunFailure": false
+  "screenshotOnRunFailure": false,
+  "retries": 1
 }
