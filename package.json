@@ -10,7 +10,7 @@
     "test-background": "npx cypress run",
     "test-site-prep": "bash bash-scripts/setup-test-site.sh # update test site",
     "test-quality": "bash bash-scripts/website-quality-test.sh",
-    "publish": "bash bash-scripts/publish.sh"
+    "publish": "bash bash-scripts/publish.sh # yarn run publish"
   },
   "repository": {
     "type": "git",
