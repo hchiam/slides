@@ -14,7 +14,7 @@ before_script:
   - cypress install # to get Cypress working
 
 script:
-  - yarn test-site && yarn test-cli
+  - yarn test-site-prep && yarn test-cli
 
 notifications:
   email:
