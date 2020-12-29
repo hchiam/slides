@@ -31,5 +31,8 @@
     "hooks": {
       "pre-commit": "yarn test-site && yarn test-cli"
     }
+  },
+  "dependencies": {
+    "localforage": "^1.9.0"
   }
 }
