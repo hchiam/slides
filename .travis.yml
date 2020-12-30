@@ -2,7 +2,7 @@
 
 language: javascript
 
-node_js: v10
+node_js: v12
 
 cache:
   yarn: true
