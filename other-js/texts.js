@@ -22,7 +22,6 @@ function createNewText(
   textObject.slide = Memory.currentSlideIndex;
   var id = textObject.id;
   Memory.addTextToMemory(textObject, id, textProps);
-  console.log(left, top, defaultText.left);
   createText(
     parentElement,
     text,
