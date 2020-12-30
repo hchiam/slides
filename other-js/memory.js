@@ -263,7 +263,7 @@ function removeImageFromMemory(id, callback) {
 
 function recreateSlidesFromMemory(memoryObject) {
   updatePersistentMemory(memoryObject);
-  clearSlides();
+  Slides.clearSlides();
   useMemory(createTextCallback, createImageCallback);
 }
 

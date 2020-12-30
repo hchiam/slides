@@ -1,4 +1,4 @@
-function recreateText(parentElement = currentSlide, textId, slideIndex) {
+function recreateText(parentElement = Slides.currentSlide, textId, slideIndex) {
   var textObject = getSlide(slideIndex).texts[textId];
   var text = textObject.text;
   var left = textObject.left * getScaleForOriginalScreenSize(memory);
@@ -9,7 +9,7 @@ function recreateText(parentElement = currentSlide, textId, slideIndex) {
 }
 
 function createNewText(
-  parentElement = currentSlide,
+  parentElement = Slides.currentSlide,
   text = defaultText.text,
   left = defaultText.left,
   top = defaultText.top,
@@ -23,12 +23,12 @@ function createNewText(
   var id = textObject.id;
   addTextToMemory(textObject, id, textProps);
   createText(parentElement, text, left, top, id, currentSlideIndex, textProps);
-  styleLeftRightButtons();
+  Slides.styleLeftRightButtons();
   announce("Added new text."); // TODO: not working
 }
 
 function createNewBigText(
-  parentElement = currentSlide,
+  parentElement = Slides.currentSlide,
   text = defaultText.text,
   left = defaultText.left + defaultTextWidth / 2 - defaultTextWidthBig / 2,
   top = defaultText.top + defaultTextHeight / 2 - defaultTextHeightBig / 2
@@ -39,7 +39,7 @@ function createNewBigText(
 }
 
 function createText(
-  parentElement = currentSlide,
+  parentElement = Slides.currentSlide,
   text = defaultText.text,
   left = defaultText.left,
   top = defaultText.top,
@@ -193,5 +193,5 @@ function alreadyHasDefaultText() {
 }
 
 function createTextCallback(textObject, slideIndex) {
-  recreateText(currentSlide, textObject.id, slideIndex);
+  recreateText(Slides.currentSlide, textObject.id, slideIndex);
 }

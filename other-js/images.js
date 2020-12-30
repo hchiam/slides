@@ -1,12 +1,16 @@
 var recreatingImage = true;
-function recreateImage(parentElement = currentSlide, imageId, slideIndex) {
+function recreateImage(
+  parentElement = Slides.currentSlide,
+  imageId,
+  slideIndex
+) {
   recreatingImage = true;
   var imageObject = getSlide(slideIndex).images[imageId];
   var src = imageObject.file;
   var left = imageObject.left * getScaleForOriginalScreenSize(memory);
   var top = imageObject.top * getScaleForOriginalScreenSize(memory);
-  isInitializingMemory = true;
-  createImage(currentSlide, src, left, top, imageId, slideIndex);
+  Slides.isInitializingMemory = true;
+  createImage(Slides.currentSlide, src, left, top, imageId, slideIndex);
 }
 
 function createNewImage(src) {
@@ -18,13 +22,13 @@ function createNewImage(src) {
   var left = image.left;
   var top = image.top;
   var imageId = image.id;
-  isInitializingMemory = false;
-  createImage(currentSlide, src, left, top, imageId, currentSlideIndex);
+  Slides.isInitializingMemory = false;
+  createImage(Slides.currentSlide, src, left, top, imageId, currentSlideIndex);
   announce("Added new image."); // TODO: not working
 }
 
 function createImage(
-  parentElement = currentSlide,
+  parentElement = Slides.currentSlide,
   src,
   left,
   top,
@@ -77,7 +81,7 @@ function createImage(
     },
   });
 
-  if (!isInitializingMemory) {
+  if (!Slides.isInitializingMemory) {
     alert("Note: you can delete images by double-clicking on them.");
   }
 
@@ -102,7 +106,7 @@ function updateImagePosition(htmlElement) {
 }
 
 function createImageCallback(imageObject, slideIndex) {
-  recreateImage(currentSlide, imageObject.id, slideIndex);
+  recreateImage(Slides.currentSlide, imageObject.id, slideIndex);
 }
 
 function triggerCreateNewImage() {
@@ -141,7 +145,7 @@ function setMaxImageSize(img) {
 function centerImage(img) {
   if (!img.height || !img.width) return;
   // don't center if reusing data:
-  if (isInitializingMemory || recreatingImage) return;
+  if (Slides.isInitializingMemory || recreatingImage) return;
   var screenHeight = document.documentElement.clientHeight; // not screen.height
   var screenWidth = document.documentElement.clientWidth; // not screen.width
   img.style.top = screenHeight / 2 - img.height / 2 + "px";

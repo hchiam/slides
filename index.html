@@ -38,14 +38,16 @@
       <button
         aria-label="Previous slide"
         id="left"
-        onclick="left()"
+        onclick="Slides.left()"
         disabled
         class="hide-on-first-load"
       >
         ◀
       </button>
       <span data-before="Previous slide" style="--left: -5em"></span>
-      <button aria-label="Next slide" id="right" onclick="right()">▶</button>
+      <button aria-label="Next slide" id="right" onclick="Slides.right()">
+        ▶
+      </button>
       <span data-before="Next slide" style="--left: -4.2em"></span>
       <input
         aria-label="Slide number"
@@ -53,9 +55,9 @@
         min="1"
         type="number"
         value="1"
-        onkeyup="delayedSetSlideNumber(this.value)"
-        onchange="setSlideNumber(this.value)"
-        onmouseover="focusSlideNumberInput()"
+        onkeyup="Slides.delayedSetSlideNumber(this.value)"
+        onchange="Slides.setSlideNumber(this.value)"
+        onmouseover="Slides.focusSlideNumberInput()"
       />
       <span></span>
       <button aria-label="Add text" id="add_text" onclick="createNewText()">
