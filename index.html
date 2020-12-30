@@ -38,14 +38,16 @@
       <button
         aria-label="Previous slide"
         id="left"
-        onclick="left()"
+        onclick="Slides.left()"
         disabled
         class="hide-on-first-load"
       >
         ◀
       </button>
       <span data-before="Previous slide" style="--left: -5em"></span>
-      <button aria-label="Next slide" id="right" onclick="right()">▶</button>
+      <button aria-label="Next slide" id="right" onclick="Slides.right()">
+        ▶
+      </button>
       <span data-before="Next slide" style="--left: -4.2em"></span>
       <input
         aria-label="Slide number"
@@ -53,19 +55,23 @@
         min="1"
         type="number"
         value="1"
-        onkeyup="delayedSetSlideNumber(this.value)"
-        onchange="setSlideNumber(this.value)"
-        onmouseover="focusSlideNumberInput()"
+        onkeyup="Slides.delayedSetSlideNumber(this.value)"
+        onchange="Slides.setSlideNumber(this.value)"
+        onmouseover="Slides.focusSlideNumberInput()"
       />
       <span></span>
-      <button aria-label="Add text" id="add_text" onclick="createNewText()">
+      <button
+        aria-label="Add text"
+        id="add_text"
+        onclick="Texts.createNewText()"
+      >
         abc
       </button>
       <span></span>
       <button
         aria-label="Add big text"
         id="add_big_text"
-        onclick="createNewBigText()"
+        onclick="Texts.createNewBigText()"
       >
         &nbsp;
       </button>
@@ -73,23 +79,31 @@
       <input
         aria-label="Select image"
         id="select_image"
-        onchange="readImage(this)"
+        onchange="Images.readImage(this)"
         type="file"
         accept="image/*"
       />
       <button
         aria-label="Add image"
         id="add_image"
-        onclick="triggerCreateNewImage()"
+        onclick="Images.triggerCreateNewImage()"
       >
         <i class="material-icons">image</i>
       </button>
       <span></span>
-      <button aria-label="Fullscreen" id="fullscreen" onclick="fullscreen()">
+      <button
+        aria-label="Fullscreen"
+        id="fullscreen"
+        onclick="Fullscreen.fullscreen()"
+      >
         <i class="material-icons">fullscreen</i>
       </button>
       <span data-before="Fullscreen" style="--left: -4.1em"></span>
-      <button aria-label="Save slide data as JSON" id="save" onclick="save()">
+      <button
+        aria-label="Save slide data as JSON"
+        id="save"
+        onclick="Memory.save()"
+      >
         <i class="material-icons">download</i>
       </button>
       <span></span>
@@ -102,12 +116,12 @@
       <button
         aria-label="Reuse JSON format slide data"
         id="upload"
-        onclick="upload()"
+        onclick="Memory.upload()"
       >
         <i class="material-icons">upload</i>
       </button>
       <span></span>
-      <button aria-label="Delete" id="delete" onclick="deleteAll()">
+      <button aria-label="Delete" id="delete" onclick="Memory.deleteAll()">
         <i class="material-icons">delete</i>
       </button>
       <span></span>
