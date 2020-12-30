@@ -1,10 +1,11 @@
 {
   "name": "slides",
-  "version": "4.2.0",
+  "version": "4.3.0",
   "description": "Edit. Present. Try it: https://hchiam-slides.surge.sh",
   "main": "slides.js",
   "scripts": {
     "test": "yarn test-site-prep && npx cypress open",
+    "test-locally": "bash bash-scripts/test-locally.sh",
     "test-pre-commit": "yarn test-site-prep && yarn test-cli",
     "test-cli": "yarn test-background # just a semantic alias",
     "test-background": "npx cypress run",
@@ -25,8 +26,9 @@
   "devDependencies": {
     "cypress": "^6.2.0",
     "cypress-file-upload": "^4.1.1",
-    "husky": "^4.3.0",
-    "lighthouse": "^6.4.1",
+    "husky": "^4.3.6",
+    "lighthouse": "^6.5.0",
+    "minify": "^6.0.1",
     "surge": "^0.21.7"
   },
   "husky": {
