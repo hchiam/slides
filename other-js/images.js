@@ -5,25 +5,32 @@ function recreateImage(
   slideIndex
 ) {
   recreatingImage = true;
-  var imageObject = getSlide(slideIndex).images[imageId];
+  var imageObject = Memory.getSlide(slideIndex).images[imageId];
   var src = imageObject.file;
-  var left = imageObject.left * getScaleForOriginalScreenSize(memory);
-  var top = imageObject.top * getScaleForOriginalScreenSize(memory);
+  var left = imageObject.left * Memory.getScaleForOriginalScreenSize(memory);
+  var top = imageObject.top * Memory.getScaleForOriginalScreenSize(memory);
   Slides.isInitializingMemory = true;
   createImage(Slides.currentSlide, src, left, top, imageId, slideIndex);
 }
 
 function createNewImage(src) {
   recreatingImage = false;
-  var image = new Image(src);
-  addImageToMemory(image, image.id);
+  var image = new Memory.Image(src);
+  Memory.addImageToMemory(image, image.id);
 
   var src = image.file;
   var left = image.left;
   var top = image.top;
   var imageId = image.id;
   Slides.isInitializingMemory = false;
-  createImage(Slides.currentSlide, src, left, top, imageId, currentSlideIndex);
+  createImage(
+    Slides.currentSlide,
+    src,
+    left,
+    top,
+    imageId,
+    Memory.currentSlideIndex
+  );
   announce("Added new image."); // TODO: not working
 }
 
@@ -42,14 +49,15 @@ function createImage(
   img.style.zIndex = -1;
   img.id = imageId;
 
-  img.style.display = currentSlideIndex === slideIndex ? "block" : "none";
+  img.style.display =
+    Memory.currentSlideIndex === slideIndex ? "block" : "none";
   img.tabIndex = 0;
   img.ariaLabel = getAriaLabelFromImage(img);
 
   img.setAttribute("data-slide", slideIndex);
 
   img.addEventListener("dblclick", function () {
-    removeImageFromMemory(img.id, function () {
+    Memory.removeImageFromMemory(img.id, function () {
       img.remove();
     });
   });
@@ -59,7 +67,7 @@ function createImage(
     var isBackspace = key === "Backspace" || key === 8;
     var isDelete = key === "Delete" || key === 46;
     if (isBackspace || isDelete) {
-      removeImageFromMemory(img.id, function () {
+      Memory.removeImageFromMemory(img.id, function () {
         img.remove();
       });
     }
@@ -70,7 +78,7 @@ function createImage(
   makeElementDraggableAndEditable(img, {
     mouseMoveCallback: updateImagePosition,
     touchEndCallback: onDoubleTap.bind(this, img, function (element) {
-      removeImageFromMemory(element.id, function () {
+      Memory.removeImageFromMemory(element.id, function () {
         element.remove();
       });
     }),
@@ -99,7 +107,7 @@ function getAriaLabelFromImage(img) {
 function updateImagePosition(htmlElement) {
   var left = htmlElement.offsetLeft;
   var top = htmlElement.offsetTop;
-  updateImagePositionInMemory(htmlElement.id, left, top);
+  Memory.updateImagePositionInMemory(htmlElement.id, left, top);
   htmlElement.ariaLabel = getAriaLabelFromImage(htmlElement);
 
   debugMemory();

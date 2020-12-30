@@ -91,7 +91,11 @@
         <i class="material-icons">fullscreen</i>
       </button>
       <span data-before="Fullscreen" style="--left: -4.1em"></span>
-      <button aria-label="Save slide data as JSON" id="save" onclick="save()">
+      <button
+        aria-label="Save slide data as JSON"
+        id="save"
+        onclick="Memory.save()"
+      >
         <i class="material-icons">download</i>
       </button>
       <span></span>
@@ -104,12 +108,12 @@
       <button
         aria-label="Reuse JSON format slide data"
         id="upload"
-        onclick="upload()"
+        onclick="Memory.upload()"
       >
         <i class="material-icons">upload</i>
       </button>
       <span></span>
-      <button aria-label="Delete" id="delete" onclick="deleteAll()">
+      <button aria-label="Delete" id="delete" onclick="Memory.deleteAll()">
         <i class="material-icons">delete</i>
       </button>
       <span></span>

@@ -5,7 +5,7 @@ function announce(message) {
 }
 
 function announceSlideNumber(slideNumber) {
-  announce("Now on slide " + (currentSlideIndex + 1));
+  announce("Now on slide " + (Memory.currentSlideIndex + 1));
 }
 
 document.addEventListener("mousedown", function (event) {

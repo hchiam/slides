@@ -11,9 +11,9 @@ var Slides = {
       sessionStorage.slidesMemory ||
       localStorage.slidesMemory
     ) {
-      readPersistentMemory(recreateSlidesFromMemory);
+      Memory.readPersistentMemory(Memory.recreateSlidesFromMemory.bind(Memory));
     } else {
-      updatePersistentMemory(memory);
+      Memory.updatePersistentMemory(memory).bind(Memory);
     }
     this.setUpSlides();
     this.isInitializingMemory = false;
@@ -29,12 +29,12 @@ var Slides = {
   },
 
   setUpSlides: function () {
-    if (areAllSlidesBlankInMemory()) {
+    if (Memory.areAllSlidesBlankInMemory()) {
       this.setUpInitialSlide();
     }
     this.styleLeftRightButtons();
     this.updateSlideNumberInputMax();
-    this.setSlideNumber(currentSlideIndex + 1);
+    this.setSlideNumber(Memory.currentSlideIndex + 1);
   },
 
   setSlideNumber: function (slideNumber) {
@@ -42,23 +42,23 @@ var Slides = {
     var slideNumberInput = document.getElementById("slide_number");
     slideNumberInput.value = slideNumber;
     if (slideIndex === memory.slides.length && !this.isLastSlideBlank()) {
-      createSlideInMemory();
+      Memory.createSlideInMemory();
       this.updateSlideNumberInputMax();
       this.leftButton.classList.remove("hide-on-first-load");
     }
     var isValidSlideNumber =
       0 < slideNumber && slideNumber < memory.slides.length + 1;
     if (!isValidSlideNumber) {
-      slideNumberInput.value = currentSlideIndex + 1;
+      slideNumberInput.value = Memory.currentSlideIndex + 1;
       return;
     }
     if (slideIndex > 0) {
       this.leftButton.classList.remove("hide-on-first-load");
     }
-    this.hideSlide(currentSlideIndex);
-    currentSlideIndex = slideIndex;
-    this.showSlide(currentSlideIndex);
-    announceSlideNumber(currentSlideIndex + 1);
+    this.hideSlide(Memory.currentSlideIndex);
+    Memory.currentSlideIndex = slideIndex;
+    this.showSlide(Memory.currentSlideIndex);
+    announceSlideNumber(Memory.currentSlideIndex + 1);
     this.styleLeftRightButtons();
     // style slide number input:
     slideNumberInput.style.width = slideNumberInput.value.length + 5 + "ch";
@@ -81,33 +81,33 @@ var Slides = {
   },
 
   left: function () {
-    if (currentSlideIndex === 0) return;
-    this.hideSlide(currentSlideIndex);
-    currentSlideIndex--;
-    this.showSlide(currentSlideIndex);
+    if (Memory.currentSlideIndex === 0) return;
+    this.hideSlide(Memory.currentSlideIndex);
+    Memory.currentSlideIndex--;
+    this.showSlide(Memory.currentSlideIndex);
     this.styleLeftRightButtons();
-    this.setSlideNumber(currentSlideIndex + 1);
-    announceSlideNumber(currentSlideIndex + 1);
+    this.setSlideNumber(Memory.currentSlideIndex + 1);
+    announceSlideNumber(Memory.currentSlideIndex + 1);
   },
 
   right: function () {
-    if (!haveContentInSlide(currentSlideIndex)) return;
-    this.hideSlide(currentSlideIndex);
-    currentSlideIndex++;
-    if (currentSlideIndex >= memory.slides.length) {
-      createSlideInMemory();
+    if (!Memory.haveContentInSlide(Memory.currentSlideIndex)) return;
+    this.hideSlide(Memory.currentSlideIndex);
+    Memory.currentSlideIndex++;
+    if (Memory.currentSlideIndex >= memory.slides.length) {
+      Memory.createSlideInMemory();
       this.updateSlideNumberInputMax();
     }
-    this.showSlide(currentSlideIndex);
+    this.showSlide(Memory.currentSlideIndex);
     this.styleLeftRightButtons();
-    this.setSlideNumber(currentSlideIndex + 1);
+    this.setSlideNumber(Memory.currentSlideIndex + 1);
     this.leftButton.classList.remove("hide-on-first-load");
-    announceSlideNumber(currentSlideIndex + 1);
+    announceSlideNumber(Memory.currentSlideIndex + 1);
   },
 
   styleLeftRightButtons: function () {
     // left
-    var isOnFirstSlide = currentSlideIndex < 1;
+    var isOnFirstSlide = Memory.currentSlideIndex < 1;
     if (isOnFirstSlide) {
       this.leftButton.setAttribute("disabled", true);
       this.leftButton.nextElementSibling.setAttribute(
@@ -124,8 +124,8 @@ var Slides = {
       this.leftButton.nextElementSibling.style.setProperty("--left", "-5em");
     }
     // right
-    var isOnLastSlide = currentSlideIndex === memory.slides.length - 1;
-    if (isOnLastSlide && !haveContentInSlide(currentSlideIndex)) {
+    var isOnLastSlide = Memory.currentSlideIndex === memory.slides.length - 1;
+    if (isOnLastSlide && !Memory.haveContentInSlide(Memory.currentSlideIndex)) {
       this.rightButton.setAttribute("disabled", true);
       this.rightButton.nextElementSibling.setAttribute(
         "data-before",
@@ -159,12 +159,12 @@ var Slides = {
   },
 
   hideSlide: function (slideIndex) {
-    var textIds = getTextIds(slideIndex);
+    var textIds = Memory.getTextIds(slideIndex);
     textIds.map(function hideText(textId) {
       var element = document.getElementById(textId);
       if (element) element.style.display = "none";
     });
-    var imageIds = getImageIds(slideIndex);
+    var imageIds = Memory.getImageIds(slideIndex);
     imageIds.map(function hideImage(imageId) {
       var element = document.getElementById(imageId);
       if (element) element.style.display = "none";
@@ -172,12 +172,12 @@ var Slides = {
   },
 
   showSlide: function (slideIndex) {
-    var textIds = getTextIds(slideIndex);
+    var textIds = Memory.getTextIds(slideIndex);
     textIds.map(function showText(textId) {
       var element = document.getElementById(textId);
       if (element) element.style.display = "block";
     });
-    var imageIds = getImageIds(slideIndex);
+    var imageIds = Memory.getImageIds(slideIndex);
     imageIds.map(function showImage(imageId) {
       var element = document.getElementById(imageId);
       if (element) element.style.display = "block";
@@ -185,7 +185,7 @@ var Slides = {
   },
 
   setUpInitialSlide: function () {
-    var currentSlideTexts = getCurrentSlide().texts;
+    var currentSlideTexts = Memory.getCurrentSlide().texts;
     var haveTextsInMemory = Object.keys(currentSlideTexts).length > 0;
     if (haveTextsInMemory) return;
     createNewText(this.currentSlide);

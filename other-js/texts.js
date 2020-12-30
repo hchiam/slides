@@ -1,8 +1,8 @@
 function recreateText(parentElement = Slides.currentSlide, textId, slideIndex) {
-  var textObject = getSlide(slideIndex).texts[textId];
+  var textObject = Memory.getSlide(slideIndex).texts[textId];
   var text = textObject.text;
-  var left = textObject.left * getScaleForOriginalScreenSize(memory);
-  var top = textObject.top * getScaleForOriginalScreenSize(memory);
+  var left = textObject.left * Memory.getScaleForOriginalScreenSize(memory);
+  var top = textObject.top * Memory.getScaleForOriginalScreenSize(memory);
   var id = textObject.id;
   var textProps = textObject.textProps;
   createText(parentElement, text, left, top, id, slideIndex, textProps);
@@ -16,13 +16,22 @@ function createNewText(
   textProps
 ) {
   if (alreadyHasDefaultText()) return;
-  var textObject = new Text(text);
+  var textObject = new Memory.Text(text);
   textObject.left = left;
   textObject.top = top;
-  textObject.slide = currentSlideIndex;
+  textObject.slide = Memory.currentSlideIndex;
   var id = textObject.id;
-  addTextToMemory(textObject, id, textProps);
-  createText(parentElement, text, left, top, id, currentSlideIndex, textProps);
+  Memory.addTextToMemory(textObject, id, textProps);
+  console.log(left, top, defaultText.left);
+  createText(
+    parentElement,
+    text,
+    left,
+    top,
+    id,
+    Memory.currentSlideIndex,
+    textProps
+  );
   Slides.styleLeftRightButtons();
   announce("Added new text."); // TODO: not working
 }
@@ -44,7 +53,7 @@ function createText(
   left = defaultText.left,
   top = defaultText.top,
   id,
-  slideIndex = currentSlideIndex,
+  slideIndex = Memory.currentSlideIndex,
   textProperties
 ) {
   var p = document.createElement("p");
@@ -55,7 +64,7 @@ function createText(
   p.style.boxShadow = "none";
   p.style.background = "transparent";
 
-  p.style.display = currentSlideIndex === slideIndex ? "block" : "none";
+  p.style.display = Memory.currentSlideIndex === slideIndex ? "block" : "none";
   p.tabIndex = 0;
   p.ariaLabel = getAriaLabelFromTextElement(p);
   p.role = "textbox";
@@ -107,7 +116,7 @@ function createText(
           getStartOfTextStringForA11y(p.innerText)
       );
       if (!yes) return;
-      removeTextFromMemory(p.id, function () {
+      Memory.removeTextFromMemory(p.id, function () {
         p.remove();
       });
     } else {
@@ -144,7 +153,7 @@ function getStartOfTextStringForA11y(text) {
 function updateTextPosition(htmlElement) {
   var left = htmlElement.offsetLeft;
   var top = htmlElement.offsetTop;
-  updateTextPositionInMemory(htmlElement.id, left, top);
+  Memory.updateTextPositionInMemory(htmlElement.id, left, top);
   htmlElement.ariaLabel = getAriaLabelFromTextElement(htmlElement);
 
   debugMemory();
@@ -153,13 +162,13 @@ function updateTextPosition(htmlElement) {
 function updateText(htmlElement) {
   var text = htmlElement.innerText;
   htmlElement.innerText = text;
-  updateTextInMemory(htmlElement.id, text);
+  Memory.updateTextInMemory(htmlElement.id, text);
   htmlElement.ariaLabel = getAriaLabelFromTextElement(htmlElement);
   backgroundColorIfEmptyText(htmlElement);
 
   var isEmpty = text.trim() === "";
   if (isEmpty) {
-    removeTextFromMemory(htmlElement.id);
+    Memory.removeTextFromMemory(htmlElement.id);
     htmlElement.remove();
   }
 
@@ -175,8 +184,8 @@ function backgroundColorIfEmptyText(htmlElement) {
 }
 
 function alreadyHasDefaultText() {
-  var textsInMemory = getCurrentSlide().texts;
-  var textIds = Object.keys(getCurrentSlide().texts);
+  var textsInMemory = Memory.getCurrentSlide().texts;
+  var textIds = Object.keys(Memory.getCurrentSlide().texts);
   var found = false;
   textIds.forEach(function (textId) {
     var text = textsInMemory[textId];
