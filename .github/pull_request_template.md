@@ -9,6 +9,7 @@
 # Checklist:
 
 - [ ] ran cypress tests locally with `npx cypress open`
+- [ ] updated package.json version it'd bump up to if approved
 - [ ] after this PR is approved/merged, don't forget to:
   - [ ] have the semver version updated as needed
   - [ ] have the live/prod site updated
