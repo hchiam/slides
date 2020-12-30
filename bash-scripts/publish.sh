@@ -4,9 +4,8 @@ mkdir to-publish/other-css
 mkdir to-publish/other-js
 
 # cp -r other-css to-publish
-minify other-css/*.css > minified.css
 # cp -r other-js to-publish
-minify other-js/*.js > minified.js
+bash minify.sh
 
 cp minified.css to-publish/minified.css
 cp minified.js to-publish/minified.js

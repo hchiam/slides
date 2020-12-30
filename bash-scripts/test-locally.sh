@@ -1,4 +1,3 @@
-minify other-css/*.css > minified.css
-minify other-js/*.js > minified.js
+bash minify.sh
 
 open index.html
