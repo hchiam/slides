@@ -58,7 +58,7 @@ var Slides = {
     this.hideSlide(Memory.currentSlideIndex);
     Memory.currentSlideIndex = slideIndex;
     this.showSlide(Memory.currentSlideIndex);
-    announceSlideNumber(Memory.currentSlideIndex + 1);
+    A11y.announceSlideNumber(Memory.currentSlideIndex + 1);
     this.styleLeftRightButtons();
     // style slide number input:
     slideNumberInput.style.width = slideNumberInput.value.length + 5 + "ch";
@@ -87,7 +87,7 @@ var Slides = {
     this.showSlide(Memory.currentSlideIndex);
     this.styleLeftRightButtons();
     this.setSlideNumber(Memory.currentSlideIndex + 1);
-    announceSlideNumber(Memory.currentSlideIndex + 1);
+    A11y.announceSlideNumber(Memory.currentSlideIndex + 1);
   },
 
   right: function () {
@@ -102,7 +102,7 @@ var Slides = {
     this.styleLeftRightButtons();
     this.setSlideNumber(Memory.currentSlideIndex + 1);
     this.leftButton.classList.remove("hide-on-first-load");
-    announceSlideNumber(Memory.currentSlideIndex + 1);
+    A11y.announceSlideNumber(Memory.currentSlideIndex + 1);
   },
 
   styleLeftRightButtons: function () {

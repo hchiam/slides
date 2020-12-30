@@ -31,7 +31,7 @@ function createNewImage(src) {
     imageId,
     Memory.currentSlideIndex
   );
-  announce("Added new image."); // TODO: not working
+  A11y.announce("Added new image."); // TODO: not working
 }
 
 function createImage(

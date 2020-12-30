@@ -33,7 +33,7 @@ function createNewText(
     textProps
   );
   Slides.styleLeftRightButtons();
-  announce("Added new text."); // TODO: not working
+  A11y.announce("Added new text."); // TODO: not working
 }
 
 function createNewBigText(
