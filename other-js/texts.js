@@ -60,8 +60,6 @@ var Texts = {
     slideIndex = Memory.currentSlideIndex,
     textProperties
   ) {
-    var controller = this;
-
     var p = document.createElement("p");
     p.innerText = text;
     p.style.left = left + "px";
@@ -87,15 +85,15 @@ var Texts = {
     }
 
     makeElementDraggableAndEditable(p, {
-      mouseMoveCallback: controller.updateTextPosition.bind(controller),
-      blurCallback: controller.updateText.bind(controller),
+      mouseMoveCallback: Texts.updateTextPosition.bind(Texts),
+      blurCallback: Texts.updateText.bind(Texts),
       snapPoints: [
         { x: window.innerWidth / 2, y: window.innerHeight / 10 },
         { x: window.innerWidth / 2, y: window.innerHeight / 2 },
       ],
 
       snapCallback: function (left, top) {
-        controller.updateTextPosition(p);
+        Texts.updateTextPosition(p);
       },
     });
 
@@ -121,7 +119,7 @@ var Texts = {
       if ((isBackspace || isDelete) && p.contentEditable !== "true") {
         var yes = confirm(
           "Do you want to delete this text? It starts with: " +
-            controller.getStartOfTextStringForA11y(p.innerText)
+            Texts.getStartOfTextStringForA11y(p.innerText)
         );
         if (!yes) return;
         Memory.removeTextFromMemory(p.id, function () {

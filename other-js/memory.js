@@ -200,14 +200,13 @@ var Memory = {
 
     if (slides.length === 0) return;
 
-    var controller = this;
     slides.forEach(function (slide, slideIndex) {
       if (Object.keys(slide.texts).length > 0) {
-        controller.useTextsFromMemory(slide, slideIndex, createTextCallback);
+        Memory.useTextsFromMemory(slide, slideIndex, createTextCallback);
       }
 
       if (Object.keys(slide.images).length > 0) {
-        controller.useImagesFromMemory(slide, slideIndex, createImageCallback);
+        Memory.useImagesFromMemory(slide, slideIndex, createImageCallback);
       }
     });
 

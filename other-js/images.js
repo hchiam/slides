@@ -45,8 +45,6 @@ var Images = {
     imageId,
     slideIndex
   ) {
-    var controller = this;
-
     var img = document.createElement("img");
     img.src = src;
     img.style.left = isNaN(left) && left.endsWith("px") ? left : left + "px";
@@ -81,9 +79,9 @@ var Images = {
     parentElement.appendChild(img);
 
     makeElementDraggableAndEditable(img, {
-      mouseMoveCallback: controller.updateImagePosition,
-      touchEndCallback: controller.onDoubleTap.bind(
-        controller,
+      mouseMoveCallback: Images.updateImagePosition,
+      touchEndCallback: Images.onDoubleTap.bind(
+        Images,
         img,
         function (element) {
           Memory.removeImageFromMemory(element.id, function () {
@@ -103,8 +101,8 @@ var Images = {
     }
 
     setTimeout(() => {
-      controller.setMaxImageSize(img);
-      controller.centerImage(img);
+      Images.setMaxImageSize(img);
+      Images.centerImage(img);
       runImagePluginsWhenImageCreated(img);
     }, 0); // 0 ms, but timeout helps make sure img src sizes are defined
   },
@@ -134,10 +132,10 @@ var Images = {
   readImage: function (inputElement) {
     if (inputElement.files && inputElement.files[0]) {
       var reader = new FileReader();
-      var controller = this;
+      var Images = this;
       reader.onload = function (e) {
         var src = e.target.result;
-        controller.createNewImage(src);
+        Images.createNewImage(src);
       };
       inputElement.onchange = function (e) {
         const f = e.target.files[0];

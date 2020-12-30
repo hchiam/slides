@@ -22,9 +22,8 @@ var Slides = {
 
   delayedSetSlideNumber: function (slideNumber) {
     clearTimeout(this.slideNumberTimer);
-    var controller = this;
     this.slideNumberTimer = setTimeout(function () {
-      controller.setSlideNumber(slideNumber);
+      Slides.setSlideNumber(slideNumber);
     }, 1000);
   },
 
