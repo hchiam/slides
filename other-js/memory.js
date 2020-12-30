@@ -281,7 +281,10 @@ var Memory = {
   recreateSlidesFromMemory: function (memoryObject) {
     this.updatePersistentMemory(memoryObject);
     Slides.clearSlides();
-    this.useMemory(createTextCallback, Images.createImageCallback.bind(Images));
+    this.useMemory(
+      Texts.createTextCallback.bind(Texts),
+      Images.createImageCallback.bind(Images)
+    );
   },
 
   save: function () {

@@ -188,7 +188,7 @@ var Slides = {
     var currentSlideTexts = Memory.getCurrentSlide().texts;
     var haveTextsInMemory = Object.keys(currentSlideTexts).length > 0;
     if (haveTextsInMemory) return;
-    createNewText(this.currentSlide);
+    Texts.createNewText(this.currentSlide);
   },
 
   clearSlides: function () {
