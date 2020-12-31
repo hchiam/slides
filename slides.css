@@ -10,7 +10,7 @@ body {
 button,
 input {
   /* box-shadow: 0 0 5px black; */
-  animation: hey-notice-this 1s ease 1s 1 forwards;
+  animation: hey-notice-this 0.25s ease 0.1s forwards 1;
 }
 
 button {
@@ -90,15 +90,15 @@ input#select_json_file {
   left: calc(50% - 550px / 2 - 0.5rem / 2);
   z-index: 1;
   box-shadow: 0 1px 5px black;
-  animation: jump-a-little 0.25s ease 1s forwards;
+  animation: jump-a-little 0.5s ease forwards;
 }
 
 @keyframes jump-a-little {
   0% {
-    bottom: 1rem;
+    bottom: -100%;
   }
   50% {
-    bottom: 2rem;
+    bottom: 3rem;
   }
   100% {
     bottom: 1rem;
@@ -267,7 +267,7 @@ button#delete:focus + span:before {
     top: calc(30% - 1rem);
     left: calc(50% - 23ch / 2);
     width: 23ch;
-    animation: fade 5s forwards;
+    animation: fade 3s forwards;
   }
 
   @keyframes fade {
