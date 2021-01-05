@@ -1,5 +1,5 @@
+rm -rf to-publish
 mkdir to-publish
-rm to-publish/*
 mkdir to-publish/other-css
 mkdir to-publish/other-js
 
