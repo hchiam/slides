@@ -19,15 +19,17 @@ var defaultTextString = "Drag this to move around. Double-click to edit text.";
 var goldenRatio = 1.6; // for big text to use
 var defaultTextWidth = 690.484; // in px
 var defaultTextHeight = 41; // in px
+var defaultTextFontSize = 30; // in px
 var defaultText = {
   text: defaultTextString,
   left: document.documentElement.clientWidth / 2 - defaultTextWidth / 2,
   top: document.documentElement.clientHeight / 2 - defaultTextHeight / 2,
   slide: 0,
-  fontSize: "30px",
+  fontSize: defaultTextFontSize + "px",
 };
 var defaultTextWidthBig = defaultTextWidth * goldenRatio;
 var defaultTextHeightBig = defaultTextHeight * goldenRatio;
+var defaultTextFontSizeBig = Math.round(defaultTextFontSize * goldenRatio); // number
 
 var Memory = {
   currentSlideIndex: 0,

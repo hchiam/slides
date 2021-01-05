@@ -46,8 +46,7 @@ var Texts = {
     left = defaultText.left + defaultTextWidth / 2 - defaultTextWidthBig / 2,
     top = defaultText.top + defaultTextHeight / 2 - defaultTextHeightBig / 2
   ) {
-    var fontSizeBig = defaultText.fontSize.replace("px", "") * goldenRatio;
-    var textProps = { fontSize: fontSizeBig + "px" };
+    var textProps = { fontSize: defaultTextFontSizeBig + "px" };
     this.createNewText(parentElement, text, left, top, textProps);
   },
 
