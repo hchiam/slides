@@ -57,4 +57,25 @@ describe("images", function () {
       .should("have.css", "left", "700px")
       .should("have.css", "top", "100px");
   });
+
+  it("can change slide when image has focus", function () {
+    cy.get("img").should("not.exist");
+
+    cy.get("#add_image").click();
+
+    cy.fixture("cells-grid.png").then((fileContent) => {
+      cy.get("input#select_image").attachFile("cells-grid.png");
+    });
+
+    cy.get("img").should("exist");
+
+    cy.get("img").focus().type("{downarrow}");
+    cy.get("#slide_number").should("have.value", 2);
+    cy.get("body").focus().type("{uparrow}");
+    cy.get("#slide_number").should("have.value", 1);
+    cy.get("img").focus().type("{rightarrow}");
+    cy.get("#slide_number").should("have.value", 2);
+    cy.get("body").focus().type("{leftarrow}");
+    cy.get("#slide_number").should("have.value", 1);
+  });
 });
