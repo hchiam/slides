@@ -32,5 +32,6 @@ else
 
   # TODO: how run this in parallel with parcel command?
   # yarn test-cli
+  # TODO: how make cypress use http://localhost:1234 ?
 
 fi
