@@ -21,8 +21,7 @@ then
   echo "Updated test site."
   echo
 else
-  # TODO: run test site locally with parcel
   echo
-  echo "Can't update test site. Consider running test site locally with parcel."
+  echo "Can't update test site. Consider running test site locally."
   echo
 fi

@@ -15,13 +15,22 @@ cp index.html to-publish
 cp slides.css to-publish
 cp slides.js to-publish
 
-if surge to-publish https://hchiam-slides.surge.sh && surge to-publish https://simple-slides.surge.sh
+if surge to-publish https://test-slides.surge.sh
 then
   echo
-  echo "Published."
+  echo "Updated test site."
   echo
+
+  yarn test-cli
+
 else
   echo
-  echo "Sorry, you can't publish to the live site(s)."
+  echo "Can't update test site. Running test locally."
   echo
+
+  parcel index.html
+
+  # TODO: how run this in parallel with parcel command?
+  # yarn test-cli
+
 fi

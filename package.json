@@ -4,9 +4,10 @@
   "description": "Edit. Present. Try it: https://hchiam-slides.surge.sh",
   "main": "slides.js",
   "scripts": {
+    "stop": "killall node",
     "test": "yarn test-site-prep && npx cypress open",
     "test-locally": "bash bash-scripts/test-locally.sh",
-    "test-pre-commit": "yarn test-site-prep && yarn test-cli",
+    "test-pre-commit": "bash bash-scripts/test-pre-commit.sh",
     "test-cli": "yarn test-background # just a semantic alias",
     "test-background": "npx cypress run",
     "test-site-prep": "bash bash-scripts/setup-test-site.sh # update test site",
@@ -30,6 +31,7 @@
     "husky": "^4.3.6",
     "lighthouse": "^6.5.0",
     "minify": "^6.0.1",
+    "parcel": "^1.12.4",
     "surge": "^0.21.7"
   },
   "husky": {
