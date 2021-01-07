@@ -15,5 +15,3 @@
 - [ ] after this PR is approved/merged, don't forget to:
   - [ ] have the semver version updated as needed
   - [ ] have the live/prod site updated
-
-(Note: If you don't have write permissions to the surge.sh sites, disable the husky pre-commit hook in package.json, but don't check in that line change in package.json)
