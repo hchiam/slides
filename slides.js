@@ -66,7 +66,8 @@ var Slides = {
   detectArrowKeys: function (event) {
     var isOnBody = document.activeElement === document.body;
     var isOnButton = document.activeElement.tagName === "BUTTON";
-    if (!isOnBody && !isOnButton) return;
+    var isOnImg = document.activeElement.tagName === "IMG";
+    if (!isOnBody && !isOnButton && !isOnImg) return;
     var key = event.code || event.keyCode || event.which || window.event;
     var isLeft = key === "ArrowLeft" || key === 37;
     var isUp = key === "ArrowUp" || key === 38;
