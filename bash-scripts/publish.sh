@@ -15,17 +15,14 @@ cp index.html to-publish
 cp slides.css to-publish
 cp slides.js to-publish
 
-read -p "Are you @hchiam? (y/n) " input
-
-# TODO: change this code to detect surge permissions and run parcel locally
-
-if [[ -z "$input" ]] || [[ $input == "y" ]]
+if surge to-publish https://hchiam-slides.surge.sh && surge to-publish https://simple-slides.surge.sh
 then
-  surge to-publish https://hchiam-slides.surge.sh
-  surge to-publish https://simple-slides.surge.sh
+  echo
+  echo "Published."
+  echo
 else
+  # TODO: run test site locally with parcel
   echo
-  echo "Editing your package.json to disable the pre-commit script (commenting it out with a # character)."
+  echo "Can't publish to live site(s). Consider running test site locally with parcel."
   echo
-  sed -i '' 's/"test-pre-commit":\ "/"test-pre-commit":\ "#/g' package.json
 fi
