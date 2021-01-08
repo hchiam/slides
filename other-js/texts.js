@@ -1,4 +1,19 @@
 var Texts = {
+  initializeTextButtons: function () {
+    document
+      .querySelector("#add_text")
+      .addEventListener(
+        "click",
+        this.createNewText.bind(this, Slides.currentSlide, defaultText.text)
+      );
+    document
+      .querySelector("#add_big_text")
+      .addEventListener(
+        "click",
+        this.createNewBigText.bind(this, Slides.currentSlide, defaultText.text)
+      );
+  },
+
   recreateText: function (
     parentElement = Slides.currentSlide,
     textId,

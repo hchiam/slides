@@ -55,6 +55,7 @@ var Memory = {
 
   initialize: function () {
     this.initializeDefaultText();
+    this.initializeEventListeners();
   },
 
   initializeDefaultText: function () {
@@ -63,6 +64,18 @@ var Memory = {
       document.documentElement.clientWidth / 2 - defaultTextWidth / 2;
     defaultText.top =
       document.documentElement.clientHeight / 2 - defaultTextHeight / 2;
+  },
+
+  initializeEventListeners: function () {
+    document
+      .querySelector("#save")
+      .addEventListener("click", this.save.bind(this));
+    document
+      .querySelector("#upload")
+      .addEventListener("click", this.upload.bind(this));
+    document
+      .querySelector("#delete")
+      .addEventListener("click", this.deleteAll.bind(this));
   },
 
   generateId: function () {
@@ -374,5 +387,3 @@ var Memory = {
     );
   },
 };
-
-Memory.initialize();

@@ -12,8 +12,6 @@ cp minified.js to-publish/minified.js
 
 cp favicon.png to-publish
 cp index.html to-publish
-cp slides.css to-publish
-cp slides.js to-publish
 
 if surge to-publish https://hchiam-slides.surge.sh && surge to-publish https://simple-slides.surge.sh
 then

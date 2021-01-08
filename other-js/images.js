@@ -2,6 +2,15 @@ var Images = {
   recreatingImage: true,
   timeOfLastTap: null,
 
+  initializeImageButtons: function () {
+    document
+      .querySelector("#select_image")
+      .addEventListener("change", this.readImage.bind(this));
+    document
+      .querySelector("#add_image")
+      .addEventListener("click", this.triggerCreateNewImage.bind(this));
+  },
+
   recreateImage: function (
     parentElement = Slides.currentSlide,
     imageId,
@@ -129,7 +138,8 @@ var Images = {
     document.getElementById("select_image").click();
   },
 
-  readImage: function (inputElement) {
+  readImage: function () {
+    var inputElement = document.querySelector("#select_image");
     if (inputElement.files && inputElement.files[0]) {
       var reader = new FileReader();
       var Images = this;
