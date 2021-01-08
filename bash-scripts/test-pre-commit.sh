@@ -14,8 +14,15 @@ then
   echo
   echo "Updated test site."
   echo
+
+  yarn test-cli
+
 else
   echo
-  echo "Can't update test site. Consider running test site locally."
+  echo "Can't update test site. Running test locally."
   echo
+
+  # run tests and local test site in parallel:
+  parcel index.html & yarn test-cli-locally && fg
+
 fi

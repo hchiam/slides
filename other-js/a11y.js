@@ -37,5 +37,3 @@ var A11y = {
     });
   },
 };
-
-A11y.setUp2DNoteListeners();

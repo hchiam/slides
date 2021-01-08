@@ -3,10 +3,10 @@ var Fullscreen = {
   fullscreenButtonFocusTimer: null,
 
   initialize: function () {
-    this.initializeListeners();
+    this.initializeEventListeners();
   },
 
-  initializeListeners: function () {
+  initializeEventListeners: function () {
     document.addEventListener(
       "fullscreenchange",
       this.styleFullscreenButton.bind(this)
@@ -27,6 +27,9 @@ var Fullscreen = {
       "keydown",
       this.detectFullscreenKeyboardShortcuts.bind(this)
     );
+    document
+      .getElementById("fullscreen")
+      .addEventListener("click", this.fullscreen.bind(this));
   },
 
   detectFullscreenKeyboardShortcuts: function (event) {
@@ -136,5 +139,3 @@ var Fullscreen = {
       : "hidden";
   },
 };
-
-Fullscreen.initialize();

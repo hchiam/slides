@@ -13,17 +13,37 @@ var Slides = {
     ) {
       Memory.readPersistentMemory(Memory.recreateSlidesFromMemory.bind(Memory));
     } else {
-      Memory.updatePersistentMemory(memory).bind(Memory);
+      Memory.updatePersistentMemory(memory);
     }
     this.setUpSlides();
     this.isInitializingMemory = false;
-    document.body.addEventListener("keyup", this.detectArrowKeys.bind(this));
+    this.initializeEventListeners();
   },
 
-  delayedSetSlideNumber: function (slideNumber) {
+  initializeEventListeners: function () {
+    document.body.addEventListener("keyup", this.detectArrowKeys.bind(this));
+    this.leftButton.addEventListener("click", this.left.bind(this));
+    this.rightButton.addEventListener("click", this.right.bind(this));
+    var slideNumberInput = document.getElementById("slide_number");
+    slideNumberInput.addEventListener(
+      "keyup",
+      this.delayedSetSlideNumber.bind(this)
+    );
+    slideNumberInput.addEventListener(
+      "change",
+      this.setSlideNumber.bind(this, slideNumberInput.value)
+    );
+    slideNumberInput.addEventListener(
+      "mouseover",
+      this.focusSlideNumberInput.bind(this)
+    );
+  },
+
+  delayedSetSlideNumber: function () {
+    var slideNumberInput = document.getElementById("slide_number");
     clearTimeout(this.slideNumberTimer);
     this.slideNumberTimer = setTimeout(function () {
-      Slides.setSlideNumber(slideNumber);
+      Slides.setSlideNumber(slideNumberInput.value);
     }, 1000);
   },
 
@@ -37,6 +57,9 @@ var Slides = {
   },
 
   setSlideNumber: function (slideNumber) {
+    if (typeof slideNumber !== "number") {
+      slideNumber = parseInt(document.getElementById("slide_number").value);
+    }
     var slideIndex = slideNumber - 1;
     var slideNumberInput = document.getElementById("slide_number");
     slideNumberInput.value = slideNumber;
@@ -203,4 +226,9 @@ var Slides = {
   },
 };
 
+A11y.setUp2DNoteListeners();
+Texts.initializeTextButtons();
+Images.initializeImageButtons();
+Fullscreen.initialize();
+Memory.initialize();
 Slides.initialize();
