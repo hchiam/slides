@@ -9,6 +9,7 @@
     "test-locally": "bash bash-scripts/test-locally.sh",
     "test-pre-commit": "bash bash-scripts/test-pre-commit.sh",
     "test-cli": "yarn test-background # just a semantic alias",
+    "test-cli-locally": "npx cypress run --config baseUrl=http://localhost:1234",
     "test-background": "npx cypress run",
     "test-site-prep": "bash bash-scripts/setup-test-site.sh # update test site",
     "test-quality": "bash bash-scripts/website-quality-test.sh",
