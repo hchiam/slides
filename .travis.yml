@@ -10,6 +10,7 @@ cache:
     - node_modules
 
 before_script:
+  - cd code
   - yarn
   - cypress install # to get Cypress working
 
