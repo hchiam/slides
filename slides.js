@@ -33,10 +33,6 @@ var Slides = {
       "change",
       this.setSlideNumber.bind(this, slideNumberInput.value)
     );
-    slideNumberInput.addEventListener(
-      "mouseover",
-      this.focusSlideNumberInput.bind(this)
-    );
   },
 
   delayedSetSlideNumber: function () {
@@ -170,15 +166,6 @@ var Slides = {
     var maxEnablingAddingNewSlide = memory.slides.length + 1;
     slideNumberInput.setAttribute("max", maxEnablingAddingNewSlide);
     // elsewhere handle actual (dis)enabling of adding slides
-  },
-
-  focusSlideNumberInput: function () {
-    var slideNumberInput = document.getElementById("slide_number");
-    slideNumberInput.focus();
-    clearTimeout(this.slideNumberTimer);
-    this.slideNumberTimer = setTimeout(function () {
-      if (document.activeElement === slideNumberInput) slideNumberInput.blur();
-    }, 3000);
   },
 
   hideSlide: function (slideIndex) {
