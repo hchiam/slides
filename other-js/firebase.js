@@ -37,7 +37,9 @@ var Firebase = {
         if (callback) callback(docId);
       })
       .catch((error) => {
-        alert("Could not create link - please wait and try again later.");
+        alert(
+          "Could not create link - please wait and try again later. \n\nAlternatively, you can download your data."
+        );
         console.log(error);
         document.querySelector("#share").style.display = "none";
         document.querySelector("#save").style.display = "inline";
@@ -61,7 +63,9 @@ var Firebase = {
         if (callback) callback(newDoc.id);
       })
       .catch((error) => {
-        alert("Could not create link - please wait and try again later.");
+        alert(
+          "Could not create link - please wait and try again later. \n\nAlternatively, you can download your data."
+        );
         console.log(error);
         document.querySelector("#share").style.display = "none";
         document.querySelector("#save").style.display = "inline";
