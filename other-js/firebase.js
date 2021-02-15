@@ -37,7 +37,7 @@ var Firebase = {
         if (callback) callback(docId);
       })
       .catch((error) => {
-        console.log("could not create link - please wait and try again later");
+        alert("Could not create link - please wait and try again later.");
         console.log(error);
       });
   },
@@ -58,7 +58,7 @@ var Firebase = {
         if (callback) callback(newDoc.id);
       })
       .catch((error) => {
-        console.log("could not create link - please wait and try again later");
+        alert("Could not create link - please wait and try again later.");
         console.log(error);
       });
   },
@@ -81,7 +81,7 @@ var Firebase = {
         }
       })
       .catch((error) => {
-        console.log("could not get slides data");
+        alert("Could not get slides data - please wait and try again later.");
         console.log(error);
       });
   },

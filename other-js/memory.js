@@ -304,7 +304,7 @@ var Memory = {
     this.readPersistentMemory();
     Firebase.createLink(function (slug) {
       var url = location.protocol + "//" + location.host + "/" + slug;
-      copyToClipboard(url);
+      copyToClipboard(url, alert("Copied link to clipboard:\n\n" + url));
     });
   },
 
