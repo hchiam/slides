@@ -3,6 +3,7 @@ var memory = {
     width: document.documentElement.clientWidth,
     height: document.documentElement.clientHeight,
   },
+  id: "",
   slides: [
     {
       texts: {
@@ -301,27 +302,10 @@ var Memory = {
   share: function () {
     if (this.areAllSlidesBlankInMemory()) return;
     this.readPersistentMemory();
-    Firebase.createLink();
-  },
-
-  // TODO: move some of this into Firebase.useLink
-  // TODO: and then run it on page load
-  populate: function () {
-    Firebase.useLink();
-
-    // var selectJsonFileInput = document.getElementById("select_json_file");
-    // selectJsonFileInput.onchange = (e) => {
-    //   var file = e.target.files[0];
-    //   var reader = new FileReader();
-    //   reader.readAsText(file, "UTF-8");
-    //   reader.onload = (e) => {
-    //     var content = e.target.result;
-    //     var json = JSON.parse(content);
-    //     this.recreateSlidesFromMemory(json);
-    //     console.log(memory);
-    //   };
-    // };
-    // selectJsonFileInput.click();
+    Firebase.createLink(function (slug) {
+      var url = location.protocol + "//" + location.host + "/" + slug;
+      copyToClipboard(url);
+    });
   },
 
   deleteAll: function () {

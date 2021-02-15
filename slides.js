@@ -226,5 +226,5 @@ Texts.initializeTextButtons();
 Images.initializeImageButtons();
 Fullscreen.initialize();
 Memory.initialize();
-Slides.initialize();
 Firebase.initialize();
+Slides.initialize();

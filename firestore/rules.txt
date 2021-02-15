@@ -1,0 +1,17 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /slides/{id} { // parent scope is protected by default
+      allow create: if hasTimestamp();
+      allow write: if hasTimestamp() && isCalm();
+      allow read: if request.query.limit == 1;
+      
+      function hasTimestamp() {
+        return request.resource.data.timestamp == request.time;
+      }
+      function isCalm() {
+        return request.time > resource.data.timestamp + duration.value(10, 's');
+      }
+    }
+  }
+}
