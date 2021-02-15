@@ -81,22 +81,13 @@ describe("slides: left/right/number", function () {
     cy.get("#fullscreen").focus().type("{leftarrow}");
     cy.get("#slide_number").should("have.value", 1);
 
-    cy.get("#save").focus().type("{downarrow}");
+    cy.get("#share").focus().type("{downarrow}");
     cy.get("#slide_number").should("have.value", 2);
-    cy.get("#save").focus().type("{uparrow}");
+    cy.get("#share").focus().type("{uparrow}");
     cy.get("#slide_number").should("have.value", 1);
-    cy.get("#save").focus().type("{rightarrow}");
+    cy.get("#share").focus().type("{rightarrow}");
     cy.get("#slide_number").should("have.value", 2);
-    cy.get("#save").focus().type("{leftarrow}");
-    cy.get("#slide_number").should("have.value", 1);
-
-    cy.get("#upload").focus().type("{downarrow}");
-    cy.get("#slide_number").should("have.value", 2);
-    cy.get("#upload").focus().type("{uparrow}");
-    cy.get("#slide_number").should("have.value", 1);
-    cy.get("#upload").focus().type("{rightarrow}");
-    cy.get("#slide_number").should("have.value", 2);
-    cy.get("#upload").focus().type("{leftarrow}");
+    cy.get("#share").focus().type("{leftarrow}");
     cy.get("#slide_number").should("have.value", 1);
 
     cy.get("#delete").focus().type("{downarrow}");

@@ -68,11 +68,8 @@ var Memory = {
 
   initializeEventListeners: function () {
     document
-      .querySelector("#save")
-      .addEventListener("click", this.save.bind(this));
-    document
-      .querySelector("#upload")
-      .addEventListener("click", this.upload.bind(this));
+      .querySelector("#share")
+      .addEventListener("click", this.share.bind(this));
     document
       .querySelector("#delete")
       .addEventListener("click", this.deleteAll.bind(this));
@@ -301,42 +298,30 @@ var Memory = {
     );
   },
 
-  save: function () {
-    var yes = confirm(
-      "Your slides are already automatically saved in your browser, \nas long as you don't clear cache. \n\nDo you still want to save the slides data in a JSON file?"
-    );
-    if (!yes) return;
+  share: function () {
+    if (this.areAllSlidesBlankInMemory()) return;
     this.readPersistentMemory();
-    this.download(
-      JSON.stringify(memory, null, 2),
-      "slides_data.json",
-      "application/json"
-    );
+    Firebase.createLink();
   },
 
-  download: function (text, name, type) {
-    var a = document.createElement("a");
-    var file = new Blob([text], { type: type });
-    a.href = URL.createObjectURL(file);
-    a.download = name;
-    a.click();
-    a.remove();
-  },
+  // TODO: move some of this into Firebase.useLink
+  // TODO: and then run it on page load
+  populate: function () {
+    Firebase.useLink();
 
-  upload: function () {
-    var selectJsonFileInput = document.getElementById("select_json_file");
-    selectJsonFileInput.onchange = (e) => {
-      var file = e.target.files[0];
-      var reader = new FileReader();
-      reader.readAsText(file, "UTF-8");
-      reader.onload = (e) => {
-        var content = e.target.result;
-        var json = JSON.parse(content);
-        this.recreateSlidesFromMemory(json);
-        console.log(memory);
-      };
-    };
-    selectJsonFileInput.click();
+    // var selectJsonFileInput = document.getElementById("select_json_file");
+    // selectJsonFileInput.onchange = (e) => {
+    //   var file = e.target.files[0];
+    //   var reader = new FileReader();
+    //   reader.readAsText(file, "UTF-8");
+    //   reader.onload = (e) => {
+    //     var content = e.target.result;
+    //     var json = JSON.parse(content);
+    //     this.recreateSlidesFromMemory(json);
+    //     console.log(memory);
+    //   };
+    // };
+    // selectJsonFileInput.click();
   },
 
   deleteAll: function () {
@@ -370,20 +355,23 @@ var Memory = {
 
   areAllSlidesBlankInMemory: function () {
     var noJSMemoryAtAll = !memory;
+    if (noJSMemoryAtAll) return true;
+
     var noSlides = !memory.slides || memory.slides.length === 0;
-    var only1Slide = memory.slides && memory.slides.length === 1;
-    var noTextsInFirstSlide =
-      only1Slide &&
-      memory.slides[0].texts &&
-      Object.keys(memory.slides[0].texts).length === 0;
-    var noImagesInFirstSlide =
-      only1Slide &&
-      memory.slides[0].images &&
-      Object.keys(memory.slides[0].images).length === 0;
-    return (
-      noJSMemoryAtAll ||
-      noSlides ||
-      (noTextsInFirstSlide && noImagesInFirstSlide)
-    );
+    if (noSlides) return true;
+
+    var foundTextOrImageInSlides = memory.slides.some((s) => {
+      var haveTextsInSlide = s.texts && Object.keys(s.texts).length > 0;
+      var haveImagesInSlide = s.images && Object.keys(s.images).length > 0;
+      return haveTextsInSlide || haveImagesInSlide;
+    });
+
+    if (foundTextOrImageInSlides) {
+      Slides.enableShareButton();
+    } else {
+      Slides.disableShareButton();
+    }
+
+    return !foundTextOrImageInSlides;
   },
 };

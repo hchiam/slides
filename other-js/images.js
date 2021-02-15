@@ -105,6 +105,8 @@ var Images = {
       },
     });
 
+    Slides.enableShareButton();
+
     if (!Slides.isInitializingMemory) {
       alert("Note: you can delete images by double-clicking on them.");
     }
