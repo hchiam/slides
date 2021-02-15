@@ -199,6 +199,20 @@ button#share:not(:disabled):focus + span:before {
   white-space: nowrap;
 }
 
+button#save:not(:disabled):hover + span:before,
+button#save:not(:disabled):focus + span:before {
+  content: "Save slide data";
+  left: -5.35em;
+  white-space: nowrap;
+}
+
+button#upload:not(:disabled):hover + span:before,
+button#upload:not(:disabled):focus + span:before {
+  content: "Reuse slide data";
+  left: -5.25em;
+  white-space: nowrap;
+}
+
 button#delete:not(:disabled):hover + span:before,
 button#delete:not(:disabled):focus + span:before {
   content: "Delete";
