@@ -70,6 +70,12 @@ var Memory = {
 
   initializeEventListeners: function () {
     document
+      .querySelector("#save")
+      .addEventListener("click", this.save.bind(this));
+    document
+      .querySelector("#upload")
+      .addEventListener("click", this.upload.bind(this));
+    document
       .querySelector("#share")
       .addEventListener("click", this.share.bind(this));
     document
@@ -78,6 +84,8 @@ var Memory = {
   },
 
   initializeConsoleCommands: function () {
+    document.querySelector("#save").style.display = "none";
+    document.querySelector("#upload").style.display = "none";
     window.save = Memory.save.bind(Memory);
     window.upload = Memory.upload.bind(Memory);
   },

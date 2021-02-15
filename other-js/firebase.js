@@ -39,6 +39,9 @@ var Firebase = {
       .catch((error) => {
         alert("Could not create link - please wait and try again later.");
         console.log(error);
+        document.querySelector("#share").style.display = "none";
+        document.querySelector("#save").style.display = "inline";
+        document.querySelector("#upload").style.display = "inline";
       });
   },
 
@@ -60,6 +63,9 @@ var Firebase = {
       .catch((error) => {
         alert("Could not create link - please wait and try again later.");
         console.log(error);
+        document.querySelector("#share").style.display = "none";
+        document.querySelector("#save").style.display = "inline";
+        document.querySelector("#upload").style.display = "inline";
       });
   },
 
