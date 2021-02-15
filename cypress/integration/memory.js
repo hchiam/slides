@@ -67,6 +67,7 @@ describe("memory", function () {
     cy.get("p").should("have.length", 1).should("have.text", defaultTextString);
 
     cy.window().then((win) => {
+      // run Memory.upload():
       win.upload(); // cy.get("#upload").click();
     });
 
