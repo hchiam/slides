@@ -206,6 +206,11 @@ button#delete:not(:disabled):focus + span:before {
   white-space: nowrap;
 }
 
+#save,
+#upload {
+  background: blue;
+}
+
 #laser {
   position: absolute;
   background: red;
