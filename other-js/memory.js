@@ -3,6 +3,7 @@ var memory = {
     width: document.documentElement.clientWidth,
     height: document.documentElement.clientHeight,
   },
+  id: "",
   slides: [
     {
       texts: {
@@ -56,6 +57,7 @@ var Memory = {
   initialize: function () {
     this.initializeDefaultText();
     this.initializeEventListeners();
+    this.initializeConsoleCommands();
   },
 
   initializeDefaultText: function () {
@@ -68,14 +70,16 @@ var Memory = {
 
   initializeEventListeners: function () {
     document
-      .querySelector("#save")
-      .addEventListener("click", this.save.bind(this));
-    document
-      .querySelector("#upload")
-      .addEventListener("click", this.upload.bind(this));
+      .querySelector("#share")
+      .addEventListener("click", this.share.bind(this));
     document
       .querySelector("#delete")
       .addEventListener("click", this.deleteAll.bind(this));
+  },
+
+  initializeConsoleCommands: function () {
+    window.save = Memory.save.bind(Memory);
+    window.upload = Memory.upload.bind(Memory);
   },
 
   generateId: function () {
@@ -339,6 +343,15 @@ var Memory = {
     selectJsonFileInput.click();
   },
 
+  share: function () {
+    if (this.areAllSlidesBlankInMemory()) return;
+    this.readPersistentMemory();
+    Firebase.createLink(function (slug) {
+      var url = location.protocol + "//" + location.host + "/" + slug;
+      copyToClipboard(url, alert("Copied link to clipboard:\n\n" + url));
+    });
+  },
+
   deleteAll: function () {
     var yes = confirm("Do you want to delete all slides?");
     if (!yes) return;
@@ -370,20 +383,23 @@ var Memory = {
 
   areAllSlidesBlankInMemory: function () {
     var noJSMemoryAtAll = !memory;
+    if (noJSMemoryAtAll) return true;
+
     var noSlides = !memory.slides || memory.slides.length === 0;
-    var only1Slide = memory.slides && memory.slides.length === 1;
-    var noTextsInFirstSlide =
-      only1Slide &&
-      memory.slides[0].texts &&
-      Object.keys(memory.slides[0].texts).length === 0;
-    var noImagesInFirstSlide =
-      only1Slide &&
-      memory.slides[0].images &&
-      Object.keys(memory.slides[0].images).length === 0;
-    return (
-      noJSMemoryAtAll ||
-      noSlides ||
-      (noTextsInFirstSlide && noImagesInFirstSlide)
-    );
+    if (noSlides) return true;
+
+    var foundTextOrImageInSlides = memory.slides.some((s) => {
+      var haveTextsInSlide = s.texts && Object.keys(s.texts).length > 0;
+      var haveImagesInSlide = s.images && Object.keys(s.images).length > 0;
+      return haveTextsInSlide || haveImagesInSlide;
+    });
+
+    if (foundTextOrImageInSlides) {
+      Slides.enableShareButton();
+    } else {
+      Slides.disableShareButton();
+    }
+
+    return !foundTextOrImageInSlides;
   },
 };

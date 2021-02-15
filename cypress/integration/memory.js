@@ -66,7 +66,11 @@ describe("memory", function () {
   it("can reuse slides", function () {
     cy.get("p").should("have.length", 1).should("have.text", defaultTextString);
 
-    cy.get("#upload").click();
+    cy.window().then((win) => {
+      // run Memory.upload():
+      win.upload(); // cy.get("#upload").click();
+    });
+
     cy.fixture("slides_data.json").then((fileContent) => {
       cy.get("input#select_json_file").attachFile("slides_data.json");
     });

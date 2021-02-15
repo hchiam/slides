@@ -211,6 +211,14 @@ var Slides = {
     var numberOfImages = Object.keys(memory.slides[lastIndex].images).length;
     return numberOfTexts === 0 && numberOfImages === 0;
   },
+
+  disableShareButton: function () {
+    document.getElementById("share").setAttribute("disabled", true);
+  },
+
+  enableShareButton: function () {
+    document.getElementById("share").removeAttribute("disabled");
+  },
 };
 
 A11y.setUp2DNoteListeners();
@@ -218,4 +226,5 @@ Texts.initializeTextButtons();
 Images.initializeImageButtons();
 Fullscreen.initialize();
 Memory.initialize();
+Firebase.initialize();
 Slides.initialize();

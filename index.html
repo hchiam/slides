@@ -6,6 +6,8 @@
     <meta name="description" content="Simple slides. Edit. Present." />
     <title>Simple Slides</title>
     <link rel="icon" type="image/png" href="favicon.png" />
+    <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-firestore.js"></script>
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
     <link rel="stylesheet" href="minified.css" />
   </head>
@@ -22,6 +24,7 @@
         ◀
       </button>
       <span data-before="Previous slide" style="--left: -5em"></span>
+
       <button aria-label="Next slide" id="right">▶</button>
       <span data-before="Next slide" style="--left: -4.2em"></span>
       <input
@@ -32,8 +35,10 @@
         value="1"
       />
       <span></span>
+
       <button aria-label="Add text" id="add_text">abc</button>
       <span></span>
+
       <button aria-label="Add big text" id="add_big_text">&nbsp;</button>
       <span></span>
       <input
@@ -42,16 +47,19 @@
         type="file"
         accept="image/*"
       />
+
       <button aria-label="Add image" id="add_image">
         <i class="material-icons">image</i>
       </button>
       <span></span>
+
       <button aria-label="Fullscreen" id="fullscreen">
         <i class="material-icons">fullscreen</i>
       </button>
       <span data-before="Fullscreen" style="--left: -4.1em"></span>
-      <button aria-label="Save slide data as JSON" id="save">
-        <i class="material-icons">download</i>
+
+      <button aria-label="Share link" id="share">
+        <i class="material-icons">share</i>
       </button>
       <span></span>
       <input
@@ -60,10 +68,7 @@
         type="file"
         accept=".json"
       />
-      <button aria-label="Reuse JSON format slide data" id="upload">
-        <i class="material-icons">upload</i>
-      </button>
-      <span></span>
+
       <button aria-label="Delete" id="delete">
         <i class="material-icons">delete</i>
       </button>

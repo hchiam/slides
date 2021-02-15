@@ -146,6 +146,8 @@ var Texts = {
     });
 
     parentElement.appendChild(p);
+
+    Slides.enableShareButton();
   },
 
   getAriaLabelFromTextElement: function (textElement) {
