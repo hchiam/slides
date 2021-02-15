@@ -57,6 +57,7 @@ var Memory = {
   initialize: function () {
     this.initializeDefaultText();
     this.initializeEventListeners();
+    this.initializeConsoleCommands();
   },
 
   initializeDefaultText: function () {
@@ -74,6 +75,11 @@ var Memory = {
     document
       .querySelector("#delete")
       .addEventListener("click", this.deleteAll.bind(this));
+  },
+
+  initializeConsoleCommands: function () {
+    window.save = Memory.save.bind(Memory);
+    window.upload = Memory.upload.bind(Memory);
   },
 
   generateId: function () {
@@ -297,6 +303,44 @@ var Memory = {
       Texts.createTextCallback.bind(Texts),
       Images.createImageCallback.bind(Images)
     );
+  },
+
+  save: function () {
+    var yes = confirm(
+      "Your slides are already automatically saved in your browser, \nas long as you don't clear cache. \n\nDo you still want to save the slides data in a JSON file?"
+    );
+    if (!yes) return;
+    this.readPersistentMemory();
+    this.download(
+      JSON.stringify(memory, null, 2),
+      "slides_data.json",
+      "application/json"
+    );
+  },
+
+  download: function (text, name, type) {
+    var a = document.createElement("a");
+    var file = new Blob([text], { type: type });
+    a.href = URL.createObjectURL(file);
+    a.download = name;
+    a.click();
+    a.remove();
+  },
+
+  upload: function () {
+    var selectJsonFileInput = document.getElementById("select_json_file");
+    selectJsonFileInput.onchange = (e) => {
+      var file = e.target.files[0];
+      var reader = new FileReader();
+      reader.readAsText(file, "UTF-8");
+      reader.onload = (e) => {
+        var content = e.target.result;
+        var json = JSON.parse(content);
+        this.recreateSlidesFromMemory(json);
+        console.log(memory);
+      };
+    };
+    selectJsonFileInput.click();
   },
 
   share: function () {
