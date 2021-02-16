@@ -1,4 +1,4 @@
-var Images = {
+window.Images = {
   recreatingImage: true,
   timeOfLastTap: null,
 

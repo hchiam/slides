@@ -1,4 +1,4 @@
-var Slides = {
+window.Slides = {
   currentSlide: document.getElementById("current_slide"),
   leftButton: document.getElementById("left"),
   rightButton: document.getElementById("right"),
@@ -220,11 +220,3 @@ var Slides = {
     document.getElementById("share").removeAttribute("disabled");
   },
 };
-
-A11y.setUp2DNoteListeners();
-Texts.initializeTextButtons();
-Images.initializeImageButtons();
-Fullscreen.initialize();
-Memory.initialize();
-Firebase.initialize();
-Slides.initialize();

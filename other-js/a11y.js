@@ -1,4 +1,4 @@
-var A11y = {
+window.A11y = {
   announce: function (message) {
     var ariaAnnouncer = document.getElementById("aria_announcer");
     // editing text will trigger the aria-live setup in html:

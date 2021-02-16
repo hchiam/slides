@@ -1,4 +1,4 @@
-var Fullscreen = {
+window.Fullscreen = {
   fullscreenKeysDebounce: null,
   fullscreenButtonFocusTimer: null,
 

@@ -1,4 +1,4 @@
-var Firebase = {
+window.Firebase = {
   firebaseConfig: {
     projectId: "simple-slides",
   },

@@ -32,7 +32,7 @@ var defaultTextWidthBig = defaultTextWidth * goldenRatio;
 var defaultTextHeightBig = defaultTextHeight * goldenRatio;
 var defaultTextFontSizeBig = Math.round(defaultTextFontSize * goldenRatio); // number
 
-var Memory = {
+window.Memory = {
   currentSlideIndex: 0,
 
   idCounter: 0, // for uniqueness only

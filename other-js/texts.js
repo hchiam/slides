@@ -1,4 +1,4 @@
-var Texts = {
+window.Texts = {
   initializeTextButtons: function () {
     document
       .querySelector("#add_text")
