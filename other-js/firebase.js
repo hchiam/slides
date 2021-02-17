@@ -74,20 +74,22 @@ window.Firebase = {
   },
 
   useLink: function () {
-    if (!location.pathname || !location.pathname.slice(1)) return;
-    var slug = location.pathname.slice(1).split("/")[0];
-    if (!slug) return;
+    if (!location.search || !location.search.slice(1)) return;
+
+    var query = location.search.slice(1); // just the part after the "?" symbol
+    if (!query) return;
+
     this.collection
-      .doc(slug) // doc id
+      .doc(query) // doc id
       .get()
       .then((snapshot) => {
         var data = snapshot.data();
         if (data) {
           var slidesData = JSON.parse(data.data);
           memory = slidesData;
-          memory.id = "";
+          memory.id = slidesData.id || query;
           Memory.recreateSlidesFromMemory(memory);
-          location.pathname = ""; // avoid incorrect link confusion
+          // NOTE: do NOT reload page NOR clear .pathname NOR .search
         }
       })
       .catch((error) => {

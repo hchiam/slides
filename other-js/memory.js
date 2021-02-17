@@ -354,8 +354,8 @@ window.Memory = {
   share: function () {
     if (this.areAllSlidesBlankInMemory()) return;
     this.readPersistentMemory();
-    Firebase.createLink(function (slug) {
-      var url = location.protocol + "//" + location.host + "/" + slug;
+    Firebase.createLink(function (query) {
+      var url = location.protocol + "//" + location.host + "/?" + query;
       copyToClipboard(url, alert("Copied link to clipboard:\n\n" + url));
     });
   },
@@ -364,7 +364,7 @@ window.Memory = {
     var yes = confirm("Do you want to delete all slides?");
     if (!yes) return;
     this.clearMemory();
-    location.reload();
+    location.href = location.origin;
   },
 
   clearMemory: function () {
@@ -375,6 +375,7 @@ window.Memory = {
         width: document.documentElement.clientWidth,
         height: document.documentElement.clientHeight,
       },
+      id: "",
       slides: [
         {
           texts: {

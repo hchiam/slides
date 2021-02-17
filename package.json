@@ -12,6 +12,7 @@
     "test-cli-locally": "npx cypress run --config baseUrl=http://localhost:1234",
     "test-background": "npx cypress run",
     "test-site-prep": "bash bash-scripts/setup-test-site.sh # update test site",
+    "test-site": "yarn test-site-prep",
     "test-quality": "bash bash-scripts/website-quality-test.sh",
     "minify": "bash bash-scripts/minify.sh",
     "publish": "bash bash-scripts/publish.sh # yarn run publish",
