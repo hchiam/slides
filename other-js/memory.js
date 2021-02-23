@@ -88,10 +88,10 @@ window.Memory = {
     document.querySelector("#upload").style.display = "none";
     window.save = Memory.save.bind(Memory);
     window.upload = Memory.upload.bind(Memory);
-    window.shareSaveUpload = function shareSaveUpload() {
-      $("#share").style.display = "inline";
-      $("#save").style.display = "inline";
-      $("#upload").style.display = "inline";
+    window.shareSaveUpload = function () {
+      document.querySelector("#share").style.display = "inline";
+      document.querySelector("#save").style.display = "inline";
+      document.querySelector("#upload").style.display = "inline";
     };
   },
 
