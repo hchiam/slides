@@ -15,6 +15,7 @@
     "test-site": "yarn test-site-prep",
     "test-quality": "bash bash-scripts/website-quality-test.sh",
     "minify": "bash bash-scripts/minify.sh",
+    "browser-sync": "bash bash-scripts/browser-sync.sh",
     "publish": "bash bash-scripts/publish.sh # yarn run publish",
     "deploy": "yarn run publish"
   },
