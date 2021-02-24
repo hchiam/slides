@@ -1,4 +1,7 @@
 window.Texts = {
+  currentText: null,
+  editTextIcon: null,
+
   initializeTextButtons: function () {
     document
       .querySelector("#add_text")
@@ -12,6 +15,39 @@ window.Texts = {
         "click",
         this.createNewBigText.bind(this, Slides.currentSlide, defaultText.text)
       );
+    this.createEditIcon();
+  },
+
+  createEditIcon: function () {
+    var editTextIcon = document.createElement("button");
+
+    editTextIcon.innerText = "editIcon";
+    editTextIcon.ariaLabel = "Edit text";
+    editTextIcon.id = "edit_text_icon";
+    editTextIcon.innerHTML = `<i class="material-icons">edit</i>`;
+    editTextIcon.style.display = "none";
+    editTextIcon.style.position = "absolute";
+    editTextIcon.style.cursor = "text";
+
+    editTextIcon.onclick = function () {
+      Texts.currentText.contentEditable = true;
+      Texts.currentText.focus();
+      editTextIcon.style.direction = "none";
+    };
+
+    document.body.appendChild(editTextIcon);
+    Texts.editTextIcon = editTextIcon;
+  },
+
+  moveEditIcon: function () {
+    var currentText = Texts.currentText;
+    var editTextIcon = Texts.editTextIcon;
+    var iconWidth = -editTextIcon.offsetWidth / 2;
+    var iconHeight = -editTextIcon.offsetHeight / 2;
+    editTextIcon.style.left =
+      currentText.style.left.replace("px", "") - iconWidth + "px";
+    editTextIcon.style.top =
+      currentText.style.top.replace("px", "") - iconHeight + "px";
   },
 
   recreateText: function (
@@ -98,9 +134,8 @@ window.Texts = {
       p.style.fontSize = defaultText.fontSize; // fallback size (if not in memory)
     }
 
-    makeElementDraggableAndEditable(p, {
+    makeElementDraggable(p, {
       mouseMoveCallback: Texts.updateTextPosition.bind(Texts),
-      blurCallback: Texts.updateText.bind(Texts),
       snapPoints: [
         { x: window.innerWidth / 2, y: window.innerHeight / 10 },
         { x: window.innerWidth / 2, y: window.innerHeight / 2 },
@@ -108,6 +143,7 @@ window.Texts = {
 
       snapCallback: function (left, top) {
         Texts.updateTextPosition(p);
+        Texts.editTextIcon.style.display = "none";
       },
     });
 
@@ -139,10 +175,33 @@ window.Texts = {
         Memory.removeTextFromMemory(p.id, function () {
           p.remove();
         });
-      } else {
-        p.contentEditable = true;
+      } else if (p.contentEditable === "true") {
         runTextPluginsWhenTextUpdated(p);
       }
+    });
+
+    p.addEventListener("mouseover", function () {
+      Texts.currentText = p;
+      if (Texts.currentText.contentEditable !== "true") {
+        Texts.editTextIcon.style.display = "";
+        Texts.moveEditIcon();
+      }
+    });
+
+    p.addEventListener("mouseleave", function (e) {
+      setTimeout(function () {
+        if (
+          e.target !== Texts.editTextIcon &&
+          e.target !== Texts.editTextIcon.querySelector("i")
+        ) {
+          Texts.editTextIcon.style.display = "none";
+        }
+      }, 3000);
+    });
+
+    p.addEventListener("blur", function () {
+      p.contentEditable = false;
+      Texts.updateText(p);
     });
 
     parentElement.appendChild(p);
@@ -179,6 +238,8 @@ window.Texts = {
     var top = htmlElement.offsetTop;
     Memory.updateTextPositionInMemory(htmlElement.id, left, top);
     htmlElement.ariaLabel = this.getAriaLabelFromTextElement(htmlElement);
+
+    this.moveEditIcon();
 
     debugMemory();
   },
