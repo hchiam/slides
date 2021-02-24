@@ -21,7 +21,6 @@ window.Texts = {
   createEditIcon: function () {
     var editTextIcon = document.createElement("button");
 
-    editTextIcon.innerText = "editIcon";
     editTextIcon.ariaLabel = "Edit text";
     editTextIcon.id = "edit_text_icon";
     editTextIcon.innerHTML = `<i class="material-icons">edit</i>`;
@@ -135,16 +134,15 @@ window.Texts = {
       p.style.fontSize = defaultText.fontSize; // fallback size (if not in memory)
     }
 
-    makeElementDraggable(p, {
+    makeElementDraggableAndEditable(p, {
       mouseMoveCallback: Texts.updateTextPosition.bind(Texts),
+      disableEditing: true,
       snapPoints: [
         { x: window.innerWidth / 2, y: window.innerHeight / 10 },
         { x: window.innerWidth / 2, y: window.innerHeight / 2 },
       ],
-
       snapCallback: function (left, top) {
         Texts.updateTextPosition(p);
-        Texts.editTextIcon.style.display = "none";
       },
     });
 
@@ -241,6 +239,8 @@ window.Texts = {
     htmlElement.ariaLabel = this.getAriaLabelFromTextElement(htmlElement);
 
     this.moveEditIcon();
+
+    Texts.editTextIcon.style.display = "none";
 
     debugMemory();
   },
