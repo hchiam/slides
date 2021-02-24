@@ -134,13 +134,13 @@ window.Texts = {
       p.style.fontSize = defaultText.fontSize; // fallback size (if not in memory)
     }
 
-    makeElementDraggableAndEditable(p, {
+    makeElementDraggable(p, {
       mouseMoveCallback: Texts.updateTextPosition.bind(Texts),
-      disableEditing: true,
       snapPoints: [
         { x: window.innerWidth / 2, y: window.innerHeight / 10 },
         { x: window.innerWidth / 2, y: window.innerHeight / 2 },
       ],
+
       snapCallback: function (left, top) {
         Texts.updateTextPosition(p);
       },
