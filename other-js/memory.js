@@ -16,7 +16,7 @@ var memory = {
   ],
 };
 
-var defaultTextString = "Drag this to move around. Double-click to edit text.";
+var defaultTextString = "Drag to move. To edit, hover then click pencil icon.";
 var goldenRatio = 1.6; // for big text to use
 var defaultTextWidth = 690.484; // in px
 var defaultTextHeight = 41; // in px

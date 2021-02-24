@@ -87,7 +87,7 @@ window.Images = {
 
     parentElement.appendChild(img);
 
-    makeElementDraggableAndEditable(img, {
+    makeElementDraggable(img, {
       mouseMoveCallback: Images.updateImagePosition,
       touchEndCallback: Images.onDoubleTap.bind(
         Images,
@@ -98,7 +98,6 @@ window.Images = {
           });
         }
       ),
-      disableEditing: true,
       snapPoints: [{ x: window.innerWidth / 2, y: window.innerHeight / 2 }],
       snapCallback: function (left, top) {
         Images.updateImagePosition(img);
