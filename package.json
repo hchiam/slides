@@ -30,7 +30,7 @@
   },
   "homepage": "https://github.com/hchiam/slides#readme",
   "devDependencies": {
-    "cypress": "^6.3.0",
+    "cypress": "^6.5.0",
     "cypress-file-upload": "^5.0.0",
     "husky": "^4.3.8",
     "lighthouse": "^7.0.0",
