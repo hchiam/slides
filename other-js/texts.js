@@ -28,6 +28,7 @@ window.Texts = {
     editTextIcon.style.display = "none";
     editTextIcon.style.position = "absolute";
     editTextIcon.style.cursor = "text";
+    editTextIcon.style.transition = "0s";
 
     editTextIcon.onclick = function () {
       Texts.currentText.contentEditable = true;
@@ -42,12 +43,12 @@ window.Texts = {
   moveEditIcon: function () {
     var currentText = Texts.currentText;
     var editTextIcon = Texts.editTextIcon;
-    var iconWidth = -editTextIcon.offsetWidth / 2;
-    var iconHeight = -editTextIcon.offsetHeight / 2;
+    var leftOffset = editTextIcon.offsetWidth / 3;
+    var topOffset = editTextIcon.offsetHeight / 3;
     editTextIcon.style.left =
-      currentText.style.left.replace("px", "") - iconWidth + "px";
+      currentText.style.left.replace("px", "") - leftOffset + "px";
     editTextIcon.style.top =
-      currentText.style.top.replace("px", "") - iconHeight + "px";
+      currentText.style.top.replace("px", "") - topOffset + "px";
   },
 
   recreateText: function (
