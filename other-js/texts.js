@@ -44,10 +44,12 @@ window.Texts = {
     var editTextIcon = Texts.editTextIcon;
     var leftOffset = editTextIcon.offsetWidth / 3;
     var topOffset = editTextIcon.offsetHeight / 3;
-    editTextIcon.style.left =
-      currentText.style.left.replace("px", "") - leftOffset + "px";
-    editTextIcon.style.top =
-      currentText.style.top.replace("px", "") - topOffset + "px";
+    if (editTextIcon && currentText) {
+      editTextIcon.style.left =
+        currentText.style.left.replace("px", "") - leftOffset + "px";
+      editTextIcon.style.top =
+        currentText.style.top.replace("px", "") - topOffset + "px";
+    }
   },
 
   recreateText: function (

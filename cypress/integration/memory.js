@@ -9,7 +9,9 @@ describe("memory", function () {
   });
 
   it("persists data after hitting refresh", function () {
-    cy.get("p").click().type("{selectall}Edited text.").blur();
+    cy.get("p").trigger("mouseover");
+    cy.get("#edit_text_icon").click();
+    cy.get("p").type("{selectall}Edited text.").blur();
 
     cy.get("#add_image").click();
     cy.fixture("cells-grid.png").then((fileContent) => {
@@ -21,7 +23,9 @@ describe("memory", function () {
     cy.get("#right").click();
 
     cy.get("#add_text").click();
-    cy.get("p:visible").click().type("{selectall}text 2").blur();
+    cy.get("p:visible").trigger("mouseover");
+    cy.get("#edit_text_icon").click();
+    cy.get("p:visible").type("{selectall}text 2").blur();
 
     cy.reload();
 
@@ -42,7 +46,9 @@ describe("memory", function () {
   });
 
   it("can delete all slides", function () {
-    cy.get("p").click().type("{selectall}Edited text.").blur();
+    cy.get("p").trigger("mouseover");
+    cy.get("#edit_text_icon").click();
+    cy.get("p").type("{selectall}Edited text.").blur();
 
     cy.get("#add_image").click();
     cy.fixture("cells-grid.png").then((fileContent) => {
@@ -54,7 +60,9 @@ describe("memory", function () {
     cy.get("#right").click();
 
     cy.get("#add_text").click();
-    cy.get("p:visible").click().type("{selectall}text 2").blur();
+    cy.get("p:visible").trigger("mouseover");
+    cy.get("#edit_text_icon").click();
+    cy.get("p:visible").type("{selectall}text 2").blur();
 
     cy.get("#delete").click();
 
