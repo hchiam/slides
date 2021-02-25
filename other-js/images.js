@@ -1,4 +1,7 @@
 window.Images = {
+  currentImage: null,
+  deleteImageIcon: null,
+
   recreatingImage: true,
   timeOfLastTap: null,
 
@@ -9,6 +12,40 @@ window.Images = {
     document
       .querySelector("#add_image")
       .addEventListener("click", this.triggerCreateNewImage.bind(this));
+    this.createImageIcon();
+  },
+
+  createImageIcon: function () {
+    var deleteImageIcon = document.createElement("button");
+
+    deleteImageIcon.ariaLabel = "Delete image";
+    deleteImageIcon.id = "delete_image_icon";
+    deleteImageIcon.innerHTML = `<i class="material-icons">delete</i>`;
+    deleteImageIcon.style.display = "none";
+    deleteImageIcon.style.position = "absolute";
+    deleteImageIcon.style.transition = "0s";
+
+    deleteImageIcon.onclick = function () {
+      var img = Images.currentImage;
+      Memory.removeImageFromMemory(img.id, function () {
+        img.remove();
+        Images.deleteImageIcon.style.display = "none";
+      });
+    };
+
+    document.body.appendChild(deleteImageIcon);
+    Images.deleteImageIcon = deleteImageIcon;
+  },
+
+  moveDeleteIcon: function () {
+    var currentImage = Images.currentImage;
+    var deleteImageIcon = Images.deleteImageIcon;
+    var leftOffset = deleteImageIcon.offsetWidth / 4;
+    var topOffset = deleteImageIcon.offsetHeight / 4;
+    deleteImageIcon.style.left =
+      currentImage.style.left.replace("px", "") - leftOffset + "px";
+    deleteImageIcon.style.top =
+      currentImage.style.top.replace("px", "") - topOffset + "px";
   },
 
   recreateImage: function (
@@ -85,6 +122,27 @@ window.Images = {
       }
     });
 
+    img.addEventListener("mouseover", function () {
+      Images.currentImage = img;
+      Images.deleteImageIcon.style.display = "";
+      Images.moveDeleteIcon();
+    });
+
+    img.addEventListener("mouseleave", function (e) {
+      setTimeout(function () {
+        if (
+          e.target !== Images.deleteImageIcon &&
+          e.target !== Images.deleteImageIcon.querySelector("i")
+        ) {
+          Images.deleteImageIcon.style.display = "none";
+        }
+      }, 3000);
+    });
+
+    img.addEventListener("blur", function (e) {
+      Images.deleteImageIcon.style.display = "none";
+    });
+
     parentElement.appendChild(img);
 
     makeElementDraggableAndEditable(img, {
@@ -127,6 +185,8 @@ window.Images = {
     var top = htmlElement.offsetTop;
     Memory.updateImagePositionInMemory(htmlElement.id, left, top);
     htmlElement.ariaLabel = Images.getAriaLabelFromImage(htmlElement);
+
+    Images.deleteImageIcon.style.display = "none";
 
     debugMemory();
   },

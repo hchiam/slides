@@ -8,9 +8,11 @@ describe("images", function () {
     cy.wait(2000);
 
     // remove text that Cypress seems to only sometimes think is hiding the image:
-    cy.contains("Drag this to move around. Double-click to edit text.")
-      .dblclick()
-      .type("{selectall} "); // trigger deleting text
+    cy.contains("Drag to move. To edit, hover then click pencil icon.").trigger(
+      "mouseover"
+    );
+    cy.get("#edit_text_icon").click();
+    cy.get("p").type("{selectall} "); // trigger deleting text
     cy.get("body").click();
   });
 
@@ -35,7 +37,8 @@ describe("images", function () {
       cy.get("input#select_image").attachFile("cells-grid.png");
     });
 
-    cy.get("img").should("exist").dblclick();
+    cy.get("img").should("exist").trigger("mouseover");
+    cy.get("#delete_image_icon").click();
     cy.on("window:confirm", () => true);
 
     cy.get("img").should("not.exist");
@@ -51,11 +54,15 @@ describe("images", function () {
       .should("have.css", "left", "182px")
       .should("have.css", "top", "21px");
     cy.get("img")
-      .trigger("mousedown", { which: 1, clientX: 182, clientY: 21 })
-      .trigger("mousemove", { clientX: 700, clientY: 100 })
-      .trigger("mouseup", { force: true })
+      .trigger("mousedown", {
+        which: 1,
+        clientX: 182,
+        clientY: 21,
+      })
+      .trigger("mousemove", { which: 1, clientX: 700, clientY: 700 })
+      .trigger("mouseup")
       .should("have.css", "left", "700px")
-      .should("have.css", "top", "100px");
+      .should("have.css", "top", "700px");
   });
 
   it("can change slide when image has focus", function () {
