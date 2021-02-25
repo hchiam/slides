@@ -3,6 +3,20 @@ body {
   padding: 0;
 }
 
+body:before {
+  content: attr(data-content);
+  position: fixed;
+  top: 2vh;
+  left: 2vw;
+  opacity: 0.5;
+  font-size: small;
+  font-style: italic;
+}
+
+body:before:empty {
+  padding: 0;
+}
+
 #current_slide {
   padding: 10px;
 }

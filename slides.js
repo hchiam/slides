@@ -18,6 +18,7 @@ window.Slides = {
     this.setUpSlides();
     this.isInitializingMemory = false;
     this.initializeEventListeners();
+    this.initializeConsoleCommands();
   },
 
   initializeEventListeners: function () {
@@ -33,6 +34,21 @@ window.Slides = {
       "change",
       this.setSlideNumber.bind(this, slideNumberInput.value)
     );
+  },
+
+  initializeConsoleCommands: function () {
+    window.title = function (inputTitle) {
+      var newTitle = "";
+      if (inputTitle !== undefined) {
+        newTitle = inputTitle;
+      } else {
+        newTitle = prompt(
+          "Edit title that shows on every slide:",
+          document.body.getAttribute("data-content")
+        );
+      }
+      document.body.setAttribute("data-content", newTitle);
+    };
   },
 
   delayedSetSlideNumber: function () {
