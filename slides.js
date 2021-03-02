@@ -37,18 +37,29 @@ window.Slides = {
   },
 
   initializeConsoleCommands: function () {
-    window.title = function (inputTitle) {
-      var newTitle = "";
-      if (inputTitle !== undefined) {
-        newTitle = inputTitle;
-      } else {
-        newTitle = prompt(
-          "Edit title that shows on every slide:",
-          document.body.getAttribute("data-content")
-        );
-      }
-      document.body.setAttribute("data-content", newTitle);
-    };
+    window.title = this.addTitle;
+    this.initializeTitle();
+  },
+
+  initializeTitle: function () {
+    if (memory && memory.title) {
+      document.body.setAttribute("data-content", memory.title);
+    }
+  },
+
+  addTitle: function (inputTitle) {
+    var newTitle = "";
+    if (inputTitle !== undefined) {
+      newTitle = inputTitle;
+    } else {
+      newTitle = prompt(
+        "Edit title that shows on every slide:",
+        document.body.getAttribute("data-content")
+      );
+    }
+    document.body.setAttribute("data-content", newTitle);
+    memory.title = inputTitle;
+    Memory.updatePersistentMemory(memory);
   },
 
   delayedSetSlideNumber: function () {
