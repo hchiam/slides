@@ -38,13 +38,6 @@ window.Slides = {
 
   initializeConsoleCommands: function () {
     window.title = this.addTitle;
-    this.initializeTitle();
-  },
-
-  initializeTitle: function () {
-    if (memory && memory.title) {
-      document.body.setAttribute("data-content", memory.title);
-    }
   },
 
   addTitle: function (inputTitle) {
@@ -57,9 +50,13 @@ window.Slides = {
         document.body.getAttribute("data-content")
       );
     }
-    document.body.setAttribute("data-content", newTitle);
+    this.setTitle(newTitle);
     memory.title = inputTitle;
     Memory.updatePersistentMemory(memory);
+  },
+
+  setTitle: function (title) {
+    document.body.setAttribute("data-content", title);
   },
 
   delayedSetSlideNumber: function () {

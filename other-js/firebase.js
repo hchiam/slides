@@ -88,6 +88,10 @@ window.Firebase = {
           var slidesData = JSON.parse(data.data);
           memory = slidesData;
           memory.id = slidesData.id || query;
+          memory.title = slidesData.title || "";
+          if (memory && memory.title) {
+            Slides.setTitle(memory.title);
+          }
           Memory.recreateSlidesFromMemory(memory);
           // NOTE: do NOT reload page NOR clear .pathname NOR .search
         }
