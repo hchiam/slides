@@ -76,9 +76,11 @@ window.Slides = {
     this.styleLeftRightButtons();
     this.updateSlideNumberInputMax();
     this.setSlideNumber(Memory.currentSlideIndex + 1);
-    if (memory && memory.title) {
-      Slides.setTitle(memory.title);
-    }
+    Memory.readPersistentMemory(function (memory) {
+      if (memory && memory.title) {
+        Slides.setTitle(memory.title);
+      }
+    });
   },
 
   setSlideNumber: function (slideNumber) {
