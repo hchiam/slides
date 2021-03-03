@@ -37,12 +37,14 @@ window.Slides = {
   },
 
   initializeConsoleCommands: function () {
-    window.title = this.addTitle;
+    window.title = function (newTitle) {
+      Slides.addTitle(newTitle || "");
+    };
   },
 
   addTitle: function (inputTitle) {
     var newTitle = "";
-    if (inputTitle !== undefined) {
+    if (inputTitle) {
       newTitle = inputTitle;
     } else {
       newTitle = prompt(
@@ -50,8 +52,8 @@ window.Slides = {
         document.body.getAttribute("data-content")
       );
     }
-    this.setTitle(newTitle);
-    memory.title = inputTitle;
+    Slides.setTitle(newTitle);
+    memory.title = newTitle;
     Memory.updatePersistentMemory(memory);
   },
 
@@ -74,6 +76,9 @@ window.Slides = {
     this.styleLeftRightButtons();
     this.updateSlideNumberInputMax();
     this.setSlideNumber(Memory.currentSlideIndex + 1);
+    if (memory && memory.title) {
+      Slides.setTitle(memory.title);
+    }
   },
 
   setSlideNumber: function (slideNumber) {

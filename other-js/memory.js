@@ -4,6 +4,7 @@ var memory = {
     height: document.documentElement.clientHeight,
   },
   id: "",
+  title: "",
   slides: [
     {
       texts: {
@@ -246,7 +247,7 @@ window.Memory = {
     var elementToScale = document.getElementById("current_slide");
     elementToScale.style.transform = "scale(" + scale + ")";
 
-    if (setupCallback) setupCallback();
+    if (setupCallback) setupCallback(memory);
   },
 
   useTextsFromMemory: function (slide, slideIndex, createTextCallback) {
