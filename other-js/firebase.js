@@ -41,9 +41,14 @@ window.Firebase = {
           "Could not create link - please wait and try again later. \n\nAlternatively, you can download your data."
         );
         console.log(error);
-        document.querySelector("#share").style.display = "none";
-        document.querySelector("#save").style.display = "inline";
-        document.querySelector("#upload").style.display = "inline";
+        Firebase.showShareButton(false);
+        Firebase.showSaveButton();
+        Firebase.showUploadButton();
+        setTimeout(() => {
+          Firebase.showShareButton();
+          Firebase.showSaveButton(false);
+          Firebase.showUploadButton(false);
+        }, 60000);
       });
   },
 
@@ -67,10 +72,25 @@ window.Firebase = {
           "Could not create link - please wait and try again later. \n\nAlternatively, you can download your data."
         );
         console.log(error);
-        document.querySelector("#share").style.display = "none";
-        document.querySelector("#save").style.display = "inline";
-        document.querySelector("#upload").style.display = "inline";
+        Firebase.showShareButton(false);
+        Firebase.showSaveButton();
+        Firebase.showUploadButton();
+        setTimeout(() => {
+          Firebase.showShareButton();
+          Firebase.showSaveButton(false);
+          Firebase.showUploadButton(false);
+        }, 60000);
       });
+  },
+
+  showShareButton: function (show = true) {
+    document.querySelector("#share").style.display = show ? "inline" : "none";
+  },
+  showSaveButton: function (show = true) {
+    document.querySelector("#save").style.display = show ? "inline" : "none";
+  },
+  showUploadButton: function (show = true) {
+    document.querySelector("#upload").style.display = show ? "inline" : "none";
   },
 
   useLink: function () {
