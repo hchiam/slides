@@ -32,6 +32,7 @@ window.Texts = {
 
     editTextIcon.onclick = function () {
       Texts.currentText.contentEditable = true;
+      Texts.currentText.style.cursor = "auto";
       Texts.currentText.focus();
       editTextIcon.style.direction = "none";
     };
@@ -204,6 +205,7 @@ window.Texts = {
 
     p.addEventListener("blur", function () {
       p.contentEditable = false;
+      p.style.cursor = "move";
       Texts.updateText(p);
     });
 

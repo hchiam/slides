@@ -130,6 +130,11 @@ input#select_json_file {
 p {
   color: white;
   mix-blend-mode: difference;
+  cursor: move;
+}
+
+img {
+  cursor: move;
 }
 
 .hide-on-first-load {
