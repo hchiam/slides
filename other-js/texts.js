@@ -23,7 +23,7 @@ window.Texts = {
 
     editTextIcon.ariaLabel = "Edit text";
     editTextIcon.id = "edit_text_icon";
-    editTextIcon.innerHTML = `<i class="material-icons">edit</i>`;
+    editTextIcon.innerHTML = `<i class="material-icons">edit</i><span></span>`;
     editTextIcon.style.display = "none";
     editTextIcon.style.position = "absolute";
     editTextIcon.style.cursor = "text";
@@ -181,7 +181,7 @@ window.Texts = {
       }
     });
 
-    p.addEventListener("mouseover", function () {
+    p.addEventListener("mousemove", function () {
       Texts.currentText = p;
       if (Texts.currentText.contentEditable !== "true") {
         Texts.editTextIcon.style.display = "";
@@ -189,7 +189,7 @@ window.Texts = {
       }
     });
 
-    p.addEventListener("mouseleave", function (e) {
+    p.addEventListener("mouseout", function (e) {
       setTimeout(function () {
         if (
           e.target !== Texts.editTextIcon &&
@@ -197,7 +197,7 @@ window.Texts = {
         ) {
           Texts.editTextIcon.style.display = "none";
         }
-      }, 3000);
+      }, 5000);
     });
 
     p.addEventListener("blur", function () {

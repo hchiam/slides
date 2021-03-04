@@ -20,7 +20,7 @@ window.Images = {
 
     deleteImageIcon.ariaLabel = "Delete image";
     deleteImageIcon.id = "delete_image_icon";
-    deleteImageIcon.innerHTML = `<i class="material-icons">delete</i>`;
+    deleteImageIcon.innerHTML = `<i class="material-icons">delete</i><span></span>`;
     deleteImageIcon.style.display = "none";
     deleteImageIcon.style.position = "absolute";
     deleteImageIcon.style.transition = "0s";
@@ -122,13 +122,13 @@ window.Images = {
       }
     });
 
-    img.addEventListener("mouseover", function () {
+    img.addEventListener("mousemove", function () {
       Images.currentImage = img;
       Images.deleteImageIcon.style.display = "";
       Images.moveDeleteIcon();
     });
 
-    img.addEventListener("mouseleave", function (e) {
+    img.addEventListener("mouseout", function (e) {
       setTimeout(function () {
         if (
           e.target !== Images.deleteImageIcon &&
@@ -136,7 +136,7 @@ window.Images = {
         ) {
           Images.deleteImageIcon.style.display = "none";
         }
-      }, 3000);
+      }, 5000);
     });
 
     img.addEventListener("blur", function (e) {

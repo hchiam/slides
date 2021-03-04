@@ -234,6 +234,30 @@ button#delete:not(:disabled):focus + span:before {
   white-space: nowrap;
 }
 
+button#edit_text_icon span:before,
+button#delete_image_icon span:before {
+  opacity: 0;
+  z-index: -1;
+  font-weight: normal;
+  font-size: medium;
+}
+
+button#edit_text_icon:not(:disabled):hover span:before,
+button#edit_text_icon:not(:disabled):focus span:before {
+  content: "Edit";
+  left: -0.05em;
+  opacity: 1;
+  top: -2rem;
+}
+
+button#delete_image_icon:not(:disabled):hover span:before,
+button#delete_image_icon:not(:disabled):focus span:before {
+  content: "Delete";
+  left: -0.6em;
+  opacity: 1;
+  top: -2rem;
+}
+
 #save,
 #upload {
   background: blue;
@@ -276,6 +300,8 @@ button#delete:not(:disabled):focus + span:before {
     position: fixed !important;
     left: 1rem !important;
     top: -4rem;
+    font-weight: normal;
+    font-size: medium;
   }
 
   :not(:disabled):hover + span:before,
