@@ -97,7 +97,7 @@ var Morphing_button = (function () {
     }
     
     .reverting {
-      animation: revert_morph 0.3s forwards !important;
+      animation: move_from_center 0.3s forwards, revert_morph 0.3s forwards;
       border: none;
     }
     
@@ -119,6 +119,17 @@ var Morphing_button = (function () {
         position: fixed;
         top: calc(50vh - 2.5ch);
         left: calc(50vw - 2.5ch);
+      }
+    }
+
+    @keyframes move_from_center {
+      0% {
+        position: fixed;
+        top: calc(50vh - 2.5ch);
+        left: calc(50vw - 2.5ch);
+      }
+      100% {
+        position: fixed;
       }
     }
     
