@@ -359,6 +359,12 @@ window.Memory = {
 
   share: function () {
     if (this.areAllSlidesBlankInMemory()) return;
+
+    var yes = confirm(
+      "This will create a public link that you can use to share your slides. Continue?"
+    );
+    if (!yes) return;
+
     this.readPersistentMemory();
     Firebase.createLink(function (query) {
       var url = location.protocol + "//" + location.host + "/?" + query;
