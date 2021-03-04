@@ -192,8 +192,8 @@ window.Texts = {
     });
 
     p.addEventListener("mouseout", function (e) {
-      clearTimeout(editTextIconTimer);
-      editTextIconTimer = setTimeout(function () {
+      clearTimeout(Texts.editTextIconTimer);
+      Texts.editTextIconTimer = setTimeout(function () {
         if (
           e.target !== Texts.editTextIcon &&
           e.target !== Texts.editTextIcon.querySelector("i")

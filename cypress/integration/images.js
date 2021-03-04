@@ -9,7 +9,7 @@ describe("images", function () {
 
     // remove text that Cypress seems to only sometimes think is hiding the image:
     cy.contains("Drag to move. To edit, hover then click pencil icon.").trigger(
-      "mouseover"
+      "mousemove"
     );
     cy.get("#edit_text_icon").click();
     cy.get("p").type("{selectall} "); // trigger deleting text
@@ -37,7 +37,7 @@ describe("images", function () {
       cy.get("input#select_image").attachFile("cells-grid.png");
     });
 
-    cy.get("img").should("exist").trigger("mouseover");
+    cy.get("img").should("exist").trigger("mousemove");
     cy.get("#delete_image_icon").click();
     cy.on("window:confirm", () => true);
 

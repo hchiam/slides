@@ -82,6 +82,7 @@ window.Memory = {
     document
       .querySelector("#delete")
       .addEventListener("click", this.deleteAll.bind(this));
+    Morphing_button.setup(document.querySelector("#share"));
   },
 
   initializeConsoleCommands: function () {
@@ -361,15 +362,36 @@ window.Memory = {
     if (this.areAllSlidesBlankInMemory()) return;
 
     var yes = confirm(
-      "This will create a public link that you can use to share your slides. Continue?"
+      "This will create a public link that you can use to share your slides. \n\nContinue?"
     );
     if (!yes) return;
 
     this.readPersistentMemory();
     Firebase.createLink(function (query) {
       var url = location.protocol + "//" + location.host + "/?" + query;
-      copyToClipboard(url, alert("Copied link to clipboard:\n\n" + url));
+      copyToClipboard(url, function () {
+        console.log("Copied link to clipboard:\n\n" + url);
+      });
+      var shareButton = document.querySelector("#share");
+      Morphing_button.morph(shareButton);
+      shareButton.classList.add("modal");
+      shareButton.innerHTML = `
+        <div>You can share your slides at this public link (no login necessary):</div>
+        <br/>
+        <div class="modal-share-link" 
+            onclick="copyToClipboard('${url}', function() { alert('Copied link:\\n\\n' + '${url}') })">
+            ${url}
+        </div>
+        <br/>
+        <div><button onclick="Memory.closeShareModal(event)">X</button></div>
+      `;
     });
+  },
+
+  closeShareModal: function (e) {
+    var shareButton = document.querySelector("#share");
+    Morphing_button.revert(shareButton, e);
+    shareButton.classList.remove("modal");
   },
 
   deleteAll: function () {

@@ -16,3 +16,5 @@ function copyToClipboard(text, callback) {
     );
   }
 }
+
+window.copyToClipboard = copyToClipboard;

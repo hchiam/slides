@@ -9,7 +9,7 @@ describe("memory", function () {
   });
 
   it("persists data after hitting refresh", function () {
-    cy.get("p").trigger("mouseover");
+    cy.get("p").trigger("mousemove");
     cy.get("#edit_text_icon").click();
     cy.get("p").type("{selectall}Edited text.").blur();
 
@@ -23,7 +23,7 @@ describe("memory", function () {
     cy.get("#right").click();
 
     cy.get("#add_text").click();
-    cy.get("p:visible").trigger("mouseover");
+    cy.get("p:visible").trigger("mousemove");
     cy.get("#edit_text_icon").click();
     cy.get("p:visible").type("{selectall}text 2").blur();
 
@@ -46,7 +46,7 @@ describe("memory", function () {
   });
 
   it("can delete all slides", function () {
-    cy.get("p").trigger("mouseover");
+    cy.get("p").trigger("mousemove");
     cy.get("#edit_text_icon").click();
     cy.get("p").type("{selectall}Edited text.").blur();
 
@@ -60,7 +60,7 @@ describe("memory", function () {
     cy.get("#right").click();
 
     cy.get("#add_text").click();
-    cy.get("p:visible").trigger("mouseover");
+    cy.get("p:visible").trigger("mousemove");
     cy.get("#edit_text_icon").click();
     cy.get("p:visible").type("{selectall}text 2").blur();
 

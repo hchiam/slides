@@ -10,7 +10,7 @@ describe("texts", function () {
 
   it("can edit text", function () {
     cy.contains("Drag to move. To edit, hover then click pencil icon.").trigger(
-      "mouseover"
+      "mousemove"
     );
     cy.get("#edit_text_icon").click();
     cy.get("p")
@@ -28,14 +28,14 @@ describe("texts", function () {
       })
       .trigger("mousemove", { which: 1, clientX: 700, clientY: 300 })
       .trigger("mouseup")
-      .trigger("mouseover");
+      .trigger("mousemove");
     cy.get("#edit_text_icon").click();
     cy.get("body").click();
     cy.get("p").should("exist");
 
     cy.contains(
       "Drag to move. To edit, hover then click pencil icon."
-    ).trigger("mouseover", { clientX: 10, clientY: 10 });
+    ).trigger("mousemove", { clientX: 10, clientY: 10 });
     cy.get("#edit_text_icon").click();
     cy.get("p").type("{selectall} "); // trigger deleting text
     cy.get("body").click();
@@ -51,7 +51,7 @@ describe("texts", function () {
       })
       .trigger("mousemove", { clientX: 700, clientY: 300 })
       .trigger("mouseup")
-      .trigger("mouseover");
+      .trigger("mousemove");
     cy.get("#edit_text_icon").click();
     cy.get("p").type("{selectall}{del}");
     cy.get("body").click();
@@ -61,7 +61,7 @@ describe("texts", function () {
   it("hitting delete while editing text should not trigger deleting whole text", function () {
     cy.contains(
       "Drag to move. To edit, hover then click pencil icon."
-    ).trigger("mouseover", { clientX: 10, clientY: 10 });
+    ).trigger("mousemove", { clientX: 10, clientY: 10 });
     cy.get("#edit_text_icon").click();
     cy.get("p").type("edit and then hit delete key{del}");
     cy.get("body").click();
@@ -80,7 +80,7 @@ describe("texts", function () {
   });
 
   it("can add text", function () {
-    cy.get("p").trigger("mouseover");
+    cy.get("p").trigger("mousemove");
     cy.get("#edit_text_icon").click();
     cy.get("p").type("{selectall} "); // trigger deleting text
     cy.get("body").click();

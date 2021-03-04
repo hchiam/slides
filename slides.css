@@ -333,3 +333,17 @@ button#delete_image_icon:not(:disabled):focus span:before {
     }
   }
 }
+
+.modal {
+  background: #323232 !important;
+}
+
+.modal-share-link {
+  cursor: text;
+  user-select: text;
+}
+
+.modal-share-link:hover {
+  background: black;
+  color: lime;
+}
