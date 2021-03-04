@@ -1,6 +1,7 @@
 window.Images = {
   currentImage: null,
   deleteImageIcon: null,
+  deleteImageIconTimer: null,
 
   recreatingImage: true,
   timeOfLastTap: null,
@@ -129,7 +130,8 @@ window.Images = {
     });
 
     img.addEventListener("mouseout", function (e) {
-      setTimeout(function () {
+      clearTimeout(deleteImageIconTimer);
+      deleteImageIconTimer = setTimeout(function () {
         if (
           e.target !== Images.deleteImageIcon &&
           e.target !== Images.deleteImageIcon.querySelector("i")

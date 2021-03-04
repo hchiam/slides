@@ -1,6 +1,7 @@
 window.Texts = {
   currentText: null,
   editTextIcon: null,
+  editTextIconTimer: null,
 
   initializeTextButtons: function () {
     document
@@ -190,7 +191,8 @@ window.Texts = {
     });
 
     p.addEventListener("mouseout", function (e) {
-      setTimeout(function () {
+      clearTimeout(editTextIconTimer);
+      editTextIconTimer = setTimeout(function () {
         if (
           e.target !== Texts.editTextIcon &&
           e.target !== Texts.editTextIcon.querySelector("i")
