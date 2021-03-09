@@ -111,6 +111,9 @@ window.Slides = {
     this.styleLeftRightButtons();
     // style slide number input:
     slideNumberInput.style.width = slideNumberInput.value.length + 5 + "ch";
+    // hide context buttons:
+    Texts.editTextIcon.style.display = "none";
+    Images.deleteImageIcon.style.display = "none";
   },
 
   detectArrowKeys: function (event) {
