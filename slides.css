@@ -153,6 +153,8 @@ p[contenteditable="true"]:before {
   top: -1.9rem;
   left: 0;
   white-space: nowrap;
+  cursor: auto;
+  pointer-events: none;
 }
 
 .hide-on-first-load {
