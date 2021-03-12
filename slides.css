@@ -127,14 +127,32 @@ input#select_json_file {
   }
 }
 
+img {
+  cursor: move;
+}
+
 p {
   color: white;
   mix-blend-mode: difference;
   cursor: move;
+  background: transparent;
 }
 
-img {
-  cursor: move;
+p[contenteditable="true"] {
+  background: green;
+}
+
+p[contenteditable="true"]:before {
+  content: "Click the highlighted text to edit:";
+  font-size: 1rem;
+  background: black;
+  color: white;
+  border-radius: 3px;
+  padding: 3px;
+  position: absolute;
+  top: -1.9rem;
+  left: 0;
+  white-space: nowrap;
 }
 
 .hide-on-first-load {

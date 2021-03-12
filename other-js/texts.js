@@ -34,7 +34,7 @@ window.Texts = {
       Texts.currentText.contentEditable = true;
       Texts.currentText.style.cursor = "auto";
       Texts.currentText.focus();
-      editTextIcon.style.direction = "none";
+      editTextIcon.style.display = "none";
     };
 
     document.body.appendChild(editTextIcon);
@@ -120,7 +120,6 @@ window.Texts = {
     p.style.top = top + "px";
     p.id = id;
     p.style.boxShadow = "none";
-    p.style.background = "transparent";
 
     p.style.display =
       Memory.currentSlideIndex === slideIndex ? "block" : "none";
@@ -185,6 +184,7 @@ window.Texts = {
 
     p.addEventListener("mousemove", function () {
       Texts.currentText = p;
+
       if (Texts.currentText.contentEditable !== "true") {
         Texts.editTextIcon.style.display = "";
         Texts.moveEditIcon();
@@ -256,7 +256,6 @@ window.Texts = {
     htmlElement.innerText = text;
     Memory.updateTextInMemory(htmlElement.id, text);
     htmlElement.ariaLabel = this.getAriaLabelFromTextElement(htmlElement);
-    this.backgroundColorIfEmptyText(htmlElement);
 
     var isEmpty = text.trim() === "";
     if (isEmpty) {
@@ -265,14 +264,6 @@ window.Texts = {
     }
 
     debugMemory();
-  },
-
-  backgroundColorIfEmptyText: function (htmlElement) {
-    if (!htmlElement.innerText) {
-      htmlElement.style.background = "black";
-    } else {
-      htmlElement.style.background = "transparent";
-    }
   },
 
   alreadyHasDefaultText: function () {
