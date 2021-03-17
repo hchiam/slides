@@ -121,4 +121,54 @@ window.Firebase = {
         console.log(error);
       });
   },
+
+  isStringTooLongForFirestoreFieldValue: function (string) {
+    var buffer = 100; // TODO: adjust this later
+    var maxFieldValueSizeInBytes = 1048487 - buffer;
+    return Firebase.getStringLengthInBytes(string) > maxFieldValueSizeInBytes;
+  },
+
+  getStringLengthInBytes: function (string) {
+    return new TextEncoder().encode(string).length;
+  },
+
+  saveExtraData: function () {
+    // TODO: use isStringTooLongForFirestoreFieldValue
+    // if too long, then add prop to doc: "extras" : "#"
+    //              and collections 1, 2, 3, ... = #
+  },
+
+  readExtraData: function () {
+    var d = Firebase.collection.doc("HW1u9T2byRtt42Ipyvjk");
+    var output = "";
+    d.get().then((snapshot) => {
+      var data = snapshot.data();
+      output += data.data;
+      console.log(output);
+      console.log("data.extras", data.extras);
+      if (data.extras && typeof data.extras == "number") {
+        function getExtraData(snapshot) {
+          var extraData = snapshot.docs[0].data().data;
+          return extraData;
+        }
+        var extraDataArray = [];
+        for (var i = 0; i < data.extras; i++) {
+          var collectionKey = String(i + 1);
+          var extraDataPromise = d
+            .collection(collectionKey)
+            .get()
+            .then(getExtraData);
+          extraDataArray.push(extraDataPromise);
+        }
+        Promise.all(extraDataArray)
+          .then((value) => {
+            output += value;
+          })
+          .then(() => {
+            console.log(output);
+          });
+      }
+    });
+    // TODO
+  },
 };
