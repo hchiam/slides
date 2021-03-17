@@ -4,6 +4,8 @@
   "description": "Edit. Present. Try it: https://hchiam-slides.surge.sh",
   "main": "slides.js",
   "scripts": {
+    "dev": "yarn test-locally # just a semantic alias",
+    "start": "yarn test-locally # just a semantic alias",
     "stop": "killall node",
     "test": "yarn test-site-prep && npx cypress open",
     "test-locally": "bash bash-scripts/test-locally.sh",
