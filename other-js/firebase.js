@@ -154,15 +154,40 @@ window.Firebase = {
   },
 
   getStringLengthInBytes: function (string) {
-    return new TextEncoder().encode(string).length;
+    return this.getStringAsBytesArray(string).length;
+  },
+
+  getStringAsBytesArray: function (string) {
+    return new TextEncoder().encode(string);
   },
 
   splitStringToFitInFirestoreFieldValue: function (string) {
     var buffer = 100; // TODO: adjust this later
     var maxFieldValueSizeInBytes = 1048487 - buffer;
-    if (justTestingForNow) maxFieldValueSizeInBytes = 50;
-    var regexSplitStringAtEveryN = ".{1," + maxFieldValueSizeInBytes + "}";
-    return string.match(new RegExp(regexSplitStringAtEveryN, "g"));
+    if (justTestingForNow) maxFieldValueSizeInBytes = 100;
+
+    var arrayOfByteLengths = this.getStringAsBytesArray(string).map(
+      (char) => new TextEncoder().encode(char).length
+    );
+
+    var temp_sum = 0;
+    var temp_chain = "";
+    var arrayOfSubstrings = [];
+    arrayOfByteLengths.forEach((charBytes, i) => {
+      if (temp_sum + charBytes < maxFieldValueSizeInBytes) {
+        temp_chain += string[i];
+        temp_sum += charBytes;
+      } else {
+        arrayOfSubstrings.push(temp_chain);
+        temp_chain = string[i];
+        temp_sum = 0;
+      }
+    });
+    if (temp_chain) {
+      arrayOfSubstrings.push(temp_chain);
+    }
+
+    return arrayOfSubstrings;
   },
 
   updateExtraData: function (existingDoc, stringifiedData) {
@@ -235,7 +260,7 @@ window.Firebase = {
 
   readExtraData: function (docId) {
     // TODO: use in useLink
-    // "HW1u9T2byRtt42Ipyvjk";
+    // Firebase.readExtraData('HW1u9T2byRtt42Ipyvjk');
     var slidesDoc = Firebase.collection.doc(docId);
     var output = "";
     return slidesDoc.get().then((snapshot) => {
