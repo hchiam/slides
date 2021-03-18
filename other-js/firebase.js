@@ -166,25 +166,28 @@ window.Firebase = {
     var maxFieldValueSizeInBytes = 1048487 - buffer;
     if (justTestingForNow) maxFieldValueSizeInBytes = 100;
 
-    var arrayOfByteLengths = this.getStringAsBytesArray(string).map(
+    var arrayOfBytes = this.getStringAsBytesArray(string).map(
       (char) => new TextEncoder().encode(char).length
     );
 
-    var temp_sum = 0;
-    var temp_chain = "";
     var arrayOfSubstrings = [];
-    arrayOfByteLengths.forEach((charBytes, i) => {
-      if (temp_sum + charBytes < maxFieldValueSizeInBytes) {
-        temp_chain += string[i];
-        temp_sum += charBytes;
+    var temp_byteSum = 0;
+    var temp_substring = "";
+    var i = 0;
+    arrayOfBytes.forEach((charBytes, j) => {
+      var includeThisChar = temp_byteSum + charBytes < maxFieldValueSizeInBytes;
+      if (includeThisChar) {
+        temp_byteSum += charBytes;
       } else {
-        arrayOfSubstrings.push(temp_chain);
-        temp_chain = string[i];
-        temp_sum = 0;
+        temp_substring = string.substring(i, j);
+        arrayOfSubstrings.push(temp_substring);
+        temp_byteSum = 0;
+        i = j;
       }
     });
-    if (temp_chain) {
-      arrayOfSubstrings.push(temp_chain);
+    if (i < string.length) {
+      temp_substring = string.substring(i, string.length);
+      arrayOfSubstrings.push(temp_substring);
     }
 
     return arrayOfSubstrings;
