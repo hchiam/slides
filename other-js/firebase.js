@@ -38,7 +38,7 @@ window.Firebase = {
       justTestingForNow &&
       this.isStringTooLongForFirestoreFieldValue(stringifiedData)
     ) {
-      promise = this.updateExtraData(existingDoc, stringifiedData);
+      promise = this.updateExtraData(existingDoc, docId, stringifiedData);
     } else {
       promise = existingDoc
         .set({
@@ -190,7 +190,7 @@ window.Firebase = {
     return arrayOfSubstrings;
   },
 
-  updateExtraData: function (existingDoc, stringifiedData) {
+  updateExtraData: function (existingDoc, docId, stringifiedData) {
     // TODO: use in updateExistingDoc
     // TODO: use in createNewDoc
     var splitData = Firebase.splitStringToFitInFirestoreFieldValue(
@@ -200,7 +200,7 @@ window.Firebase = {
     //              and collections 1, 2, 3, ... = #
     return existingDoc
       .set({
-        data: stringifiedData,
+        data: splitData[0],
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       })
       .then(() => {
@@ -233,7 +233,7 @@ window.Firebase = {
     return this.database
       .collection("slides")
       .add({
-        data: stringifiedData,
+        data: splitData[0],
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       })
       .then((newDoc) => {

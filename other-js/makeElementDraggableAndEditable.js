@@ -167,3 +167,5 @@ function makeElementDraggableAndEditable(element, settings) {
     return c <= threshold;
   }
 }
+
+window.makeElementDraggableAndEditable = makeElementDraggableAndEditable;

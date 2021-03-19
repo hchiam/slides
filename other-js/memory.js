@@ -450,3 +450,14 @@ window.Memory = {
     return !foundTextOrImageInSlides;
   },
 };
+
+window.memory = memory;
+window.defaultTextString = defaultTextString;
+window.goldenRatio = goldenRatio;
+window.defaultTextWidth = defaultTextWidth;
+window.defaultTextHeight = defaultTextHeight;
+window.defaultTextFontSize = defaultTextFontSize;
+window.defaultText = defaultText;
+window.defaultTextWidthBig = defaultTextWidthBig;
+window.defaultTextHeightBig = defaultTextHeightBig;
+window.defaultTextFontSizeBig = defaultTextFontSizeBig;

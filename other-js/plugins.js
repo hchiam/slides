@@ -20,3 +20,9 @@ function runImagePluginsWhenImageCreated(imageElement, internalCallback) {
   });
   if (internalCallback) internalCallback(imageElement);
 }
+
+window.usePlugins = usePlugins;
+window.useTextPlugins = useTextPlugins;
+window.useImagePlugins = useImagePlugins;
+window.pluginCallbacksToParseTexts = pluginCallbacksToParseTexts;
+window.pluginCallbacksToParseImages = pluginCallbacksToParseImages;
