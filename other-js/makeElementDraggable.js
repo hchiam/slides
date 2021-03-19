@@ -135,3 +135,5 @@ function makeElementDraggable(element, settings) {
     return c <= threshold;
   }
 }
+
+window.makeElementDraggable = makeElementDraggable;

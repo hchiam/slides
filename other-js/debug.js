@@ -35,3 +35,7 @@ function getEventsOnElement(selector) {
 console.log(
   "Found a bug? Feel free to report suggestions here: https://github.com/hchiam/slides/issues"
 );
+
+window.enableDebugging = enableDebugging;
+window.debugMemory = debugMemory;
+window.getEventsOnElement = getEventsOnElement;
