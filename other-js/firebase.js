@@ -28,7 +28,6 @@ window.Firebase = {
 
   updateExistingDoc: function (memory, docId, callback) {
     if (!memory) return;
-    console.log(memory);
 
     var existingDoc = this.database.collection("slides").doc(docId);
 
@@ -223,7 +222,6 @@ window.Firebase = {
             })
             .then(() => {
               lastIndex++; // starts at 1
-              console.log(String(lastIndex), splitData[lastIndex]);
               existingDoc
                 .collection(String(lastIndex))
                 .add({ data: splitData[lastIndex] });
