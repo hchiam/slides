@@ -1,4 +1,5 @@
-var justTestingForNow = true;
+var fieldValueSizeBuffer = 100; // TODO: adjust this later
+var maxFieldValueSizeInBytes = 1048487 - fieldValueSizeBuffer;
 
 window.Firebase = {
   firebaseConfig: {
@@ -33,10 +34,7 @@ window.Firebase = {
 
     var stringifiedData = JSON.stringify(memory);
 
-    if (
-      justTestingForNow &&
-      this.isStringTooLongForFirestoreFieldValue(stringifiedData)
-    ) {
+    if (this.isStringTooLongForFirestoreFieldValue(stringifiedData)) {
       this.updateExtraData(existingDoc, docId, stringifiedData, callback);
     } else {
       existingDoc
@@ -56,10 +54,7 @@ window.Firebase = {
 
     var stringifiedData = JSON.stringify(memory);
 
-    if (
-      justTestingForNow &&
-      this.isStringTooLongForFirestoreFieldValue(stringifiedData)
-    ) {
+    if (this.isStringTooLongForFirestoreFieldValue(stringifiedData)) {
       this.saveExtraData(stringifiedData, callback);
     } else {
       this.database
@@ -153,9 +148,6 @@ window.Firebase = {
   },
 
   isStringTooLongForFirestoreFieldValue: function (string) {
-    var buffer = 100; // TODO: adjust this later
-    var maxFieldValueSizeInBytes = 1048487 - buffer;
-    if (justTestingForNow) maxFieldValueSizeInBytes = 50;
     return Firebase.getStringLengthInBytes(string) > maxFieldValueSizeInBytes;
   },
 
@@ -168,10 +160,6 @@ window.Firebase = {
   },
 
   splitStringToFitInFirestoreFieldValue: function (string) {
-    var buffer = 100; // TODO: adjust this later
-    var maxFieldValueSizeInBytes = 1048487 - buffer;
-    if (justTestingForNow) maxFieldValueSizeInBytes = 100;
-
     var arrayOfByteLengths = this.getStringAsBytesArray(string).map(
       (char) => new TextEncoder().encode(char).length
     );
