@@ -2,7 +2,7 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     match /slides/{id} { // parent scope is protected by default
-    	allow write: if hasTimestamp() && isCalm();
+      allow write: if hasTimestamp() && isCalm();
       allow create: if hasTimestamp();
       allow read: if true; // allow read: if request.query.limit == 1;
       
