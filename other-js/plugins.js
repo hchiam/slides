@@ -26,3 +26,5 @@ window.useTextPlugins = useTextPlugins;
 window.useImagePlugins = useImagePlugins;
 window.pluginCallbacksToParseTexts = pluginCallbacksToParseTexts;
 window.pluginCallbacksToParseImages = pluginCallbacksToParseImages;
+window.runTextPluginsWhenTextUpdated = runTextPluginsWhenTextUpdated;
+window.runImagePluginsWhenImageCreated = runImagePluginsWhenImageCreated;
