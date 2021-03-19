@@ -123,7 +123,6 @@ window.Firebase = {
               stringifiedData += values.join("");
             })
             .then(() => {
-              console.log(stringifiedData);
               var slidesData = JSON.parse(stringifiedData);
               memory = slidesData;
               memory.id = slidesData.id || query;
@@ -209,7 +208,28 @@ window.Firebase = {
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       })
       .then(() => {
-        if (callback) callback(docId);
+        var extraDataPromises = [];
+        console.log(splitData);
+        for (var i = 0; i < numberOfExtraDocs; i++) {
+          var collectionKey = String(i + 1);
+          var splitSubstring = splitData[i + 1];
+          // but because of timing, still only get last one
+          var extraDataPromise = existingDoc
+            .collection(collectionKey)
+            .limit(1) // assume only 1
+            .get()
+            .then((snapshot) => {
+              console.log(i, collectionKey, splitSubstring);
+              snapshot.docs[0].ref.update({ data: splitSubstring });
+            });
+
+          extraDataPromises.push(extraDataPromise);
+        }
+        Promise.all(extraDataPromises)
+          .then(() => {
+            if (callback) callback(docId);
+          })
+          .catch(Firebase.handleShareLinkError);
       })
       .catch(Firebase.handleShareLinkError);
   },
@@ -218,8 +238,6 @@ window.Firebase = {
     var splitData = Firebase.splitStringToFitInFirestoreFieldValue(
       stringifiedData
     );
-    console.log(splitData);
-
     var numberOfExtraDocs = splitData.length - 1;
     return this.database
       .collection("slides")
@@ -237,8 +255,7 @@ window.Firebase = {
           var collectionKey = String(i + 1);
           var extraDataPromise = newDoc
             .collection(collectionKey)
-            .add({ data: splitData[i + 1] })
-            .catch(Firebase.handleShareLinkError);
+            .add({ data: splitData[i + 1] });
           extraDataPromises.push(extraDataPromise);
         }
         Promise.all(extraDataPromises).then(() => {
