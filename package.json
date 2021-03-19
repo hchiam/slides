@@ -42,7 +42,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "#yarn test-pre-commit"
+      "pre-commit": "yarn test-pre-commit"
     }
   },
   "dependencies": {
