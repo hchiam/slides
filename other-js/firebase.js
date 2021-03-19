@@ -33,20 +33,13 @@ window.Firebase = {
 
     var stringifiedData = JSON.stringify(memory);
 
-    var promise;
-
     if (
       justTestingForNow &&
       this.isStringTooLongForFirestoreFieldValue(stringifiedData)
     ) {
-      promise = this.updateExtraData(
-        existingDoc,
-        docId,
-        stringifiedData,
-        callback
-      );
+      this.updateExtraData(existingDoc, docId, stringifiedData, callback);
     } else {
-      promise = existingDoc
+      existingDoc
         .set({
           data: stringifiedData,
           timestamp: firebase.firestore.FieldValue.serverTimestamp(),
@@ -63,15 +56,13 @@ window.Firebase = {
 
     var stringifiedData = JSON.stringify(memory);
 
-    var promise;
-
     if (
       justTestingForNow &&
       this.isStringTooLongForFirestoreFieldValue(stringifiedData)
     ) {
-      promise = this.saveExtraData(stringifiedData, callback);
+      this.saveExtraData(stringifiedData, callback);
     } else {
-      promise = this.database
+      this.database
         .collection("slides")
         .add({
           data: stringifiedData,
