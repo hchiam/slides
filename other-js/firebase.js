@@ -21,7 +21,7 @@ window.Firebase = {
       if (memory.id) {
         this.updateExistingDoc(memory, memory.id, callback);
       } else {
-        this.createNewDoc(callback);
+        this.createNewDoc(memory, callback);
       }
     });
   },
