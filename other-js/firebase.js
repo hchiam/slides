@@ -209,20 +209,24 @@ window.Firebase = {
       })
       .then(() => {
         var extraDataPromises = [];
-        console.log(splitData);
+        var lastIndex = 0;
         for (var i = 0; i < numberOfExtraDocs; i++) {
           var collectionKey = String(i + 1);
-          var splitSubstring = splitData[i + 1];
-          // but because of timing, still only get last one
           var extraDataPromise = existingDoc
             .collection(collectionKey)
-            .limit(1) // assume only 1
             .get()
             .then((snapshot) => {
-              console.log(i, collectionKey, splitSubstring);
-              snapshot.docs[0].ref.update({ data: splitSubstring });
+              snapshot.forEach((doc) => {
+                doc.ref.delete();
+              });
+            })
+            .then(() => {
+              lastIndex++; // starts at 1
+              console.log(String(lastIndex), splitData[lastIndex]);
+              existingDoc
+                .collection(String(lastIndex))
+                .add({ data: splitData[lastIndex] });
             });
-
           extraDataPromises.push(extraDataPromise);
         }
         Promise.all(extraDataPromises)

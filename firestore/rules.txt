@@ -2,7 +2,6 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     match /slides/{id} { // parent scope is protected by default
-      allow create: if hasTimestamp();
       allow write: if hasTimestamp() && isCalm();
       allow read: if true; // allow read: if request.query.limit == 1;
       
@@ -13,8 +12,14 @@ service cloud.firestore {
         return request.time > resource.data.timestamp + duration.value(10, 's');
       }
       
+      match /{collection} {
+        allow write: if true; // write = create, update, delete
+        allow read: if true; // read = get, list
+      }
+      
       match /{collection}/{id} {
-        allow read: if true;
+        allow write: if true; // write = create, update, delete
+        allow read: if true; // read = get, list
       }
     }
   }
