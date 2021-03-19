@@ -19,15 +19,16 @@ window.Firebase = {
     Memory.readPersistentMemory((memory) => {
       if (!memory) return;
       if (memory.id) {
-        this.updateExistingDoc(memory.id, callback);
+        this.updateExistingDoc(memory, memory.id, callback);
       } else {
         this.createNewDoc(callback);
       }
     });
   },
 
-  updateExistingDoc: function (docId, callback) {
+  updateExistingDoc: function (memory, docId, callback) {
     if (!memory) return;
+    console.log(memory);
 
     var existingDoc = this.database.collection("slides").doc(docId);
 
@@ -51,7 +52,7 @@ window.Firebase = {
     }
   },
 
-  createNewDoc: function (callback) {
+  createNewDoc: function (memory, callback) {
     if (!memory) return;
 
     var stringifiedData = JSON.stringify(memory);
