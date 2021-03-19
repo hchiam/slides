@@ -16,13 +16,14 @@ window.Firebase = {
   },
 
   createLink: function (callback) {
-    if (!memory) return;
-
-    if (memory.id) {
-      this.updateExistingDoc(memory.id, callback);
-    } else {
-      this.createNewDoc(callback);
-    }
+    Memory.readPersistentMemory((memory) => {
+      if (!memory) return;
+      if (memory.id) {
+        this.updateExistingDoc(memory.id, callback);
+      } else {
+        this.createNewDoc(callback);
+      }
+    });
   },
 
   updateExistingDoc: function (docId, callback) {
@@ -38,7 +39,12 @@ window.Firebase = {
       justTestingForNow &&
       this.isStringTooLongForFirestoreFieldValue(stringifiedData)
     ) {
-      promise = this.updateExtraData(existingDoc, docId, stringifiedData);
+      promise = this.updateExtraData(
+        existingDoc,
+        docId,
+        stringifiedData,
+        callback
+      );
     } else {
       promise = existingDoc
         .set({
@@ -48,20 +54,7 @@ window.Firebase = {
         .then(() => {
           if (callback) callback(docId);
         })
-        .catch((error) => {
-          alert(
-            "Could not create link - please wait and try again later. \n\nAlternatively, you can download your data."
-          );
-          console.log(error);
-          Firebase.showShareButton(false);
-          Firebase.showSaveButton();
-          Firebase.showUploadButton();
-          setTimeout(() => {
-            Firebase.showShareButton();
-            Firebase.showSaveButton(false);
-            Firebase.showUploadButton(false);
-          }, 60000);
-        });
+        .catch(Firebase.handleShareLinkError);
     }
   },
 
@@ -76,7 +69,7 @@ window.Firebase = {
       justTestingForNow &&
       this.isStringTooLongForFirestoreFieldValue(stringifiedData)
     ) {
-      promise = this.saveExtraData(stringifiedData);
+      promise = this.saveExtraData(stringifiedData, callback);
     } else {
       promise = this.database
         .collection("slides")
@@ -90,20 +83,7 @@ window.Firebase = {
           Memory.updatePersistentMemory(memory);
           if (callback) callback(newDoc.id);
         })
-        .catch((error) => {
-          alert(
-            "Could not create link - please wait and try again later. \n\nAlternatively, you can download your data."
-          );
-          console.log(error);
-          Firebase.showShareButton(false);
-          Firebase.showSaveButton();
-          Firebase.showUploadButton();
-          setTimeout(() => {
-            Firebase.showShareButton();
-            Firebase.showSaveButton(false);
-            Firebase.showUploadButton(false);
-          }, 60000);
-        });
+        .catch(Firebase.handleShareLinkError);
     }
   },
 
@@ -123,12 +103,48 @@ window.Firebase = {
     var query = location.search.slice(1); // just the part after the "?" symbol
     if (!query) return;
 
-    this.collection
-      .doc(query) // doc id
+    var stringifiedData = "";
+
+    var slidesDoc = this.collection.doc(query); // doc id
+
+    slidesDoc
       .get()
       .then((snapshot) => {
         var data = snapshot.data();
-        if (data) {
+        stringifiedData = data.data;
+        var hadToSplitUpString = data.extras && typeof data.extras == "number";
+        if (hadToSplitUpString) {
+          function getExtraData(snapshot) {
+            var extraData = snapshot.docs[0].data().data;
+            return extraData;
+          }
+          var extraDataArray = [];
+          for (var i = 0; i < data.extras; i++) {
+            var collectionKey = String(i + 1);
+            var extraDataPromise = slidesDoc
+              .collection(collectionKey)
+              .get()
+              .then(getExtraData);
+            extraDataArray.push(extraDataPromise);
+          }
+          Promise.all(extraDataArray)
+            .then((values) => {
+              stringifiedData += values.join("");
+            })
+            .then(() => {
+              console.log(stringifiedData);
+              var slidesData = JSON.parse(stringifiedData);
+              memory = slidesData;
+              memory.id = slidesData.id || query;
+              memory.title = slidesData.title || "";
+              if (memory && memory.title) {
+                Slides.setTitle(memory.title);
+              }
+              Memory.recreateSlidesFromMemory(memory);
+              // NOTE: do NOT reload page NOR clear .pathname NOR .search
+            });
+        } else {
+          // all fits in one data string:
           var slidesData = JSON.parse(data.data);
           memory = slidesData;
           memory.id = slidesData.id || query;
@@ -190,105 +206,71 @@ window.Firebase = {
     return arrayOfSubstrings;
   },
 
-  updateExtraData: function (existingDoc, docId, stringifiedData) {
-    // TODO: use in updateExistingDoc
-    // TODO: use in createNewDoc
+  updateExtraData: function (existingDoc, docId, stringifiedData, callback) {
     var splitData = Firebase.splitStringToFitInFirestoreFieldValue(
       stringifiedData
     );
-    // if too long, then add prop to doc: "extras" : "#"
-    //              and collections 1, 2, 3, ... = #
+    var numberOfExtraDocs = splitData.length - 1;
     return existingDoc
       .set({
         data: splitData[0],
+        extras: numberOfExtraDocs,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       })
       .then(() => {
         if (callback) callback(docId);
       })
-      .catch((error) => {
-        alert(
-          "Could not create link - please wait and try again later. \n\nAlternatively, you can download your data."
-        );
-        console.log(error);
-        Firebase.showShareButton(false);
-        Firebase.showSaveButton();
-        Firebase.showUploadButton();
-        setTimeout(() => {
-          Firebase.showShareButton();
-          Firebase.showSaveButton(false);
-          Firebase.showUploadButton(false);
-        }, 60000);
-      });
+      .catch(Firebase.handleShareLinkError);
   },
 
-  saveExtraData: function (stringifiedData) {
-    // TODO: use in updateExistingDoc
-    // TODO: use in createNewDoc
+  saveExtraData: function (stringifiedData, callback) {
     var splitData = Firebase.splitStringToFitInFirestoreFieldValue(
       stringifiedData
     );
-    // if too long, then add prop to doc: "extras" : "#"
-    //              and collections 1, 2, 3, ... = #
+    console.log(splitData);
+
+    var numberOfExtraDocs = splitData.length - 1;
     return this.database
       .collection("slides")
       .add({
         data: splitData[0],
+        extras: numberOfExtraDocs,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       })
       .then((newDoc) => {
         // store id in memory:
         memory.id = newDoc.id;
-        Memory.updatePersistentMemory(memory);
-        if (callback) callback(newDoc.id);
+        // go through splitData array:
+        var extraDataPromises = [];
+        for (var i = 0; i < numberOfExtraDocs; i++) {
+          var collectionKey = String(i + 1);
+          var extraDataPromise = newDoc
+            .collection(collectionKey)
+            .add({ data: splitData[i + 1] })
+            .catch(Firebase.handleShareLinkError);
+          extraDataPromises.push(extraDataPromise);
+        }
+        Promise.all(extraDataPromises).then(() => {
+          // store id in memory:
+          Memory.updatePersistentMemory(memory);
+          if (callback) callback(memory.id);
+        });
       })
-      .catch((error) => {
-        alert(
-          "Could not create link - please wait and try again later. \n\nAlternatively, you can download your data."
-        );
-        console.log(error);
-        Firebase.showShareButton(false);
-        Firebase.showSaveButton();
-        Firebase.showUploadButton();
-        setTimeout(() => {
-          Firebase.showShareButton();
-          Firebase.showSaveButton(false);
-          Firebase.showUploadButton(false);
-        }, 60000);
-      });
+      .catch(Firebase.handleShareLinkError);
   },
 
-  readExtraData: function (docId) {
-    // TODO: use in useLink
-    // Firebase.readExtraData('HW1u9T2byRtt42Ipyvjk');
-    var slidesDoc = Firebase.collection.doc(docId);
-    var output = "";
-    return slidesDoc.get().then((snapshot) => {
-      var data = snapshot.data();
-      output = data.data;
-      if (data.extras && typeof data.extras == "number") {
-        function getExtraData(snapshot) {
-          var extraData = snapshot.docs[0].data().data;
-          return extraData;
-        }
-        var extraDataArray = [];
-        for (var i = 0; i < data.extras; i++) {
-          var collectionKey = String(i + 1);
-          var extraDataPromise = slidesDoc
-            .collection(collectionKey)
-            .get()
-            .then(getExtraData);
-          extraDataArray.push(extraDataPromise);
-        }
-        Promise.all(extraDataArray)
-          .then((values) => {
-            output += values.join("");
-          })
-          .then(() => {
-            console.log(output);
-          });
-      }
-    });
-    // TODO
+  handleShareLinkError: function (error) {
+    alert(
+      "Could not create link - please wait and try again later. \n\nAlternatively, you can download your data."
+    );
+    console.log(error);
+    Firebase.showShareButton(false);
+    Firebase.showSaveButton();
+    Firebase.showUploadButton();
+    setTimeout(() => {
+      Firebase.showShareButton();
+      Firebase.showSaveButton(false);
+      Firebase.showUploadButton(false);
+    }, 60000);
   },
 };
