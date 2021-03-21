@@ -1,6 +1,6 @@
 {
   "name": "slides",
-  "version": "6.4.0",
+  "version": "6.4.1",
   "description": "Edit. Present. Try it: https://hchiam-slides.surge.sh",
   "main": "slides.js",
   "scripts": {
@@ -14,7 +14,7 @@
     "test-cli-locally": "npx cypress run --config baseUrl=http://localhost:1234",
     "test-background": "npx cypress run",
     "test-site-prep": "bash bash-scripts/setup-test-site.sh # update test site",
-    "test-site": "yarn test-site-prep",
+    "test-site": "yarn test-site-prep # just a semantic alias",
     "test-quality": "bash bash-scripts/website-quality-test.sh",
     "minify": "bash bash-scripts/minify.sh",
     "browser-sync": "bash bash-scripts/browser-sync.sh",

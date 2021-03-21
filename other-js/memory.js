@@ -33,6 +33,9 @@ var defaultTextWidthBig = defaultTextWidth * goldenRatio;
 var defaultTextHeightBig = defaultTextHeight * goldenRatio;
 var defaultTextFontSizeBig = Math.round(defaultTextFontSize * goldenRatio); // number
 
+var bytesIn1MiB = Math.pow(2, 20);
+var localStorageLimit = 5 * bytesIn1MiB; // 5MB
+
 window.Memory = {
   currentSlideIndex: 0,
 
@@ -201,6 +204,10 @@ window.Memory = {
 
   updatePersistentMemory: function (memoryObject) {
     memory = memoryObject;
+    var willFitInAnyLocalStorage = !this.isStringTooLongForLocalStorageLimit(
+      JSON.stringify(memory)
+    );
+    if (!willFitInAnyLocalStorage) return;
     if (typeof localforage !== "undefined") {
       localforage.setItem(
         "slidesMemory",
@@ -448,6 +455,18 @@ window.Memory = {
     }
 
     return !foundTextOrImageInSlides;
+  },
+
+  isStringTooLongForLocalStorageLimit: function (string) {
+    return this.getStringLengthInBytes(string) > localStorageLimit;
+  },
+
+  getStringLengthInBytes: function (string) {
+    return this.getStringAsBytesArray(string).length;
+  },
+
+  getStringAsBytesArray: function (string) {
+    return new TextEncoder().encode(string);
   },
 };
 

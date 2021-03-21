@@ -118,7 +118,10 @@ window.Firebase = {
               stringifiedData += values.join("");
             })
             .then(() => {
-              var slidesData = JSON.parse(stringifiedData);
+              var undefinedRepeatedAtEnd = /([undefined]*)$/;
+              var slidesData = JSON.parse(
+                stringifiedData.replace(undefinedRepeatedAtEnd, "")
+              );
               memory = slidesData;
               memory.id = slidesData.id || query;
               memory.title = slidesData.title || "";
@@ -148,15 +151,7 @@ window.Firebase = {
   },
 
   isStringTooLongForFirestoreFieldValue: function (string) {
-    return Firebase.getStringLengthInBytes(string) > maxFieldValueSizeInBytes;
-  },
-
-  getStringLengthInBytes: function (string) {
-    return this.getStringAsBytesArray(string).length;
-  },
-
-  getStringAsBytesArray: function (string) {
-    return new TextEncoder().encode(string);
+    return Memory.getStringLengthInBytes(string) > maxFieldValueSizeInBytes;
   },
 
   splitStringToFitInFirestoreFieldValue: function (string) {
