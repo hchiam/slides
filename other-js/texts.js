@@ -43,6 +43,13 @@ window.Texts = {
       Texts.currentText.style.cursor = "auto";
       Texts.currentText.focus();
       editTextIcon.style.display = "none";
+
+      // select entire p text:
+      var range = document.createRange();
+      var selection = window.getSelection();
+      range.selectNodeContents(Texts.currentText);
+      selection.removeAllRanges();
+      selection.addRange(range);
     };
 
     document.body.appendChild(editTextIcon);
