@@ -254,6 +254,7 @@ window.Firebase = {
   },
 
   handleShareLinkError: function (error) {
+    Spinner.hide();
     alert(
       "Could not create link - please wait and try again later. \n\nAlternatively, you can download your data."
     );
