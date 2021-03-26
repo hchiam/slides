@@ -11,8 +11,7 @@ function copyToClipboard(text, callback) {
     if (callback) callback(text);
   } catch (err) {
     alert(
-      "Could not automatically copy to clipboard. \n\n Copy this text instead: \n\n" +
-        text
+      "Could not automatically copy. \n\n Copy this text instead: \n\n" + text
     );
   }
 }

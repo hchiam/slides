@@ -373,11 +373,14 @@ window.Memory = {
     );
     if (!yes) return;
 
+    Spinner.show();
     this.readPersistentMemory();
+
     Firebase.createLink(function (query) {
+      Spinner.hide();
       var url = location.protocol + "//" + location.host + "/?" + query;
       copyToClipboard(url, function () {
-        console.log("Copied link to clipboard:\n\n" + url);
+        console.log("Copied link: \n\n" + url);
       });
       var shareButton = document.querySelector("#share");
       Morphing_button.morph(shareButton);
@@ -385,13 +388,14 @@ window.Memory = {
       shareButton.innerHTML = `
         <div>You can share your slides at this public link (no login necessary):</div>
         <br/>
-        <div class="modal-share-link" 
+        <div class="modal-share-link" tabindex="0" autofocus 
             onclick="copyToClipboard('${url}', function() { alert('Copied link:\\n\\n' + '${url}') })">
             ${url}
         </div>
         <br/>
-        <div><button onclick="Memory.closeShareModal(event)">X</button></div>
+        <div><button onclick="Memory.closeShareModal(event)" aria-label="Close">X</button></div>
       `;
+      setUpKeyboardFocusTrap(shareButton);
     });
   },
 
