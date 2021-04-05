@@ -369,7 +369,9 @@ window.Memory = {
     if (this.areAllSlidesBlankInMemory()) return;
 
     var yes = confirm(
-      "This will create a public link that you can use to share your slides. \n\nContinue?"
+      "This will create a public link that you can use to share your slides. " +
+        "\n\nYour slides data will be saved in Google Firebase, and may be deleted at any time at the discretion of the maintainer of this app. " +
+        "\n\nContinue?"
     );
     if (!yes) return;
 
