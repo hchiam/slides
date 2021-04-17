@@ -12,6 +12,9 @@ window.Firebase = {
   initialize: function () {
     firebase.initializeApp(this.firebaseConfig);
     this.database = window.firebase.firestore();
+    if (location.hostname === "localhost") {
+      this.database.useEmulator("localhost", 8080);
+    }
     this.collection = this.database.collection("slides");
     this.useLink();
   },
