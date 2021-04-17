@@ -224,6 +224,13 @@ window.Texts = {
       Texts.updateText(p);
     });
 
+    p.addEventListener("focus", function () {
+      console.log(Texts.editTextIcon);
+      Texts.currentText = p;
+      Texts.currentText.hover();
+      Texts.editTextIcon.focus();
+    });
+
     parentElement.appendChild(p);
 
     Slides.enableShareButton();

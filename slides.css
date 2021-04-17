@@ -143,7 +143,7 @@ p[contenteditable="true"] {
 }
 
 p[contenteditable="true"]:before {
-  content: "Click the highlighted text to edit:";
+  content: "You can click the highlighted text to edit:";
   font-size: 1rem;
   background: black;
   color: white;
