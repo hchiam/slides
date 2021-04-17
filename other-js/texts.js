@@ -179,7 +179,14 @@ window.Texts = {
       }
     };
 
+    p.wasFocusFromKeyboard = false;
+
+    p.addEventListener("click", function () {
+      p.wasFocusFromKeyboard = false;
+    });
+
     p.addEventListener("keyup", function (event) {
+      p.wasFocusFromKeyboard = true;
       var key = event.code || event.keyCode || event.which || window.event;
       var isBackspace = key === "Backspace" || key === 8;
       var isDelete = key === "Delete" || key === 46;
@@ -224,11 +231,15 @@ window.Texts = {
       Texts.updateText(p);
     });
 
-    p.addEventListener("focus", function () {
-      console.log(Texts.editTextIcon);
+    p.addEventListener("focus", function (event) {
       Texts.currentText = p;
-      Texts.currentText.hover();
-      Texts.editTextIcon.focus();
+      if (
+        p.wasFocusFromKeyboard &&
+        Texts.currentText.contentEditable !== "true"
+      ) {
+        Texts.editTextIcon.style.display = "";
+        Texts.moveEditIcon();
+      }
     });
 
     parentElement.appendChild(p);
