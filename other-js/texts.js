@@ -224,6 +224,21 @@ window.Texts = {
       Texts.updateText(p);
     });
 
+    p.addEventListener("focus", function (event) {
+      Texts.currentText = p;
+      if (A11y.wasFocusFromKeyboard) {
+        Texts.editTextIcon.style.display = "";
+        Texts.moveEditIcon();
+        var temp = Texts.editTextIcon.parentNode.removeChild(
+          Texts.editTextIcon
+        );
+        Texts.currentText.parentNode.insertBefore(
+          temp,
+          Texts.currentText.nextSibling
+        );
+      }
+    });
+
     parentElement.appendChild(p);
 
     Slides.enableShareButton();

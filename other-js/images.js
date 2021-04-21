@@ -57,17 +57,25 @@ window.Images = {
     this.recreatingImage = true;
     var imageObject = Memory.getSlide(slideIndex).images[imageId];
     var src = imageObject.file;
+    var fileName = imageObject.fileName;
     var left = imageObject.left * Memory.getScaleForOriginalScreenSize(memory);
     var top = imageObject.top * Memory.getScaleForOriginalScreenSize(memory);
     Slides.isInitializingMemory = true;
-    this.createImage(Slides.currentSlide, src, left, top, imageId, slideIndex);
+    this.createImage(
+      Slides.currentSlide,
+      src,
+      fileName,
+      left,
+      top,
+      imageId,
+      slideIndex
+    );
   },
 
-  createNewImage: function (src) {
+  createNewImage: function (src, fileName = "") {
     this.recreatingImage = false;
-    var image = new Memory.Image(src);
+    var image = new Memory.Image(src, fileName);
     Memory.addImageToMemory(image, image.id);
-
     var src = image.file;
     var left = image.left;
     var top = image.top;
@@ -76,6 +84,7 @@ window.Images = {
     this.createImage(
       Slides.currentSlide,
       src,
+      fileName,
       left,
       top,
       imageId,
@@ -87,6 +96,7 @@ window.Images = {
   createImage: function (
     parentElement = Slides.currentSlide,
     src,
+    fileName,
     left,
     top,
     imageId,
@@ -94,6 +104,7 @@ window.Images = {
   ) {
     var img = document.createElement("img");
     img.src = src;
+    img.fileName = encodeURI(fileName);
     img.style.left = isNaN(left) && left.endsWith("px") ? left : left + "px";
     img.style.top = isNaN(top) && top.endsWith("px") ? top : top + "px";
     img.style.zIndex = -1;
@@ -142,7 +153,24 @@ window.Images = {
     });
 
     img.addEventListener("blur", function (e) {
-      Images.deleteImageIcon.style.display = "none";
+      if (!A11y.wasFocusFromKeyboard) {
+        Images.deleteImageIcon.style.display = "none";
+      }
+    });
+
+    img.addEventListener("focus", function (e) {
+      Images.currentImage = img;
+      if (A11y.wasFocusFromKeyboard) {
+        Images.deleteImageIcon.style.display = "";
+        Images.moveDeleteIcon();
+        var temp = Images.deleteImageIcon.parentNode.removeChild(
+          Images.deleteImageIcon
+        );
+        Images.currentImage.parentNode.insertBefore(
+          temp,
+          Images.currentImage.nextSibling
+        );
+      }
     });
 
     parentElement.appendChild(img);
@@ -179,7 +207,34 @@ window.Images = {
   },
 
   getAriaLabelFromImage: function (img) {
-    return "image at " + img.style.left + " left and " + img.style.top + " top";
+    var fileName = img.fileName;
+    var fileNameMessage = "";
+    if (fileName && fileName.length <= 20) {
+      fileNameMessage += " with file name " + fileName;
+    } else if (fileName) {
+      fileNameMessage +=
+        " with file name starting with " +
+        this.getStartOfImageFileNameForA11y(fileName);
+    }
+    return (
+      "image " +
+      fileNameMessage +
+      " at " +
+      img.style.left +
+      " left and " +
+      img.style.top +
+      " top"
+    );
+  },
+
+  getStartOfImageFileNameForA11y: function (fileName) {
+    var fileNameStr =
+      typeof fileName === "string" ? fileName : fileName.fileName;
+    var fileNameExtension = fileName.match(/\.[^.]+$/)[0];
+    fileNameStr = fileNameStr.replace(new RegExp(fileNameExtension + "$"), "");
+    if (fileNameStr.length <= 20) return fileNameStr;
+    var positionOfLastSpace = fileNameStr.slice(0, 20).lastIndexOf(" ");
+    return fileNameStr.slice(0, positionOfLastSpace);
   },
 
   updateImagePosition: function (htmlElement) {
@@ -205,17 +260,19 @@ window.Images = {
   readImage: function () {
     var inputElement = document.querySelector("#select_image");
     if (inputElement.files && inputElement.files[0]) {
+      var file = inputElement.files[0];
+      var fileName = file ? file.name : "";
       var reader = new FileReader();
       var Images = this;
       reader.onload = function (e) {
         var src = e.target.result;
-        Images.createNewImage(src);
+        Images.createNewImage(src, fileName);
       };
       inputElement.onchange = function (e) {
         const f = e.target.files[0];
         reader.readAsDataURL(f);
       };
-      const image = inputElement.files[0];
+      const image = file;
       reader.readAsDataURL(image);
     }
   },
