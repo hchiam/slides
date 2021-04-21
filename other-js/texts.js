@@ -2,6 +2,7 @@ window.Texts = {
   currentText: null,
   editTextIcon: null,
   editTextIconTimer: null,
+  wasFocusFromKeyboard: false,
 
   initializeTextButtons: function () {
     document
@@ -179,14 +180,15 @@ window.Texts = {
       }
     };
 
-    p.wasFocusFromKeyboard = false;
+    document.addEventListener("click", function () {
+      Texts.wasFocusFromKeyboard = false;
+    });
 
-    p.addEventListener("click", function () {
-      p.wasFocusFromKeyboard = false;
+    document.addEventListener("keydown", function () {
+      Texts.wasFocusFromKeyboard = true;
     });
 
     p.addEventListener("keyup", function (event) {
-      p.wasFocusFromKeyboard = true;
       var key = event.code || event.keyCode || event.which || window.event;
       var isBackspace = key === "Backspace" || key === 8;
       var isDelete = key === "Delete" || key === 46;
@@ -233,12 +235,16 @@ window.Texts = {
 
     p.addEventListener("focus", function (event) {
       Texts.currentText = p;
-      if (
-        p.wasFocusFromKeyboard &&
-        Texts.currentText.contentEditable !== "true"
-      ) {
+      if (Texts.wasFocusFromKeyboard) {
         Texts.editTextIcon.style.display = "";
         Texts.moveEditIcon();
+        var temp = Texts.editTextIcon.parentNode.removeChild(
+          Texts.editTextIcon
+        );
+        Texts.currentText.parentNode.insertBefore(
+          temp,
+          Texts.currentText.nextSibling
+        );
       }
     });
 
