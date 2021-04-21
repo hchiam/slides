@@ -11,7 +11,7 @@ var memory = {
         // id: { text: "", left: 0, top: 0, slide: 0, id: "..." },
       },
       images: {
-        // id: { file: "", left: 0, top: 0, slide: 0, id: "..." },
+        // id: { file: "", fileName: "", left: 0, top: 0, slide: 0, id: "..." },
       },
     },
   ],
@@ -50,8 +50,9 @@ window.Memory = {
     this.id = id || Memory.generateId();
   },
 
-  Image: function (file = "", id) {
+  Image: function (file = "", fileName, id) {
     this.file = file;
+    this.fileName = fileName;
     this.left = 0;
     this.top = 0;
     this.slide = defaultText.slide;
@@ -113,7 +114,7 @@ window.Memory = {
         // id: { text: "", left: 0, top: 0, slide: 0, id: "..." },
       },
       images: {
-        // id: { file: "", left: 0, top: 0, slide: 0, id: "..." },
+        // id: { file: "", fileName: "", left: 0, top: 0, slide: 0, id: "..." },
       },
     });
     this.updatePersistentMemory(memory);
@@ -287,12 +288,13 @@ window.Memory = {
     return minRatio;
   },
 
-  addImageToMemory: function (image, id) {
+  addImageToMemory: function (image, fileName, id) {
     if (typeof image === "string") {
       var src = image;
-      var imageObject = new this.Image(src, id);
+      var imageObject = new this.Image(src, fileName, id);
       memory.slides[this.currentSlideIndex].images[imageObject.id] = {
         file: imageObject.file,
+        fileName: imageObject.fileName,
         left: imageObject.left,
         top: imageObject.top,
         slide: imageObject.slide,
@@ -301,6 +303,7 @@ window.Memory = {
     } else {
       memory.slides[this.currentSlideIndex].images[image.id] = {
         file: image.file,
+        fileName: image.fileName,
         left: image.left,
         top: image.top,
         slide: image.slide,
@@ -433,7 +436,7 @@ window.Memory = {
             // id: { text: "", left: 0, top: 0, slide: 0, id: "..." },
           },
           images: {
-            // id: { file: "", left: 0, top: 0, slide: 0, id: "..." },
+            // id: { file: "", fileName: "", left: 0, top: 0, slide: 0, id: "..." },
           },
         },
       ],
