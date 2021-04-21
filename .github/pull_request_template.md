@@ -8,6 +8,7 @@
 
 # Checklist:
 
+- [ ] added test case(s) if necessary
 - [ ] ran cypress tests locally with `yarn test`
 - [ ] ran lighthouse site quality test locally with `yarn test-quality`
 - [ ] updated package.json version it'd bump up to if approved
