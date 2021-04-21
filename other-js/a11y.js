@@ -1,4 +1,11 @@
 window.A11y = {
+  wasFocusFromKeyboard: false,
+
+  initialize: function () {
+    this.setUp2DNoteListeners();
+    this.setUpKeyboardFocusListeners();
+  },
+
   announce: function (message) {
     var ariaAnnouncer = document.getElementById("aria_announcer");
     // editing text will trigger the aria-live setup in html:
@@ -7,6 +14,16 @@ window.A11y = {
 
   announceSlideNumber: function (slideNumber) {
     this.announce("Now on slide " + (Memory.currentSlideIndex + 1));
+  },
+
+  setUpKeyboardFocusListeners: function () {
+    document.addEventListener("click", function () {
+      A11y.wasFocusFromKeyboard = false;
+    });
+
+    document.addEventListener("keydown", function () {
+      A11y.wasFocusFromKeyboard = true;
+    });
   },
 
   setUp2DNoteListeners: function () {

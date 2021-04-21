@@ -142,7 +142,28 @@ window.Images = {
     });
 
     img.addEventListener("blur", function (e) {
-      Images.deleteImageIcon.style.display = "none";
+      if (!A11y.wasFocusFromKeyboard) {
+        Images.deleteImageIcon.style.display = "none";
+      }
+    });
+
+    img.addEventListener("focus", function (e) {
+      Images.currentImage = img;
+      if (A11y.wasFocusFromKeyboard) {
+        Images.deleteImageIcon.style.display = "";
+        Images.moveDeleteIcon();
+        console.log(Images.currentImage);
+        console.log(Images.currentImage.nextSibling);
+        console.log(Images.deleteImageIcon);
+        console.log(Images.deleteImageIcon.parentNode);
+        var temp = Images.deleteImageIcon.parentNode.removeChild(
+          Images.deleteImageIcon
+        );
+        Images.currentImage.parentNode.insertBefore(
+          temp,
+          Images.currentImage.nextSibling
+        );
+      }
     });
 
     parentElement.appendChild(img);

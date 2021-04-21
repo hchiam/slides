@@ -2,7 +2,6 @@ window.Texts = {
   currentText: null,
   editTextIcon: null,
   editTextIconTimer: null,
-  wasFocusFromKeyboard: false,
 
   initializeTextButtons: function () {
     document
@@ -180,14 +179,6 @@ window.Texts = {
       }
     };
 
-    document.addEventListener("click", function () {
-      Texts.wasFocusFromKeyboard = false;
-    });
-
-    document.addEventListener("keydown", function () {
-      Texts.wasFocusFromKeyboard = true;
-    });
-
     p.addEventListener("keyup", function (event) {
       var key = event.code || event.keyCode || event.which || window.event;
       var isBackspace = key === "Backspace" || key === 8;
@@ -235,7 +226,7 @@ window.Texts = {
 
     p.addEventListener("focus", function (event) {
       Texts.currentText = p;
-      if (Texts.wasFocusFromKeyboard) {
+      if (A11y.wasFocusFromKeyboard) {
         Texts.editTextIcon.style.display = "";
         Texts.moveEditIcon();
         var temp = Texts.editTextIcon.parentNode.removeChild(
