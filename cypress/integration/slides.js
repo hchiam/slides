@@ -20,22 +20,23 @@ describe("slides: left/right/number", function () {
   });
 
   it("can go to next/previous slide using slide number input", function () {
-    cy.get("#slide_number").type("{uparrow}").should("have.value", 2);
-    cy.get("#slide_number").type("{downarrow}").should("have.value", 1);
+    cy.get("#slide_number").click().type("{uparrow}").should("have.value", 2);
+    cy.get("#slide_number").click().type("{downarrow}").should("have.value", 1);
   });
 
   it("can go left/right when arrow keys on body", function () {
-    cy.get("body").focus().type("{downarrow}");
+    cy.get("body").click().type("{downarrow}");
     cy.get("#slide_number").should("have.value", 2);
-    cy.get("body").focus().type("{uparrow}");
+    cy.get("body").click().type("{uparrow}");
     cy.get("#slide_number").should("have.value", 1);
-    cy.get("body").focus().type("{rightarrow}");
+    cy.get("body").click().type("{rightarrow}");
     cy.get("#slide_number").should("have.value", 2);
-    cy.get("body").focus().type("{leftarrow}");
+    cy.get("body").click().type("{leftarrow}");
     cy.get("#slide_number").should("have.value", 1);
   });
 
   it("can go left/right when arrow keys on any buttons", function () {
+    cy.get("body").click().tab();
     cy.get("#right").focus().type("{downarrow}");
     cy.get("#slide_number").should("have.value", 2);
     cy.get("#left").focus().type("{uparrow}");
