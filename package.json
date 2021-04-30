@@ -36,6 +36,7 @@
   "devDependencies": {
     "cypress": "^6.5.0",
     "cypress-file-upload": "^5.0.0",
+    "cypress-plugin-tab": "^1.0.5",
     "firebase-tools": "^9.10.0",
     "husky": "^4.3.8",
     "lighthouse": "^7.0.0",
