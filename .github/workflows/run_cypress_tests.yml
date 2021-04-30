@@ -1,4 +1,4 @@
-name: GitHub Actions Demo
+name: GitHub Actions to run Cypress tests
 
 # on: [push]
 
@@ -6,7 +6,7 @@ on: [pull_request]
 #   types: [review_requested]
 
 jobs:
-  Example-GitHub-Action-Name:
+  Run-Cypress-Tests:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
