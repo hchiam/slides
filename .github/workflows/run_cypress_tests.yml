@@ -1,0 +1,17 @@
+name: GitHub Actions to run Cypress tests
+
+# on: [push]
+
+on: [pull_request]
+#   types: [review_requested]
+
+jobs:
+  Run-Cypress-Tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2 # this will use https://github.com/actions/checkout
+      - run: yarn
+      - run: yarn test-site-prep
+      - name: Cypress run
+        uses: cypress-io/github-action@v2 # this will use https://github.com/cypress-io/github-action
