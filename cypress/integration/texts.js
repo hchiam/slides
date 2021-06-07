@@ -33,9 +33,10 @@ describe("texts", function () {
     cy.get("body").click();
     cy.get("p").should("exist");
 
-    cy.contains(
-      "Drag to move. To edit, hover then click pencil icon."
-    ).trigger("mousemove", { clientX: 10, clientY: 10 });
+    cy.contains("Drag to move. To edit, hover then click pencil icon.").trigger(
+      "mousemove",
+      { clientX: 10, clientY: 10 }
+    );
     cy.get("#edit_text_icon").click();
     cy.get("p").type("{selectall} "); // trigger deleting text
     cy.get("body").click();
@@ -59,9 +60,10 @@ describe("texts", function () {
   });
 
   it("hitting delete while editing text should not trigger deleting whole text", function () {
-    cy.contains(
-      "Drag to move. To edit, hover then click pencil icon."
-    ).trigger("mousemove", { clientX: 10, clientY: 10 });
+    cy.contains("Drag to move. To edit, hover then click pencil icon.").trigger(
+      "mousemove",
+      { clientX: 10, clientY: 10 }
+    );
     cy.get("#edit_text_icon").click();
     cy.get("p").type("edit and then hit delete key{del}");
     cy.get("body").click();
