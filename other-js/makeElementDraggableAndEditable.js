@@ -1,3 +1,5 @@
+window.makeElementDraggableAndEditable = makeElementDraggableAndEditable;
+
 function makeElementDraggableAndEditable(element, settings) {
   element.mouseX = 0;
   element.mouseY = 0;

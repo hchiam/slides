@@ -52,5 +52,16 @@ window.A11y = {
         }, 500);
       }
     });
+
+    document.addEventListener("keyup", function (event) {
+      var element = event.target;
+      var hitArrow = hitArrowKey(event);
+      if (hitArrow && (element.tagName == "P" || element.tagName == "IMG")) {
+        _2DNote.play(element, false);
+        setTimeout(() => {
+          _2DNote.stop(element);
+        }, 300);
+      }
+    });
   },
 };

@@ -1,3 +1,5 @@
+window.makeElementDraggable = makeElementDraggable;
+
 function makeElementDraggable(element, settings) {
   element.mouseX = 0;
   element.mouseY = 0;
