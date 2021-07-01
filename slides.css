@@ -254,8 +254,8 @@ button#upload:not(:disabled):focus + span:before {
 
 button#delete:not(:disabled):hover + span:before,
 button#delete:not(:disabled):focus + span:before {
-  content: "Delete";
-  left: -3.2em;
+  content: "Delete all slides";
+  left: -5.1em;
   white-space: nowrap;
 }
 
