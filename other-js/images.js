@@ -39,14 +39,15 @@ window.Images = {
   },
 
   moveDeleteIcon: function () {
-    var currentImage = Images.currentImage;
+    var currentImageLeft = Images.currentImage.style.left.replace("px", "");
+    var currentImageTop = Images.currentImage.style.top.replace("px", "");
     var deleteImageIcon = Images.deleteImageIcon;
     var leftOffset = deleteImageIcon.offsetWidth / 4;
     var topOffset = deleteImageIcon.offsetHeight / 4;
-    deleteImageIcon.style.left =
-      currentImage.style.left.replace("px", "") - leftOffset + "px";
-    deleteImageIcon.style.top =
-      currentImage.style.top.replace("px", "") - topOffset + "px";
+    var left = Math.max(0, currentImageLeft - leftOffset);
+    var top = Math.max(0, currentImageTop - topOffset);
+    deleteImageIcon.style.left = left + "px";
+    deleteImageIcon.style.top = top + "px";
   },
 
   recreateImage: function (
@@ -175,7 +176,7 @@ window.Images = {
 
     parentElement.appendChild(img);
 
-    makeElementDraggableAndEditable(img, {
+    makeElementDraggable(img, {
       mouseMoveCallback: Images.updateImagePosition,
       touchEndCallback: Images.onDoubleTap.bind(
         Images,

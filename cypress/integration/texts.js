@@ -14,7 +14,7 @@ describe("texts", function () {
     );
     cy.get("#edit_text_icon").click();
     cy.get("p")
-      .type("edited")
+      .type("{selectall}{backspace}edited")
       .invoke("text")
       .should("match", /.*edited.*/i);
   });
@@ -38,7 +38,7 @@ describe("texts", function () {
       { clientX: 10, clientY: 10 }
     );
     cy.get("#edit_text_icon").click();
-    cy.get("p").type("{selectall} "); // trigger deleting text
+    cy.get("p").type("{selectall}{backspace} "); // trigger deleting text
     cy.get("body").click();
     cy.get("p").should("not.exist");
   });
@@ -54,7 +54,7 @@ describe("texts", function () {
       .trigger("mouseup")
       .trigger("mousemove");
     cy.get("#edit_text_icon").click();
-    cy.get("p").type("{selectall}{del}");
+    cy.get("p").type("{selectall}{backspace}{del}");
     cy.get("body").click();
     cy.get("p").should("not.exist");
   });
@@ -84,7 +84,7 @@ describe("texts", function () {
   it("can add text", function () {
     cy.get("p").trigger("mousemove");
     cy.get("#edit_text_icon").click();
-    cy.get("p").type("{selectall} "); // trigger deleting text
+    cy.get("p").type("{selectall}{backspace} "); // trigger deleting text
     cy.get("body").click();
     cy.get("p").should("not.exist");
     cy.get("#add_text").click();

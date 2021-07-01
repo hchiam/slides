@@ -39,17 +39,20 @@ window.Texts = {
     editTextIcon.style.transition = "0s";
 
     editTextIcon.onclick = function () {
-      Texts.currentText.contentEditable = true;
-      Texts.currentText.style.cursor = "auto";
-      Texts.currentText.focus();
+      var currentText = Texts.currentText;
+      currentText.contentEditable = true;
+      currentText.style.cursor = "auto";
+      currentText.focus();
       editTextIcon.style.display = "none";
 
-      // select entire p text:
-      var range = document.createRange();
-      var selection = window.getSelection();
-      range.selectNodeContents(Texts.currentText);
-      selection.removeAllRanges();
-      selection.addRange(range);
+      if (currentText.innerText === defaultTextString) {
+        // select entire p text:
+        var range = document.createRange();
+        var selection = window.getSelection();
+        range.selectNodeContents(Texts.currentText);
+        selection.removeAllRanges();
+        selection.addRange(range);
+      }
     };
 
     document.body.appendChild(editTextIcon);
@@ -62,10 +65,12 @@ window.Texts = {
     var leftOffset = editTextIcon.offsetWidth / 3;
     var topOffset = editTextIcon.offsetHeight / 3;
     if (editTextIcon && currentText) {
-      editTextIcon.style.left =
-        currentText.style.left.replace("px", "") - leftOffset + "px";
-      editTextIcon.style.top =
-        currentText.style.top.replace("px", "") - topOffset + "px";
+      var currentTextLeft = currentText.style.left.replace("px", "");
+      var currentTextTop = currentText.style.top.replace("px", "");
+      var left = Math.max(0, currentTextLeft - leftOffset);
+      var top = Math.max(0, currentTextTop - topOffset);
+      editTextIcon.style.left = left + "px";
+      editTextIcon.style.top = top + "px";
     }
   },
 
@@ -152,7 +157,7 @@ window.Texts = {
       p.style.fontSize = defaultText.fontSize; // fallback size (if not in memory)
     }
 
-    makeElementDraggable(p, {
+    makeElementDraggableAndEditable(p, {
       mouseMoveCallback: Texts.updateTextPosition.bind(Texts),
       snapPoints: [
         { x: window.innerWidth / 2, y: window.innerHeight / 10 },
