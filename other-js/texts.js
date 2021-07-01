@@ -65,10 +65,12 @@ window.Texts = {
     var leftOffset = editTextIcon.offsetWidth / 3;
     var topOffset = editTextIcon.offsetHeight / 3;
     if (editTextIcon && currentText) {
-      editTextIcon.style.left =
-        currentText.style.left.replace("px", "") - leftOffset + "px";
-      editTextIcon.style.top =
-        currentText.style.top.replace("px", "") - topOffset + "px";
+      var currentTextLeft = currentText.style.left.replace("px", "");
+      var currentTextTop = currentText.style.top.replace("px", "");
+      var left = Math.max(0, currentTextLeft - leftOffset);
+      var top = Math.max(0, currentTextTop - topOffset);
+      editTextIcon.style.left = left + "px";
+      editTextIcon.style.top = top + "px";
     }
   },
 
