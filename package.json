@@ -1,6 +1,6 @@
 {
   "name": "slides",
-  "version": "6.8.1",
+  "version": "6.8.2",
   "description": "Edit. Present. Try it: https://hchiam-slides.surge.sh",
   "main": "slides.js",
   "scripts": {
