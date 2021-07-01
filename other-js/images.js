@@ -175,7 +175,7 @@ window.Images = {
 
     parentElement.appendChild(img);
 
-    makeElementDraggableAndEditable(img, {
+    makeElementDraggable(img, {
       mouseMoveCallback: Images.updateImagePosition,
       touchEndCallback: Images.onDoubleTap.bind(
         Images,
