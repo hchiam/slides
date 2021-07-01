@@ -14,7 +14,7 @@ describe("texts", function () {
     );
     cy.get("#edit_text_icon").click();
     cy.get("p")
-      .type("edited")
+      .type("{selectall}{backspace}edited")
       .invoke("text")
       .should("match", /.*edited.*/i);
   });
