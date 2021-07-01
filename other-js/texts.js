@@ -39,12 +39,13 @@ window.Texts = {
     editTextIcon.style.transition = "0s";
 
     editTextIcon.onclick = function () {
-      Texts.currentText.contentEditable = true;
-      Texts.currentText.style.cursor = "auto";
-      Texts.currentText.focus();
+      var currentText = Texts.currentText;
+      currentText.contentEditable = true;
+      currentText.style.cursor = "auto";
+      currentText.focus();
       editTextIcon.style.display = "none";
 
-      if (Texts.currentText.innerText === defaultTextString) {
+      if (currentText.innerText === defaultTextString) {
         // select entire p text:
         var range = document.createRange();
         var selection = window.getSelection();
