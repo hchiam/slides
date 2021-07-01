@@ -204,6 +204,9 @@ function makeElementDraggableAndEditable(element, settings) {
           element.detectAsClickToEdit = false;
           element.contentEditable = false;
         } else if (!isTabKey(event)) {
+          if (!element.startedTyping) {
+            setCaret(element);
+          }
           element.startedTyping = true;
           element.detectAsClickToEdit = true;
           element.contentEditable = true;
@@ -212,6 +215,16 @@ function makeElementDraggableAndEditable(element, settings) {
       },
       false
     );
+  }
+
+  function setCaret(element) {
+    var range = document.createRange();
+    range.setStart(element, 0);
+    range.collapse(true);
+
+    var selection = window.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
   }
 
   function moveWithArrowKeys(element, arrowKey) {
