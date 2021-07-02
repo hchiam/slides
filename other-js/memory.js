@@ -144,8 +144,9 @@ window.Memory = {
   haveContentInSlide: function (slideIndex) {
     var slide = this.getSlide(slideIndex);
     return (
-      Object.keys(slide.texts).length > 0 ||
-      Object.keys(slide.images).length > 0
+      slide &&
+      (Object.keys(slide.texts).length > 0 ||
+        Object.keys(slide.images).length > 0)
     );
   },
 
