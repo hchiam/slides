@@ -441,6 +441,11 @@ window.Memory = {
     if (!yes) return;
     memory.slides.splice(this.currentSlideIndex, 1);
     this.updatePersistentMemory(memory);
+    var slideIndexToGoTo = Math.min(
+      this.currentSlideIndex + 1,
+      memory.slides.length - 1
+    );
+    Slides.setSlideNumber(slideIndexToGoTo + 1);
   },
 
   clearMemory: function () {
