@@ -85,7 +85,7 @@ window.Memory = {
       .addEventListener("click", this.share.bind(this));
     document
       .querySelector("#delete")
-      .addEventListener("click", this.deleteJustThisSlide.bind(this));
+      .addEventListener("click", this.deleteAll.bind(this));
     Morphing_button.setup(document.querySelector("#share"));
   },
 
@@ -422,25 +422,6 @@ window.Memory = {
     if (!yes) return;
     this.clearMemory();
     location.href = location.origin;
-  },
-
-  deleteJustThisSlide: function () {
-    var currentSlideNumber = this.currentSlideIndex + 1;
-    var confirmDeleteMessage =
-      "CONFIRM: Do you want to delete JUST THIS slide?" +
-      " (Slide " +
-      currentSlideNumber +
-      ".)";
-    var hasSpecialLink = location.search;
-    if (hasSpecialLink) {
-      confirmDeleteMessage +=
-        " \n\nNOTE: This does NOT delete the public link.";
-    }
-    var yes = confirm(confirmDeleteMessage);
-    if (!yes) return;
-    memory.slides.splice(this.currentSlideIndex);
-    console.log("deleteJustThisSlide");
-    this.updatePersistentMemory(memory);
   },
 
   clearMemory: function () {
