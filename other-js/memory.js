@@ -439,13 +439,37 @@ window.Memory = {
     }
     var yes = confirm(confirmDeleteMessage);
     if (!yes) return;
-    memory.slides.splice(this.currentSlideIndex, 1);
-    this.updatePersistentMemory(memory);
+    this.deleteElementsOnSlide(this.currentSlideIndex);
+    this.deleteSlideFromMemory(this.currentSlideIndex);
     var slideIndexToGoTo = Math.min(
       this.currentSlideIndex + 1,
       memory.slides.length - 1
     );
     Slides.setSlideNumber(slideIndexToGoTo + 1);
+  },
+
+  deleteElementsOnSlide: function (slideIndex) {
+    // NOTE: needs to be called before deleteSlideFromMemory
+    var textsToDelete = memory.slides[slideIndex].texts;
+    var imagesToDelete = memory.slides[slideIndex].images;
+    var textIdsToDelete = Object.keys(textsToDelete).map(
+      (t) => memory.slides[slideIndex].texts[t].id
+    );
+    var imageIdsToDelete = Object.keys(imagesToDelete).map(
+      (t) => memory.slides[slideIndex].images[t].id
+    );
+    textIdsToDelete.forEach((tId) => {
+      document.querySelector('[id="' + tId + '"]').remove();
+    });
+    imageIdsToDelete.forEach((iId) => {
+      document.querySelector('[id="' + iId + '"]').remove();
+    });
+  },
+
+  deleteSlideFromMemory: function (slideIndex) {
+    // NOTE: needs to be called after deleteElementsOnSlide
+    memory.slides.splice(slideIndex, 1);
+    this.updatePersistentMemory(memory);
   },
 
   clearMemory: function () {
