@@ -1,11 +1,9 @@
-var enableDebugging = false;
-
 function debugMemory() {
-  if (!enableDebugging) return;
-  // for debugging:
-  var firstTextId = Object.keys(memory.texts)[0];
-  var firstText = memory.texts[firstTextId];
-  console.log(JSON.stringify(firstText));
+  console.log(
+    JSON.stringify(memory, null, 2),
+    "and memory.slides.length: ",
+    memory.slides.length
+  );
 }
 
 function getEventsOnElement(selector) {
@@ -36,6 +34,5 @@ console.log(
   "Found a bug? Feel free to report suggestions here: https://github.com/hchiam/slides/issues"
 );
 
-window.enableDebugging = enableDebugging;
 window.debugMemory = debugMemory;
 window.getEventsOnElement = getEventsOnElement;
