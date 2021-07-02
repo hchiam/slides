@@ -412,7 +412,8 @@ window.Memory = {
   },
 
   deleteAll: function () {
-    var confirmDeleteMessage = "CONFIRM: Do you want to delete ALL slides?";
+    var confirmDeleteMessage =
+      "CONFIRM: \n\n  Do you want to delete ALL slides?";
     var hasSpecialLink = location.search;
     if (hasSpecialLink) {
       confirmDeleteMessage +=
@@ -427,7 +428,7 @@ window.Memory = {
   deleteJustThisSlide: function () {
     var currentSlideNumber = this.currentSlideIndex + 1;
     var confirmDeleteMessage =
-      "CONFIRM: Do you want to delete JUST THIS slide?" +
+      "CONFIRM: \n\n  Do you want to delete JUST THIS slide?" +
       " (Slide " +
       currentSlideNumber +
       ".)";
