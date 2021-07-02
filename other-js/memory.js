@@ -439,7 +439,7 @@ window.Memory = {
     }
     var yes = confirm(confirmDeleteMessage);
     if (!yes) return;
-    memory.slides.splice(this.currentSlideIndex);
+    memory.slides.splice(this.currentSlideIndex, 1);
     this.updatePersistentMemory(memory);
   },
 
