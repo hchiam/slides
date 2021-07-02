@@ -85,7 +85,7 @@ window.Memory = {
       .addEventListener("click", this.share.bind(this));
     document
       .querySelector("#delete")
-      .addEventListener("click", this.deleteAll.bind(this));
+      .addEventListener("click", this.deleteJustThisSlide.bind(this));
     Morphing_button.setup(document.querySelector("#share"));
   },
 
@@ -117,6 +117,7 @@ window.Memory = {
         // id: { file: "", fileName: "", left: 0, top: 0, slide: 0, id: "..." },
       },
     });
+    console.log("createSlideInMemory");
     this.updatePersistentMemory(memory);
     if (createSlideCallback) createSlideCallback();
   },
@@ -144,8 +145,9 @@ window.Memory = {
   haveContentInSlide: function (slideIndex) {
     var slide = this.getSlide(slideIndex);
     return (
-      Object.keys(slide.texts).length > 0 ||
-      Object.keys(slide.images).length > 0
+      slide &&
+      (Object.keys(slide.texts).length > 0 ||
+        Object.keys(slide.images).length > 0)
     );
   },
 
@@ -174,11 +176,13 @@ window.Memory = {
     if (textProps) {
       memory.slides[this.currentSlideIndex].texts[textId].textProps = textProps;
     }
+    console.log("addTextToMemory");
     this.updatePersistentMemory(memory);
   },
 
   removeTextFromMemory: function (id, callbackOnDelete) {
     delete memory.slides[this.currentSlideIndex].texts[id];
+    console.log("removeTextFromMemory");
     this.updatePersistentMemory(memory);
     if (callbackOnDelete) callbackOnDelete();
   },
@@ -187,6 +191,7 @@ window.Memory = {
     if (!memory.slides[this.currentSlideIndex].texts[textId]) return;
     memory.slides[this.currentSlideIndex].texts[textId].left = left;
     memory.slides[this.currentSlideIndex].texts[textId].top = top;
+    console.log("updateTextPositionInMemory");
     this.updatePersistentMemory(memory);
   },
 
@@ -194,12 +199,14 @@ window.Memory = {
     if (!memory.slides[this.currentSlideIndex].images[imageId]) return;
     memory.slides[this.currentSlideIndex].images[imageId].left = left;
     memory.slides[this.currentSlideIndex].images[imageId].top = top;
+    console.log("updateImagePositionInMemory");
     this.updatePersistentMemory(memory);
   },
 
   updateTextInMemory: function (textId, text) {
     if (!memory.slides[this.currentSlideIndex].texts[textId]) return;
     memory.slides[this.currentSlideIndex].texts[textId].text = text;
+    console.log("updateTextInMemory");
     this.updatePersistentMemory(memory);
   },
 
@@ -214,10 +221,13 @@ window.Memory = {
         "slidesMemory",
         JSON.stringify(memoryObject || memory)
       );
+      console.log("LF");
     } else if (sessionStorage.slidesMemory) {
       sessionStorage.slidesMemory = JSON.stringify(memoryObject || memory);
+      console.log("SS");
     } else {
       localStorage.slidesMemory = JSON.stringify(memoryObject || memory);
+      console.log("LS", memory.slides);
     }
   },
 
@@ -310,6 +320,7 @@ window.Memory = {
         id: image.id,
       };
     }
+    console.log("addImageToMemory");
     this.updatePersistentMemory(memory);
   },
 
@@ -317,11 +328,13 @@ window.Memory = {
     var yes = confirm("Do you want to delete this image?");
     if (!yes) return;
     delete memory.slides[this.currentSlideIndex].images[id];
+    console.log("removeImageFromMemory");
     this.updatePersistentMemory(memory);
     if (callback) callback();
   },
 
   recreateSlidesFromMemory: function (memoryObject) {
+    console.log("recreateSlidesFromMemory");
     this.updatePersistentMemory(memoryObject);
     Slides.clearSlides();
     this.useMemory(
@@ -411,14 +424,35 @@ window.Memory = {
   },
 
   deleteAll: function () {
-    var confirmDeleteMessage = "Do you want to delete all slides?";
-    if (location.search)
+    var confirmDeleteMessage = "CONFIRM: Do you want to delete ALL slides?";
+    var hasSpecialLink = location.search;
+    if (hasSpecialLink) {
       confirmDeleteMessage +=
         " \n\nNOTE: This does NOT delete the public link.";
+    }
     var yes = confirm(confirmDeleteMessage);
     if (!yes) return;
     this.clearMemory();
     location.href = location.origin;
+  },
+
+  deleteJustThisSlide: function () {
+    var currentSlideNumber = this.currentSlideIndex + 1;
+    var confirmDeleteMessage =
+      "CONFIRM: Do you want to delete JUST THIS slide?" +
+      " (Slide " +
+      currentSlideNumber +
+      ".)";
+    var hasSpecialLink = location.search;
+    if (hasSpecialLink) {
+      confirmDeleteMessage +=
+        " \n\nNOTE: This does NOT delete the public link.";
+    }
+    var yes = confirm(confirmDeleteMessage);
+    if (!yes) return;
+    memory.slides.splice(this.currentSlideIndex);
+    console.log("deleteJustThisSlide");
+    this.updatePersistentMemory(memory);
   },
 
   clearMemory: function () {

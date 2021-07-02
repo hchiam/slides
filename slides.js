@@ -90,6 +90,8 @@ window.Slides = {
     var slideIndex = slideNumber - 1;
     var slideNumberInput = document.getElementById("slide_number");
     slideNumberInput.value = slideNumber;
+    // TODO: does this need to get called?
+    // if (slideIndex === memory.slides.length - 1 && !this.isLastSlideBlank()) {
     if (slideIndex === memory.slides.length && !this.isLastSlideBlank()) {
       Memory.createSlideInMemory();
       this.updateSlideNumberInputMax();
@@ -147,12 +149,15 @@ window.Slides = {
     if (!Memory.haveContentInSlide(Memory.currentSlideIndex)) return;
     this.hideSlide(Memory.currentSlideIndex);
     Memory.currentSlideIndex++;
+    // TODO: does this need to get called?
     if (Memory.currentSlideIndex >= memory.slides.length) {
       Memory.createSlideInMemory();
       this.updateSlideNumberInputMax();
     }
     this.showSlide(Memory.currentSlideIndex);
     this.styleLeftRightButtons();
+    // TODO: move this above createSlideInMemory?
+    // TODO: or remove?
     this.setSlideNumber(Memory.currentSlideIndex + 1);
     this.leftButton.classList.remove("hide-on-first-load");
     A11y.announceSlideNumber(Memory.currentSlideIndex + 1);
@@ -178,7 +183,15 @@ window.Slides = {
     }
     // right
     var isOnLastSlide = Memory.currentSlideIndex === memory.slides.length - 1;
+    console.log(
+      "isOnLastSlide",
+      isOnLastSlide,
+      Memory.currentSlideIndex,
+      memory.slides.length - 1,
+      Memory.haveContentInSlide(Memory.currentSlideIndex)
+    );
     if (isOnLastSlide && !Memory.haveContentInSlide(Memory.currentSlideIndex)) {
+      console.log("should be disabling button");
       this.rightButton.setAttribute("disabled", true);
       this.rightButton.nextElementSibling.setAttribute(
         "data-before",
@@ -186,6 +199,7 @@ window.Slides = {
       );
       this.rightButton.nextElementSibling.style.setProperty("--left", "-7.2em");
     } else {
+      console.log("button enabled");
       this.rightButton.removeAttribute("disabled");
       this.rightButton.nextElementSibling.setAttribute(
         "data-before",
