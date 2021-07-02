@@ -1,7 +1,12 @@
-var enableDebugging = true;
+var isDebuggingEnabled = false;
+
+function enableDebugging() {
+  isDebuggingEnabled = true;
+  debugMemory();
+}
 
 function debugMemory() {
-  if (!enableDebugging) return;
+  if (!isDebuggingEnabled) return;
   console.log(
     JSON.stringify(memory, null, 2),
     "and memory.slides.length: ",
@@ -37,6 +42,7 @@ console.log(
   "Found a bug? Feel free to report suggestions here: https://github.com/hchiam/slides/issues"
 );
 
+window.isDebuggingEnabled = isDebuggingEnabled;
 window.enableDebugging = enableDebugging;
 window.debugMemory = debugMemory;
 window.getEventsOnElement = getEventsOnElement;
