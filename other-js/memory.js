@@ -1,4 +1,4 @@
-var memory = {
+window.memory = {
   originalScreenSize: {
     width: document.documentElement.clientWidth,
     height: document.documentElement.clientHeight,
