@@ -439,7 +439,6 @@ window.Memory = {
     var yes = confirm(confirmDeleteMessage);
     if (!yes) return;
     memory.slides.splice(this.currentSlideIndex);
-    console.log("deleteJustThisSlide");
     this.updatePersistentMemory(memory);
   },
 

@@ -183,15 +183,7 @@ window.Slides = {
     }
     // right
     var isOnLastSlide = Memory.currentSlideIndex === memory.slides.length - 1;
-    console.log(
-      "isOnLastSlide",
-      isOnLastSlide,
-      Memory.currentSlideIndex,
-      memory.slides.length - 1,
-      Memory.haveContentInSlide(Memory.currentSlideIndex)
-    );
     if (isOnLastSlide && !Memory.haveContentInSlide(Memory.currentSlideIndex)) {
-      console.log("should be disabling button");
       this.rightButton.setAttribute("disabled", true);
       this.rightButton.nextElementSibling.setAttribute(
         "data-before",
@@ -199,7 +191,6 @@ window.Slides = {
       );
       this.rightButton.nextElementSibling.style.setProperty("--left", "-7.2em");
     } else {
-      console.log("button enabled");
       this.rightButton.removeAttribute("disabled");
       this.rightButton.nextElementSibling.setAttribute(
         "data-before",
