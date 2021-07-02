@@ -158,7 +158,7 @@ window.Firebase = {
   },
 
   splitStringToFitInFirestoreFieldValue: function (string) {
-    var arrayOfByteLengths = this.getStringAsBytesArray(string).map(
+    var arrayOfByteLengths = Memory.getStringAsBytesArray(string).map(
       (char) => new TextEncoder().encode(char).length
     );
 
@@ -183,9 +183,8 @@ window.Firebase = {
   },
 
   updateExtraData: function (existingDoc, docId, stringifiedData, callback) {
-    var splitData = Firebase.splitStringToFitInFirestoreFieldValue(
-      stringifiedData
-    );
+    var splitData =
+      Firebase.splitStringToFitInFirestoreFieldValue(stringifiedData);
     var numberOfExtraDocs = splitData.length - 1;
     return existingDoc
       .set({
@@ -224,9 +223,8 @@ window.Firebase = {
   },
 
   saveExtraData: function (stringifiedData, callback) {
-    var splitData = Firebase.splitStringToFitInFirestoreFieldValue(
-      stringifiedData
-    );
+    var splitData =
+      Firebase.splitStringToFitInFirestoreFieldValue(stringifiedData);
     var numberOfExtraDocs = splitData.length - 1;
     return this.database
       .collection("slides")
