@@ -411,10 +411,12 @@ window.Memory = {
   },
 
   deleteAll: function () {
-    var confirmDeleteMessage = "Do you want to delete all slides?";
-    if (location.search)
+    var confirmDeleteMessage = "CONFIRM: Do you want to delete ALL slides?";
+    var hasSpecialLink = location.search;
+    if (hasSpecialLink) {
       confirmDeleteMessage +=
         " \n\nNOTE: This does NOT delete the public link.";
+    }
     var yes = confirm(confirmDeleteMessage);
     if (!yes) return;
     this.clearMemory();
