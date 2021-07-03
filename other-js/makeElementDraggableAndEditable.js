@@ -204,7 +204,7 @@ function makeElementDraggableAndEditable(element, settings) {
           element.detectAsClickToEdit = false;
           element.contentEditable = false;
         } else if (!isTabKey(event)) {
-          if (!element.startedTyping) {
+          if (!element.startedTyping && element !== document.activeElement) {
             setCaret(element);
           }
           element.startedTyping = true;
