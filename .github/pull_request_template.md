@@ -11,7 +11,6 @@
 - [ ] added test case(s) if necessary
 - [ ] ran cypress tests locally with `yarn test`
 - [ ] ran lighthouse site quality test locally with `yarn test-quality`
-- [ ] updated package.json version it'd bump up to if approved
 - [ ] after this PR is approved/merged, don't forget to:
   - [ ] have the semver version updated as needed:
     - https://github.com/hchiam/slides/releases
