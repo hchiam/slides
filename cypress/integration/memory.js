@@ -3,7 +3,9 @@ import "../support/commands";
 describe("memory", function () {
   beforeEach(function () {
     cy.visit("/");
-    cy.get("#delete").click();
+    cy.window().then((win) => {
+      win.Memory.deleteAll();
+    });
     cy.clearLocalForage();
     cy.wait(2000);
   });
@@ -45,10 +47,17 @@ describe("memory", function () {
     cy.get("img:visible").should("not.exist");
   });
 
-  it("can delete all slides", function () {
+  it("can delete just the current slide", function () {
     cy.get("p").trigger("mousemove");
     cy.get("#edit_text_icon").click();
-    cy.get("p").type("{selectall}{backspace}Edited text.").blur();
+    cy.get("p").type("{selectall}{backspace}Slide 1").blur();
+
+    cy.get("#right").click();
+
+    cy.get("#add_text").click();
+    cy.get("p:visible").trigger("mousemove");
+    cy.get("#edit_text_icon").click();
+    cy.get("p:visible").type("{selectall}{backspace}Slide 2").blur();
 
     cy.get("#add_image").click();
     cy.fixture("cells-grid.png").then((fileContent) => {
@@ -62,13 +71,23 @@ describe("memory", function () {
     cy.get("#add_text").click();
     cy.get("p:visible").trigger("mousemove");
     cy.get("#edit_text_icon").click();
-    cy.get("p:visible").type("{selectall}{backspace}text 2").blur();
+    cy.get("p:visible").type("{selectall}{backspace}Slide 3").blur();
+
+    cy.get("#left").click();
 
     cy.get("#delete").click();
 
     cy.get("p:visible").should("have.length", 1);
+    cy.get("img:visible").should("have.length", 0);
 
-    cy.get("p:visible").should("have.text", defaultTextString);
+    cy.get("p:visible").should("have.text", "Slide 3");
+
+    cy.get("#left").click();
+
+    cy.get("p:visible").should("have.length", 1);
+    cy.get("img:visible").should("have.length", 0);
+
+    cy.get("p:visible").should("have.text", "Slide 1");
   });
 
   it("can reuse slides", function () {

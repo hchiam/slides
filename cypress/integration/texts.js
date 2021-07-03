@@ -3,7 +3,9 @@ import "../support/commands";
 describe("texts", function () {
   beforeEach(function () {
     cy.visit("/");
-    cy.get("#delete").click();
+    cy.window().then((win) => {
+      win.Memory.deleteAll();
+    });
     cy.clearLocalForage();
     cy.wait(2000);
   });
