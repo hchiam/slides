@@ -195,7 +195,13 @@ function makeElementDraggableAndEditable(element, settings) {
       function (event) {
         event.preventDefault();
         var arrowKey = getArrowKey(event);
-        if (arrowKey && !element.startedTyping) {
+        var selectionRange =
+          window.getSelection() && window.getSelection().getRangeAt(0);
+        if (
+          arrowKey &&
+          ((selectionRange && !selectionRange.startOffset) ||
+            (!selectionRange && !element.startedTyping))
+        ) {
           element.detectAsClickToEdit = false;
           element.contentEditable = false;
           moveWithArrowKeys(element, arrowKey);
