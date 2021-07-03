@@ -440,7 +440,9 @@ window.Memory = {
     var yes = confirm(confirmDeleteMessage);
     if (!yes) return;
     this.deleteElementsOnSlide(this.currentSlideIndex);
-    this.deleteSlideFromMemory(this.currentSlideIndex);
+    if (this.currentSlideIndex > 0) {
+      this.deleteSlideFromMemory(this.currentSlideIndex);
+    }
     var slideIndexToGoTo = Math.min(
       this.currentSlideIndex + 1,
       memory.slides.length - 1
