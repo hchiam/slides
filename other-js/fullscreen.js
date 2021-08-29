@@ -65,7 +65,8 @@ window.Fullscreen = {
     }
   },
 
-  fullscreen: function (areControlsToBeShown = true) {
+  fullscreen: function (areControlsToBeShown) {
+    areControlsToBeShown = areControlsToBeShown || true;
     var inFullscreen = window.innerHeight == screen.height;
     if (inFullscreen) {
       this.exitFullscreen();
@@ -133,7 +134,8 @@ window.Fullscreen = {
     }, milliseconds);
   },
 
-  showControls: function (areControlsToBeShown = true) {
+  showControls: function (areControlsToBeShown) {
+    areControlsToBeShown = areControlsToBeShown || true;
     document.getElementById("controls").style.visibility = areControlsToBeShown
       ? ""
       : "hidden";

@@ -21,7 +21,8 @@ window.Images = {
 
     deleteImageIcon.ariaLabel = "Delete image";
     deleteImageIcon.id = "delete_image_icon";
-    deleteImageIcon.innerHTML = `<i class="material-icons">delete</i><span></span>`;
+    deleteImageIcon.innerHTML =
+      '<i class="material-icons">delete</i><span></span>';
     deleteImageIcon.style.display = "none";
     deleteImageIcon.style.position = "absolute";
     deleteImageIcon.style.transition = "0s";
@@ -50,11 +51,8 @@ window.Images = {
     deleteImageIcon.style.top = top + "px";
   },
 
-  recreateImage: function (
-    parentElement = Slides.currentSlide,
-    imageId,
-    slideIndex
-  ) {
+  recreateImage: function (parentElement, imageId, slideIndex) {
+    parentElement = parentElement || Slides.currentSlide;
     this.recreatingImage = true;
     var imageObject = Memory.getSlide(slideIndex).images[imageId];
     var src = imageObject.file;
@@ -73,7 +71,8 @@ window.Images = {
     );
   },
 
-  createNewImage: function (src, fileName = "") {
+  createNewImage: function (src, fileName) {
+    fileName = fileName || "";
     this.recreatingImage = false;
     var image = new Memory.Image(src, fileName);
     Memory.addImageToMemory(image, image.id);
@@ -95,7 +94,7 @@ window.Images = {
   },
 
   createImage: function (
-    parentElement = Slides.currentSlide,
+    parentElement,
     src,
     fileName,
     left,
@@ -103,6 +102,7 @@ window.Images = {
     imageId,
     slideIndex
   ) {
+    parentElement = parentElement || Slides.currentSlide;
     var img = document.createElement("img");
     img.src = src;
     img.fileName = encodeURI(fileName);
@@ -200,7 +200,7 @@ window.Images = {
       alert("Note: you can delete images by double-clicking on them.");
     }
 
-    setTimeout(() => {
+    setTimeout(function () {
       Images.setMaxImageSize(img);
       Images.centerImage(img);
       runImagePluginsWhenImageCreated(img);
@@ -270,10 +270,10 @@ window.Images = {
         Images.createNewImage(src, fileName);
       };
       inputElement.onchange = function (e) {
-        const f = e.target.files[0];
+        var f = e.target.files[0];
         reader.readAsDataURL(f);
       };
-      const image = file;
+      var image = file;
       reader.readAsDataURL(image);
     }
   },
