@@ -20,12 +20,12 @@ window.Firebase = {
   },
 
   createLink: function (callback) {
-    Memory.readPersistentMemory(function (memory) {
+    Memory.readPersistentMemory((memory) => {
       if (!memory) return;
       if (memory.id) {
-        Firebase.updateExistingDoc(memory, memory.id, callback);
+        this.updateExistingDoc(memory, memory.id, callback);
       } else {
-        Firebase.createNewDoc(memory, callback);
+        this.createNewDoc(memory, callback);
       }
     });
   },
@@ -45,7 +45,7 @@ window.Firebase = {
           data: stringifiedData,
           timestamp: firebase.firestore.FieldValue.serverTimestamp(),
         })
-        .then(function () {
+        .then(() => {
           if (callback) callback(docId);
         })
         .catch(Firebase.handleShareLinkError);
@@ -66,7 +66,7 @@ window.Firebase = {
           data: stringifiedData,
           timestamp: firebase.firestore.FieldValue.serverTimestamp(),
         })
-        .then(function (newDoc) {
+        .then((newDoc) => {
           // store id in memory:
           memory.id = newDoc.id;
           Memory.updatePersistentMemory(memory);
@@ -76,16 +76,13 @@ window.Firebase = {
     }
   },
 
-  showShareButton: function (show) {
-    show = show || true;
+  showShareButton: function (show = true) {
     document.querySelector("#share").style.display = show ? "inline" : "none";
   },
-  showSaveButton: function (show) {
-    show = show || true;
+  showSaveButton: function (show = true) {
     document.querySelector("#save").style.display = show ? "inline" : "none";
   },
-  showUploadButton: function (show) {
-    show = show || true;
+  showUploadButton: function (show = true) {
     document.querySelector("#upload").style.display = show ? "inline" : "none";
   },
 
@@ -101,7 +98,7 @@ window.Firebase = {
 
     slidesDoc
       .get()
-      .then(function (snapshot) {
+      .then((snapshot) => {
         var data = snapshot.data();
         stringifiedData = data.data;
         var hadToSplitUpString = data.extras && typeof data.extras == "number";
@@ -120,10 +117,10 @@ window.Firebase = {
             extraDataArray.push(extraDataPromise);
           }
           Promise.all(extraDataArray)
-            .then(function (values) {
+            .then((values) => {
               stringifiedData += values.join("");
             })
-            .then(function () {
+            .then(() => {
               var undefinedRepeatedAtEnd = /([undefined]*)$/;
               var slidesData = JSON.parse(
                 stringifiedData.replace(undefinedRepeatedAtEnd, "")
@@ -150,7 +147,7 @@ window.Firebase = {
           // NOTE: do NOT reload page NOR clear .pathname NOR .search
         }
       })
-      .catch(function (error) {
+      .catch((error) => {
         alert("Could not get slides data - please wait and try again later.");
         console.log(error);
       });
@@ -161,16 +158,14 @@ window.Firebase = {
   },
 
   splitStringToFitInFirestoreFieldValue: function (string) {
-    var arrayOfByteLengths = Memory.getStringAsBytesArray(string).map(function (
-      char
-    ) {
-      return new TextEncoder().encode(char).length;
-    });
+    var arrayOfByteLengths = Memory.getStringAsBytesArray(string).map(
+      (char) => new TextEncoder().encode(char).length
+    );
 
     var temp_sum = 0;
     var temp_chain = "";
     var arrayOfSubstrings = [];
-    arrayOfByteLengths.forEach(function (charBytes, i) {
+    arrayOfByteLengths.forEach((charBytes, i) => {
       if (temp_sum + charBytes < maxFieldValueSizeInBytes) {
         temp_chain += string[i];
         temp_sum += charBytes;
@@ -197,7 +192,7 @@ window.Firebase = {
         extras: numberOfExtraDocs,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       })
-      .then(function () {
+      .then(() => {
         var extraDataPromises = [];
         var lastIndex = 0;
         for (var i = 0; i < numberOfExtraDocs; i++) {
@@ -205,12 +200,12 @@ window.Firebase = {
           var extraDataPromise = existingDoc
             .collection(collectionKey)
             .get()
-            .then(function (snapshot) {
-              snapshot.forEach(function (doc) {
+            .then((snapshot) => {
+              snapshot.forEach((doc) => {
                 doc.ref.delete();
               });
             })
-            .then(function () {
+            .then(() => {
               lastIndex++; // starts at 1
               existingDoc
                 .collection(String(lastIndex))
@@ -219,7 +214,7 @@ window.Firebase = {
           extraDataPromises.push(extraDataPromise);
         }
         Promise.all(extraDataPromises)
-          .then(function () {
+          .then(() => {
             if (callback) callback(docId);
           })
           .catch(Firebase.handleShareLinkError);
@@ -238,7 +233,7 @@ window.Firebase = {
         extras: numberOfExtraDocs,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       })
-      .then(function (newDoc) {
+      .then((newDoc) => {
         // store id in memory:
         memory.id = newDoc.id;
         // go through splitData array:
@@ -250,7 +245,7 @@ window.Firebase = {
             .add({ data: splitData[i + 1] });
           extraDataPromises.push(extraDataPromise);
         }
-        Promise.all(extraDataPromises).then(function () {
+        Promise.all(extraDataPromises).then(() => {
           // store id in memory:
           Memory.updatePersistentMemory(memory);
           if (callback) callback(memory.id);
@@ -268,7 +263,7 @@ window.Firebase = {
     Firebase.showShareButton(false);
     Firebase.showSaveButton();
     Firebase.showUploadButton();
-    setTimeout(function () {
+    setTimeout(() => {
       Firebase.showShareButton();
       Firebase.showSaveButton(false);
       Firebase.showUploadButton(false);

@@ -58,7 +58,7 @@ window.A11y = {
       var hitArrow = hitArrowKey(event);
       if (hitArrow && (element.tagName == "P" || element.tagName == "IMG")) {
         _2DNote.play(element, false);
-        setTimeout(function () {
+        setTimeout(() => {
           _2DNote.stop(element);
         }, 300);
       }

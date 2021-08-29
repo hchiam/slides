@@ -41,8 +41,7 @@ window.Memory = {
 
   idCounter: 0, // for uniqueness only
 
-  Text: function (text, id) {
-    text = text || "";
+  Text: function (text = "", id) {
     this.text = text || defaultText.text;
     this.left = defaultText.left;
     this.top = defaultText.top;
@@ -51,8 +50,7 @@ window.Memory = {
     this.id = id || Memory.generateId();
   },
 
-  Image: function (file, fileName, id) {
-    file = file || "";
+  Image: function (file = "", fileName, id) {
     this.file = file;
     this.fileName = fileName;
     this.left = 0;
@@ -357,14 +355,14 @@ window.Memory = {
 
   upload: function () {
     var selectJsonFileInput = document.getElementById("select_json_file");
-    selectJsonFileInput.onchange = function (e) {
+    selectJsonFileInput.onchange = (e) => {
       var file = e.target.files[0];
       var reader = new FileReader();
       reader.readAsText(file, "UTF-8");
-      reader.onload = function (e) {
+      reader.onload = (e) => {
         var content = e.target.result;
         var json = JSON.parse(content);
-        Memory.recreateSlidesFromMemory(json);
+        this.recreateSlidesFromMemory(json);
         console.log(memory);
       };
     };
@@ -393,19 +391,16 @@ window.Memory = {
       var shareButton = document.querySelector("#share");
       Morphing_button.morph(shareButton);
       shareButton.classList.add("modal");
-      shareButton.innerHTML =
-        "<div>You can share your slides at this public link (no login necessary):</div>" +
-        "<br/>" +
-        '<div class="modal-share-link" tabindex="0" autofocus ' +
-        '    onclick="copyToClipboard(' +
-        url +
-        ", function() { alert('Copied link:\\n\\n" +
-        url +
-        ') })">' +
-        url +
-        "</div>" +
-        "<br/>" +
-        '<div><button onclick="Memory.closeShareModal(event)" aria-label="Close">X</button></div>';
+      shareButton.innerHTML = `
+        <div>You can share your slides at this public link (no login necessary):</div>
+        <br/>
+        <div class="modal-share-link" tabindex="0" autofocus 
+            onclick="copyToClipboard('${url}', function() { alert('Copied link:\\n\\n' + '${url}') })">
+            ${url}
+        </div>
+        <br/>
+        <div><button onclick="Memory.closeShareModal(event)" aria-label="Close">X</button></div>
+      `;
       setUpKeyboardFocusTrap(shareButton);
     });
   },
@@ -459,16 +454,16 @@ window.Memory = {
     // NOTE: needs to be called before deleteSlideFromMemory
     var textsToDelete = memory.slides[slideIndex].texts;
     var imagesToDelete = memory.slides[slideIndex].images;
-    var textIdsToDelete = Object.keys(textsToDelete).map(function (t) {
-      return memory.slides[slideIndex].texts[t].id;
-    });
-    var imageIdsToDelete = Object.keys(imagesToDelete).map(function (t) {
-      return memory.slides[slideIndex].images[t].id;
-    });
-    textIdsToDelete.forEach(function (tId) {
+    var textIdsToDelete = Object.keys(textsToDelete).map(
+      (t) => memory.slides[slideIndex].texts[t].id
+    );
+    var imageIdsToDelete = Object.keys(imagesToDelete).map(
+      (t) => memory.slides[slideIndex].images[t].id
+    );
+    textIdsToDelete.forEach((tId) => {
       document.querySelector('[id="' + tId + '"]').remove();
     });
-    imageIdsToDelete.forEach(function (iId) {
+    imageIdsToDelete.forEach((iId) => {
       document.querySelector('[id="' + iId + '"]').remove();
     });
   },
@@ -509,7 +504,7 @@ window.Memory = {
     var noSlides = !memory.slides || memory.slides.length === 0;
     if (noSlides) return true;
 
-    var foundTextOrImageInSlides = memory.slides.some(function (s) {
+    var foundTextOrImageInSlides = memory.slides.some((s) => {
       var haveTextsInSlide = s.texts && Object.keys(s.texts).length > 0;
       var haveImagesInSlide = s.images && Object.keys(s.images).length > 0;
       return haveTextsInSlide || haveImagesInSlide;

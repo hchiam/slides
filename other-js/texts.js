@@ -32,7 +32,7 @@ window.Texts = {
 
     editTextIcon.ariaLabel = "Edit text";
     editTextIcon.id = "edit_text_icon";
-    editTextIcon.innerHTML = '<i class="material-icons">edit</i><span></span>';
+    editTextIcon.innerHTML = `<i class="material-icons">edit</i><span></span>`;
     editTextIcon.style.display = "none";
     editTextIcon.style.position = "absolute";
     editTextIcon.style.cursor = "text";
@@ -74,8 +74,11 @@ window.Texts = {
     }
   },
 
-  recreateText: function (parentElement, textId, slideIndex) {
-    parentElement = parentElement || Slides.currentSlide;
+  recreateText: function (
+    parentElement = Slides.currentSlide,
+    textId,
+    slideIndex
+  ) {
     var textObject = Memory.getSlide(slideIndex).texts[textId];
     var text = textObject.text;
     var left = textObject.left * Memory.getScaleForOriginalScreenSize(memory);
@@ -85,11 +88,13 @@ window.Texts = {
     this.createText(parentElement, text, left, top, id, slideIndex, textProps);
   },
 
-  createNewText: function (parentElement, text, left, top, textProps) {
-    parentElement = parentElement || Slides.currentSlide;
-    text = text || defaultText.text;
-    left = left || defaultText.left;
-    top = top || defaultText.top;
+  createNewText: function (
+    parentElement = Slides.currentSlide,
+    text = defaultText.text,
+    left = defaultText.left,
+    top = defaultText.top,
+    textProps
+  ) {
     if (this.alreadyHasDefaultText()) return;
     var textObject = new Memory.Text(text);
     textObject.left = left;
@@ -110,31 +115,25 @@ window.Texts = {
     A11y.announce("Added new text."); // TODO: not working
   },
 
-  createNewBigText: function (parentElement, text, left, top) {
-    parentElement = parentElement || Slides.currentSlide;
-    text = text || defaultText.text;
-    left =
-      left || defaultText.left + defaultTextWidth / 2 - defaultTextWidthBig / 2;
-    top =
-      top || defaultText.top + defaultTextHeight / 2 - defaultTextHeightBig / 2;
+  createNewBigText: function (
+    parentElement = Slides.currentSlide,
+    text = defaultText.text,
+    left = defaultText.left + defaultTextWidth / 2 - defaultTextWidthBig / 2,
+    top = defaultText.top + defaultTextHeight / 2 - defaultTextHeightBig / 2
+  ) {
     var textProps = { fontSize: defaultTextFontSizeBig + "px" };
     this.createNewText(parentElement, text, left, top, textProps);
   },
 
   createText: function (
-    parentElement,
-    text,
-    left,
-    top,
+    parentElement = Slides.currentSlide,
+    text = defaultText.text,
+    left = defaultText.left,
+    top = defaultText.top,
     id,
-    slideIndex,
+    slideIndex = Memory.currentSlideIndex,
     textProperties
   ) {
-    parentElement = parentElement || Slides.currentSlide;
-    text = text || defaultText.text;
-    left = left || defaultText.left;
-    top = top || defaultText.top;
-    slideIndex = slideIndex || Memory.currentSlideIndex;
     var p = document.createElement("p");
     p.innerText = text;
     p.style.left = left + "px";
