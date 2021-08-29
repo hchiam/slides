@@ -212,12 +212,13 @@ window.Memory = {
       JSON.stringify(memory)
     );
     if (!willFitInAnyLocalStorage) return;
-    if (typeof localforage !== "undefined") {
-      localforage.setItem(
-        "slidesMemory",
-        JSON.stringify(memoryObject || memory)
-      );
-    } else if (sessionStorage.slidesMemory) {
+    // if (typeof localforage !== "undefined") {
+    //   localforage.setItem(
+    //     "slidesMemory",
+    //     JSON.stringify(memoryObject || memory)
+    //   );
+    // } else
+    if (sessionStorage.slidesMemory) {
       sessionStorage.slidesMemory = JSON.stringify(memoryObject || memory);
     } else {
       localStorage.slidesMemory = JSON.stringify(memoryObject || memory);
@@ -225,19 +226,19 @@ window.Memory = {
   },
 
   readPersistentMemory: function (callback) {
-    if (typeof localforage !== "undefined") {
-      localforage.getItem("slidesMemory", function (err, value) {
-        memory = JSON.parse(value) || memory;
-        if (callback) callback(memory);
-      });
-    } else {
-      if (sessionStorage.slidesMemory) {
-        memory = JSON.parse(sessionStorage.slidesMemory);
-      } else if (localStorage.slidesMemory) {
-        memory = JSON.parse(localStorage.slidesMemory);
-      }
-      if (callback) callback(memory);
+    // if (typeof localforage !== "undefined") {
+    //   localforage.getItem("slidesMemory", function (err, value) {
+    //     memory = JSON.parse(value) || memory;
+    //     if (callback) callback(memory);
+    //   });
+    // } else {
+    if (sessionStorage.slidesMemory) {
+      memory = JSON.parse(sessionStorage.slidesMemory);
+    } else if (localStorage.slidesMemory) {
+      memory = JSON.parse(localStorage.slidesMemory);
     }
+    if (callback) callback(memory);
+    // }
   },
 
   useMemory: function (createTextCallback, createImageCallback, setupCallback) {
@@ -499,7 +500,7 @@ window.Memory = {
         },
       ],
     };
-    if (typeof localforage !== "undefined") localforage.clear();
+    // if (typeof localforage !== "undefined") localforage.clear();
   },
 
   areAllSlidesBlankInMemory: function () {
