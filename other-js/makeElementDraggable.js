@@ -22,7 +22,8 @@ function makeElementDraggable(element, settings) {
   function setupAriaLabel(element) {
     element.setAttribute(
       "aria-label",
-      "Draggable. To drag this element around, hold down Option and hit the arrow keys."
+      "Draggable. To drag this element around, hit the arrow keys. Text: " +
+        element.innerText
     );
   }
 
@@ -145,12 +146,14 @@ function makeElementDraggable(element, settings) {
     }
   }
 
-  function snapToGrid(value, gridSize = 25) {
+  function snapToGrid(value, gridSize) {
+    gridSize = gridSize || 25;
     var newValue = gridSize * Math.floor(value / gridSize);
     return newValue;
   }
 
-  function isSnapPointInRange(snapPoint, left, top, threshold = 50) {
+  function isSnapPointInRange(snapPoint, left, top, threshold) {
+    threshold = threshold || 50;
     var a = snapPoint.x - left;
     var b = snapPoint.y - top;
     var c = Math.sqrt(a * a + b * b);

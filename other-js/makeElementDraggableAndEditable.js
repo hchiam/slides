@@ -27,7 +27,8 @@ function makeElementDraggableAndEditable(element, settings) {
   function setupAriaLabel(element) {
     element.setAttribute(
       "aria-label",
-      "Draggable and editable. To drag, hit Escape and then hold down Option and hit the arrow keys. To edit, start typing."
+      "Draggable and editable. To enter drag mode, hit Escape and then hit the arrow keys. To enter edit mode, hit any letter. Text: " +
+        element.innerText
     );
   }
 
@@ -177,12 +178,14 @@ function makeElementDraggableAndEditable(element, settings) {
     }
   }
 
-  function snapToGrid(value, gridSize = 25) {
+  function snapToGrid(value, gridSize) {
+    gridSize = gridSize || 25;
     var newValue = gridSize * Math.floor(value / gridSize);
     return newValue;
   }
 
-  function isSnapPointInRange(snapPoint, left, top, threshold = 50) {
+  function isSnapPointInRange(snapPoint, left, top, threshold) {
+    threshold = threshold || 50;
     var a = snapPoint.x - left;
     var b = snapPoint.y - top;
     var c = Math.sqrt(a * a + b * b);
@@ -197,20 +200,28 @@ function makeElementDraggableAndEditable(element, settings) {
         var arrowKey = getArrowKey(event);
         var selectionRange =
           window.getSelection() && window.getSelection().getRangeAt(0);
+        var notUsingKeyboardArrowsToSelectLetters =
+          selectionRange && !selectionRange.startOffset;
         if (
           arrowKey &&
-          ((selectionRange && !selectionRange.startOffset) ||
-            (!selectionRange && !element.startedTyping))
+          (!element.startedTyping || notUsingKeyboardArrowsToSelectLetters)
         ) {
           element.detectAsClickToEdit = false;
           element.contentEditable = false;
           moveWithArrowKeys(element, arrowKey);
-        } else if (isEscKey(event)) {
+        } else if (isEscKey(event) || isTabKey(event)) {
           element.startedTyping = false;
           element.detectAsClickToEdit = false;
           element.contentEditable = false;
+          element.blur();
+          element.focus();
         } else if (!isTabKey(event)) {
-          if (!element.startedTyping && element !== document.activeElement) {
+          // if typing inside:
+          var didNotSelectAnyText =
+            selectionRange &&
+            (!selectionRange.startOffset ||
+              selectionRange.startOffset > element.innerText.length);
+          if (!element.startedTyping && didNotSelectAnyText) {
             setCaret(element);
           }
           element.startedTyping = true;
