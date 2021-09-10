@@ -1,3 +1,12 @@
+echo "Did you test manually on the test side?"
+echo "(Some bugs only happen in prod site.)"
+read -p "Confirm (y): " input
+
+if [[ $input != "y" ]]
+then
+  exit
+fi
+
 rm -rf to-publish
 mkdir to-publish
 
