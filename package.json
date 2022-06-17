@@ -17,8 +17,7 @@
     "test-quality": "bash bash-scripts/website-quality-test.sh",
     "minify": "bash bash-scripts/minify.sh",
     "browser-sync": "bash bash-scripts/browser-sync.sh",
-    "publish": "bash bash-scripts/publish.sh # yarn run publish",
-    "deploy": "yarn run publish",
+    "deploy": "bash bash-scripts/publish.sh # yarn publish does something different",
     "fb:export": "cd firestore && firebase emulators:export seed",
     "fb:start": "cd firestore && echo 'open http://localhost:4000/firestore/slides' && firebase emulators:start --import seed",
     "es-check": "es-check es5 'minified.js' 'slides.js' './other-js/*.js'"
